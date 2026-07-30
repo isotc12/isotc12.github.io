@@ -4,6 +4,24 @@ import PageHero from '../components/PageHero.astro'
 import fs from 'node:fs'
 
 const events = JSON.parse(fs.readFileSync('public/data/events.json', 'utf-8'))
+
+// Group events by year for the timeline
+const byYear = new Map()
+for (const e of events) {
+  const year = e.time?.from?.date?.slice(0, 4) || String(e.year)
+  if (!byYear.has(year)) byYear.set(year, [])
+  byYear.get(year).push(e)
+}
+const years = Array.from(byYear.keys()).sort((a, b) => b.localeCompare(a))
+
+function ordinal(n) {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
+const first = events[events.length - 1]
+const last = events[0]
 ---
 
 <BaseLayout title="History" description="Fifteen plenary meetings of ISO/TC 12 from 2010 to 2026 — Prague to Zoom.">
@@ -11,33 +29,70 @@ const events = JSON.parse(fs.readFileSync('public/data/events.json', 'utf-8'))
     <PageHero
       eyebrow="History"
       ordinal="02"
-      title="Plenaries since 2010"
-      lede="The committee has met formally fifteen times since 2010 — from a face-to-face in Prague through hybrid meetings in Berlin, Stockholm, and Helsinki to the virtual Zoom plenaries of the pandemic years."
+      title="From Prague to Zoom"
+      lede={`Fifteen plenary meetings across sixteen years — from an in-person meeting in Prague (2010) through hybrid meetings in Berlin, Stockholm, and Helsinki, to the virtual Zoom plenaries of the pandemic years and beyond.`}
     />
   </div>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
-    <ol class="relative">
-      {events.map((e, i) => (
-        <li class="grid grid-cols-12 gap-4 hairline py-6">
-          <div class="col-span-3 sm:col-span-2">
-            <div class="font-mono text-wine text-sm">{e.ordinal}</div>
-            <div class="eyebrow mt-1">{e.time?.from?.date?.slice(0, 4) || e.year}</div>
-          </div>
-          <div class="col-span-6 sm:col-span-7">
-            <h3 class="font-display text-lg leading-tight">
-              <a href={e.landing_url} class="hover:text-wine transition-colors">{e.title}</a>
-            </h3>
-            <p class="text-sm text-muted mt-1">{e.general_area}</p>
-          </div>
-          <div class="col-span-3 text-right">
-            <div class="eyebrow">Date</div>
-            <div class="font-mono text-sm mt-1">
-              {new Date(e.time?.from?.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <aside class="lg:col-span-3 lg:sticky lg:top-20 self-start">
+        <div class="eyebrow mb-3">Jump to year</div>
+        <ol class="space-y-1.5 text-sm">
+          {years.map((y, i) => (
+            <li>
+              <a href={`#year-${y}`} class="font-mono text-muted hover:text-wine flex justify-between items-baseline border-b border-rule py-1.5">
+                <span>{y}</span>
+                <span class="text-xs text-faint">{byYear.get(y).length} {byYear.get(y).length === 1 ? 'meeting' : 'meetings'}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </aside>
+
+      <div class="lg:col-span-9">
+        {years.map((year) => (
+          <section id={`year-${year}`} class="year-section mb-20 scroll-mt-20">
+            <div class="flex items-baseline gap-6 mb-8 sticky top-0 bg-paper py-4 z-10 hairline">
+              <span class="font-display font-medium text-5xl text-wine tabular-nums">{year}</span>
+              <span class="font-mono text-xs text-muted uppercase tracking-wider">{byYear.get(year).length} {byYear.get(year).length === 1 ? 'meeting' : 'meetings'}</span>
             </div>
-          </div>
-        </li>
-      ))}
-    </ol>
+            <ol>
+              {byYear.get(year).map((e) => (
+                <li class="grid grid-cols-12 gap-4 hairline pt-6 pb-8">
+                  <div class="col-span-3 sm:col-span-2">
+                    <div class="font-mono text-wine text-sm tabular-nums">{e.ordinal}</div>
+                    <div class="eyebrow mt-1">
+                      {new Date(e.time?.from?.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                    </div>
+                  </div>
+                  <div class="col-span-9 sm:col-span-10">
+                    <h3 class="font-display text-xl leading-tight">
+                      <a href={e.landing_url} class="hover:text-wine transition-colors">{e.title}</a>
+                    </h3>
+                    <div class="text-sm text-muted mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                      <span>{e.general_area}</span>
+                      {e.host && <span class="text-faint">· hosted by {e.host}</span>}
+                    </div>
+                    {e.acting_chair_at_meeting && (
+                      <div class="text-xs text-muted mt-2 italic">
+                        Acting chair: {e.acting_chair_at_meeting}
+                      </div>
+                    )}
+                    {e.attendance?.countries && (
+                      <div class="mt-4 flex flex-wrap gap-2">
+                        {e.attendance.countries.filter((c) => c.attended !== false).map((c) => (
+                          <span class="font-mono text-[0.65rem] text-muted border border-rule px-1.5 py-0.5">{c.code}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </div>
+    </div>
   </section>
 </BaseLayout>

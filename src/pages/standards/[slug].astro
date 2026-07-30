@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import PageHero from '../../components/PageHero.astro'
 import fs from 'node:fs'
 
 export function getStaticPaths() {
@@ -32,86 +31,128 @@ const stageLabel = (stage) => {
   return map[stage] || stage
 }
 
-const references = standard.part <= 12 || standard.part === 13
-  ? [
-      { label: 'BIPM SI Brochure', href: 'https://www.bipm.org/en/measurement-units/si-brochure' },
-      { label: 'ISO Store', href: `https://www.iso.org/standard.html` },
-    ]
-  : []
+const isIEC = standard.part >= 14 && standard.part <= 17
+const orgPrefix = isIEC ? 'IEC' : 'ISO'
+const fullRef = `${orgPrefix} ${isIEC ? 'IEC ' : ''}80000-${standard.part}`
 ---
 
 <BaseLayout
-  title={`ISO 80000-${standard.part}`}
-  description={`ISO ${standard.part >= 14 && standard.part <= 17 ? 'IEC' : ''} 80000-${standard.part}: ${standard.title}. ${standard.scope}`}
+  title={`${orgPrefix} 80000-${standard.part} — ${standard.title}`}
+  description={`${fullRef}: ${standard.title}. ${standard.scope}`}
 >
-  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
-    <a href="/standards/" class="font-mono text-xs text-muted hover:text-ink">← All ISO 80000 parts</a>
-    <PageHero
-      eyebrow={`${standard.part >= 14 && standard.part <= 17 ? 'IEC' : 'ISO'} 80000-${standard.part}`}
-      ordinal={`Part ${standard.part}`}
-      title={standard.title}
-      lede={standard.scope}
-    />
-  </div>
+  <article class="spec-sheet">
+    <header class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-10">
+      <a href="/standards/" class="font-mono text-xs text-muted hover:text-ink">← All parts</a>
+    </header>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
-    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-12">
-      <div class="md:col-span-8 prose-tc12 max-w-none">
-        <h3 class="font-display text-xl font-medium mb-3">In the series</h3>
-        <p>
-          Part {standard.part} of the ISO/IEC 80000 series. The series defines
-          the names, symbols, and units of quantities used across science,
-          technology, and trade. Each part covers a domain.
-        </p>
-
-        <h3 class="font-display text-xl font-medium mb-3 mt-10">Status</h3>
-        <p>
-          {statusLabel(standard.status)}
-          {standard.edition_year && ` — current edition published in ${standard.edition_year}.`}
-          {standard.status === 'under revision' && ' A revision is in progress under ISO/TC 12/WG 21 (General) or a domain-specific project leader.'}
-          {standard.status === 'under development' && ' IEC-led, developed jointly with IEC/TC 25.'}
-          {standard.status === 'withdrawn' && ' Material transferred to the ISO/IEC 80003 series.'}
-        </p>
-
-        <h3 class="font-display text-xl font-medium mb-3 mt-10">Recent activity</h3>
-        <p>
-          The 23rd plenary meeting of ISO/TC 12 (May 2026) addressed
-          maintenance of the series, including stability-date reviews
-          and SMART exploration.
-        </p>
+    <div class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end anim-fade-up">
+      <div class="lg:col-span-8">
+        <div class="font-mono text-[0.7rem] tracking-[0.18em] text-wine uppercase mb-3">
+          {orgPrefix}/IEC 80000 · Part {standard.part}
+        </div>
+        <h1 class="font-display font-medium leading-[1.05] tracking-[-0.02em] text-[var(--text-h1)] text-balance">
+          {standard.title}
+        </h1>
+        <p class="lede mt-6 max-w-2xl">{standard.scope}</p>
       </div>
 
-      <aside class="md:col-span-4 md:border-l md:border-rule md:pl-8 space-y-6">
-        <dl class="text-sm space-y-3">
-          <div>
-            <dt class="eyebrow">Reference</dt>
-            <dd class="font-mono mt-1">{`ISO ${standard.part >= 14 && standard.part <= 17 ? 'IEC' : ''} 80000-${standard.part}`}</dd>
+      <aside class="lg:col-span-4 lg:border-l lg:border-rule lg:pl-10 self-end">
+        <dl class="space-y-5">
+          <div class="grid grid-cols-12 gap-3 items-baseline">
+            <dt class="col-span-4 eyebrow">Reference</dt>
+            <dd class="col-span-8 font-mono text-base">{fullRef}</dd>
           </div>
           {standard.edition_year && (
-            <div>
-              <dt class="eyebrow">Edition</dt>
-              <dd class="font-mono mt-1">{standard.edition_year}</dd>
+            <div class="grid grid-cols-12 gap-3 items-baseline">
+              <dt class="col-span-4 eyebrow">Edition</dt>
+              <dd class="col-span-8 font-mono text-base tabular-nums">{standard.edition_year}</dd>
             </div>
           )}
-          <div>
-            <dt class="eyebrow">Stage</dt>
-            <dd class="font-mono mt-1">{stageLabel(standard.stage)}</dd>
+          <div class="grid grid-cols-12 gap-3 items-baseline">
+            <dt class="col-span-4 eyebrow">Stage</dt>
+            <dd class="col-span-8 font-mono text-xs">{stageLabel(standard.stage)}</dd>
           </div>
-          <div>
-            <dt class="eyebrow">Status</dt>
-            <dd class="mt-1">{statusLabel(standard.status)}</dd>
+          <div class="grid grid-cols-12 gap-3 items-baseline">
+            <dt class="col-span-4 eyebrow">Status</dt>
+            <dd class="col-span-8">
+              <span class:list={[
+                'inline-flex items-baseline gap-1.5 text-xs font-mono px-2 py-0.5',
+                standard.status === 'published' && 'text-calibration bg-calibration/10',
+                (standard.status === 'under development' || standard.status === 'under revision') && 'text-wine bg-wine/10',
+                standard.status === 'withdrawn' && 'text-muted bg-muted/10 line-through',
+              ]}>{statusLabel(standard.status)}</span>
+            </dd>
           </div>
         </dl>
-
-        <div class="space-y-1.5">
-          <a href="https://www.iso.org/standard.html" class="block font-mono text-sm text-wine hover:text-wine-deep border-b border-wine pb-0.5">
-            View on ISO Store ↗
-          </a>
-          <a href="/decisions/" class="block font-mono text-sm text-muted hover:text-ink border-b border-rule pb-0.5">
-            See related resolutions →
-          </a>
-        </div>
       </aside>
     </div>
-  </section>
+
+    <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-24">
+      <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-x-12 gap-y-10">
+        <div class="md:col-span-3">
+          <div class="eyebrow">In the series</div>
+        </div>
+        <div class="md:col-span-9 prose-tc12 max-w-none">
+          <p>
+            Part {standard.part} of the ISO/IEC 80000 series. The series
+            defines names, symbols, and units of quantities used across
+            science, technology, and trade. Each part covers a single domain.
+          </p>
+          {isIEC && (
+            <p>
+              Developed jointly with <strong class="text-ink">IEC/TC 25</strong>
+              under joint working group <strong class="text-ink">JWG 2</strong>.
+            </p>
+          )}
+          {standard.status === 'under revision' && (
+            <p>
+              A revision is currently in progress, coordinated through
+              ISO/TC 12 working groups.
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
+      <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-x-12 gap-y-10">
+        <div class="md:col-span-3">
+          <div class="eyebrow">Recent activity</div>
+        </div>
+        <div class="md:col-span-9 prose-tc12 max-w-none">
+          <p>
+            The committee most recently addressed this part at the
+            <a href="/decisions/" class="text-wine">23rd plenary meeting (May 2026)</a>,
+            which covered systematic reviews, stability dates, and SMART
+            exploration for the ISO/IEC 80000 series as a whole.
+          </p>
+          <a href="/decisions/" class="font-mono text-sm text-wine hover:text-wine-deep border-b border-wine pb-0.5 inline-block mt-2">
+            See all resolutions →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
+      <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-x-12 gap-y-4">
+        <div class="md:col-span-3">
+          <div class="eyebrow">External</div>
+        </div>
+        <div class="md:col-span-9">
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href={`https://www.iso.org/standard.html`} class="text-ink hover:text-wine">
+                <span class="font-mono text-wine">{fullRef}</span> on the ISO Store ↗
+              </a>
+            </li>
+            <li>
+              <a href="https://www.bipm.org/en/measurement-units/si-brochure" class="text-ink hover:text-wine">
+                <span class="font-mono text-muted">BIPM SI Brochure</span> — the foundational reference for all ISO 80000 quantities ↗
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </article>
 </BaseLayout>

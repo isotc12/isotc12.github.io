@@ -47,13 +47,21 @@ const withdrawn = standards.filter((s) => s.status === 'withdrawn')
               <td class="py-3 pr-4 font-mono text-xs text-muted align-top hidden sm:table-cell">{s.edition_year ?? '—'}</td>
               <td class="py-3 pr-4 font-mono text-xs text-muted align-top hidden md:table-cell">{s.stage}</td>
               <td class="py-3 align-top">
-                <span class:list-[
-                  'inline-block text-xs px-2 py-0.5 font-mono',
-                  s.status === 'published' && 'text-calibration',
-                  s.status === 'under development' && 'text-wine',
-                  s.status === 'under revision' && 'text-wine',
-                  s.status === 'withdrawn' && 'text-muted'
-                ]>{s.status}</span>
+                <span class:list={[
+                  'inline-flex items-baseline gap-1.5 text-[0.7rem] font-mono px-2 py-0.5',
+                  s.status === 'published' && 'text-calibration bg-calibration/10',
+                  s.status === 'under development' && 'text-wine bg-wine/10',
+                  s.status === 'under revision' && 'text-wine bg-wine/10',
+                  s.status === 'withdrawn' && 'text-muted bg-muted/10 line-through',
+                ]}>
+                  <span class:list={[
+                    'inline-block w-1 h-1 rounded-full',
+                    s.status === 'published' && 'bg-calibration',
+                    (s.status === 'under development' || s.status === 'under revision') && 'bg-wine',
+                    s.status === 'withdrawn' && 'bg-muted',
+                  ]}></span>
+                  {s.status}
+                </span>
               </td>
             </tr>
           ))}

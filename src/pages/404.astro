@@ -1,11 +1,62 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+
+const prefixes = [
+  { symbol: 'Q', name: 'quetta', factor: '10³⁰' },
+  { symbol: 'R', name: 'ronna',  factor: '10²⁷' },
+  { symbol: 'Y', name: 'yotta',  factor: '10²⁴' },
+  { symbol: 'Z', name: 'zetta',  factor: '10²¹' },
+  { symbol: 'E', name: 'exa',    factor: '10¹⁸' },
+  { symbol: 'P', name: 'peta',   factor: '10¹⁵' },
+  { symbol: 'T', name: 'tera',   factor: '10¹²' },
+  { symbol: 'G', name: 'giga',   factor: '10⁹' },
+  { symbol: 'M', name: 'mega',   factor: '10⁶' },
+  { symbol: 'k', name: 'kilo',   factor: '10³' },
+]
 ---
 
-<BaseLayout title="404 — Not Found · ISO/TC 12">
-  <section class="space-y-4">
-    <h1 class="text-3xl font-bold text-brand">404</h1>
-    <p class="text-slate-700">The page you're looking for doesn't exist.</p>
-    <a href="/" class="text-brand hover:underline">← Back to home</a>
+<BaseLayout title="404 — Not found" description="The page you requested could not be found." noIndex={true}>
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-16 pb-24">
+    <div class="eyebrow anim-fade-up">Error 404</div>
+    <h1 class="font-display font-medium leading-[0.95] tracking-tight text-[clamp(4rem,12vw,9rem)] mt-4 anim-fade-up">
+      Not<br />
+      <span class="italic font-light text-muted">found.</span>
+    </h1>
+    <p class="lede mt-10 max-w-xl anim-fade-up" style="animation-delay: 0.1s;">
+      The page you requested is out of range — like asking for a
+      <em>milli</em>metre and getting nothing back.
+    </p>
+
+    <div class="mt-20 anim-fade" style="animation-delay: 0.3s;">
+      <div class="eyebrow mb-4">The SI prefix ladder — you fell off the bottom</div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <tbody>
+            {prefixes.map((p, i) => (
+              <tr class="hairline" style={`opacity: ${1 - (i * 0.07)}`}>
+                <td class="py-2 pr-6 font-mono text-wine text-base">{p.symbol}</td>
+                <td class="py-2 pr-6 font-display">{p.name}</td>
+                <td class="py-2 pr-6 font-mono text-xs text-muted">{p.factor}</td>
+              </tr>
+            ))}
+            <tr class="hairline border-t-2 border-t-rule-strong">
+              <td class="py-2 pr-6 font-mono text-muted text-base line-through opacity-50">∅</td>
+              <td class="py-2 pr-6 font-display text-muted italic opacity-50">this page</td>
+              <td class="py-2 pr-6 font-mono text-xs text-faint opacity-50">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-16 anim-fade-up" style="animation-delay: 0.5s;">
+      <div class="eyebrow mb-3">Get back to measure</div>
+      <div class="flex flex-wrap gap-x-6 gap-y-3">
+        <a href="/" class="font-mono text-sm text-wine border-b border-wine pb-0.5 hover:text-wine-deep">Home →</a>
+        <a href="/standards/" class="font-mono text-sm text-muted hover:text-ink border-b border-rule pb-0.5">ISO 80000 series</a>
+        <a href="/decisions/" class="font-mono text-sm text-muted hover:text-ink border-b border-rule pb-0.5">All resolutions</a>
+        <a href="/meetings/" class="font-mono text-sm text-muted hover:text-ink border-b border-rule pb-0.5">Plenary meetings</a>
+      </div>
+    </div>
   </section>
 </BaseLayout>

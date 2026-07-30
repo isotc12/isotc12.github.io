@@ -47,12 +47,6 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-image:
-      linear-gradient(to right, transparent 0, transparent calc(100% - 1px), color-mix(in oklab, var(--color-rule) 50%, transparent) 100%);
-    background-size: 8.333% 100%;
-    background-position: 0 0;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
   }
 
   .dark {
@@ -148,17 +142,47 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .anim-fade-up {
+    animation: fade-up 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .anim-fade {
+    animation: fade 0.6s ease-out both;
+  }
+
+  .stagger > * {
     animation: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
+
+  .stagger > *:nth-child(1) { animation-delay: 0.05s; }
+  .stagger > *:nth-child(2) { animation-delay: 0.12s; }
+  .stagger > *:nth-child(3) { animation-delay: 0.19s; }
+  .stagger > *:nth-child(4) { animation-delay: 0.26s; }
+  .stagger > *:nth-child(5) { animation-delay: 0.33s; }
+  .stagger > *:nth-child(6) { animation-delay: 0.40s; }
+  .stagger > *:nth-child(7) { animation-delay: 0.47s; }
 
   @keyframes fade-up {
     from {
       opacity: 0;
-      transform: translateY(8px);
+      transform: translateY(12px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
   }
 }
