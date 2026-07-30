@@ -1,0 +1,45 @@
+title: 12th plenary meeting
+ordinal: 12
+status: completed
+year: 2015
+landing_url: /meetings/plenary-meeting-12/
+
+time:
+  from: { date: 2015-06-24 }
+  to: { date: 2015-06-26 }
+
+general_area: Gaithersburg, MD, USA
+country_code: US
+
+venues:
+  - name: NIST, Gaithersburg
+
+host: ANSI / NIST (United States)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+
+chair:
+  name: Mr Leslie Pendrill
+
+committee_manager: Mr Sven Radhe
+
+schedule:
+  - date: 2015-06-24
+    event: WG 19 meeting
+  - date: 2015-06-26
+    event: Plenary meeting (Gaithersburg)
+    description: |
+      12th plenary meeting of ISO/TC 12, held at NIST Gaithersburg, MD, USA.
+      Thirteen resolutions (P-2015-01 through P-2015-13) covering agenda
+      adoption, business plan, ISO 80000 series restructuring (introductions
+      consolidation, indices), DIS ballots for parts 2/5/7/10/12,
+      development track change (36m→48m), JWG 20 status concerns and
+      executive committee formation, liaison officer nominations, future
+      work with IEC/TC 25 on logarithmic quantities, and next meeting
+      planning (Berlin 2016).
+
+next_plenary:
+  date: 2016-08-25
+  location: Stockholm, Sweden

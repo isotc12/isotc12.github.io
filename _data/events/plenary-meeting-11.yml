@@ -1,0 +1,50 @@
+title: 11th plenary meeting
+ordinal: 11
+status: completed
+year: 2014
+landing_url: /meetings/plenary-meeting-11/
+
+time:
+  from: { date: 2014-01-29 }
+  to: { date: 2014-01-31 }
+
+general_area: Berlin, Germany
+country_code: DE
+
+venues:
+  - name: DIN Office, Berlin
+
+host: DIN (Germany)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+
+chair:
+  name: Mr Leslie Pendrill
+
+committee_manager: Mr Sven Radhe
+
+schedule:
+  - date: 2014-01-29
+    event: WG 18 + WG 19 meetings
+  - date: 2014-01-30
+    event: WG meetings continue
+  - date: 2014-01-31
+    event: Plenary meeting (Berlin)
+    description: |
+      11th plenary meeting of ISO/TC 12, held in Berlin, Germany.
+      Twenty-seven secretariat resolutions (P-2014-01 through P-2014-15
+      consolidated) covering agenda, business plan corrections, WG 18
+      report and disbandment (pending JWG 20 activation), JWG 20
+      establishment, WG 19 report, ISO 80000 series project leader
+      changes, title changes (Part 7 → Light and radiation, Part 12 →
+      Condensed matter physics), OID omission (voiding Resolution 4
+      Prague 2010), allocation of ISO 80003-2/-3/-7/-8 to JWG 20,
+      liaison updates (TC 215 report, TC 203 discontinuation, invites
+      to TC 274, IEC/TC 1, IEC/TC 25), ITU and OIML liaison reports,
+      and next meeting offers.
+
+next_plenary:
+  date: 2015-06-26
+  location: Gaithersburg, MD, USA (eventually chosen)

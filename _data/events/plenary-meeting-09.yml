@@ -1,0 +1,46 @@
+title: 9th plenary meeting
+ordinal: 9
+status: completed
+year: 2010
+landing_url: /meetings/plenary-meeting-09/
+
+time:
+  from: { date: 2010-04-12 }
+  to: { date: 2010-04-13 }
+
+general_area: Prague, Czech Republic
+country_code: CZ
+
+venues:
+  - name: UNMZ Office, Prague
+
+host: UNMZ (Czech Republic)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+
+chair:
+  name: Mr Leslie Pendrill
+
+committee_manager: Mr Sven Radhe
+
+schedule:
+  - date: 2010-04-12
+    event: Plenary meeting day 1 (Prague)
+  - date: 2010-04-13
+    event: Plenary meeting day 2 (Prague)
+    description: |
+      9th plenary meeting of ISO/TC 12, held in Prague, Czech Republic.
+      Twelve consolidated resolutions (P-2010-01 through P-2010-12)
+      covering agenda, business plan, Unicode annexes, OID codes for
+      quantity concepts (later voided), special relativity additions
+      for ISO 80000-3/-4, title changes for ISO 80000-2 and -8,
+      ISO 80000-9 Annex B (metastable isotopes), ISO/IEC 80003 series
+      title and identifiers, multiple liaison establishments (ISO/TC 215,
+      ISO/TC 8/SC 6, IEC/TC 1, ICAO, ILO, WCO, OASIS QUOMOS), and
+      future-work NWIPs.
+
+next_plenary:
+  date: 2012-10-24
+  location: Milan, Italy

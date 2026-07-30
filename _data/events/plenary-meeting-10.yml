@@ -1,0 +1,42 @@
+title: 10th plenary meeting
+ordinal: 10
+status: completed
+year: 2012
+landing_url: /meetings/plenary-meeting-10/
+
+time: { from: { date: 2012-10-24 }, to: { date: 2012-10-24 } }
+
+general_area: Milan, Italy
+country_code: IT
+
+venues:
+  - name: UNI/CEI Offices, Milan
+
+host: UNI (Italy)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+
+chair:
+  name: Mr Leslie Pendrill
+
+committee_manager: Mr Sven Radhe
+
+schedule:
+  - date: 2012-10-24
+    event: Plenary meeting (Milan)
+    description: |
+      10th plenary meeting of ISO/TC 12, held in Milan, Italy.
+      Eleven consolidated resolutions (P-2012-01 through P-2012-11)
+      covering agenda, business plan, WG 13 disbandment, conversion
+      of WG 18 into JWG(s) for e-health (with title change to
+      "Quantities for e-health"), systematic-review confirmations
+      for ISO 80000-5/-7/-8/-11, full revision of ISO 80000 series
+      in a single WG with project leaders per part, disbandment of
+      WG 1 through WG 17, liaison appointments (Piery to WHO), and
+      corrigenda for ISO 80000-10 and -12.
+
+next_plenary:
+  date: 2014-01-31
+  location: Berlin, Germany

@@ -1,0 +1,43 @@
+title: 13th plenary meeting
+ordinal: 13
+status: completed
+year: 2016
+landing_url: /meetings/plenary-meeting-13/
+
+time:
+  from: { date: 2016-08-25 }
+  to: { date: 2016-08-25 }
+
+general_area: Stockholm, Sweden
+country_code: SE
+
+venues:
+  - name: SIS Office, Stockholm
+
+host: SIS (Sweden)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+
+chair:
+  name: Mr Leslie Pendrill (Chair at the time)
+
+committee_manager: Mr Sven Radhe
+
+schedule:
+  - date: 2016-08-25
+    event: Plenary meeting (Stockholm)
+    description: |
+      13th plenary meeting of ISO/TC 12, held in Stockholm, Sweden.
+      Agenda covered business plan, JWG 20 disbandment, liaison
+      approaches (IEC/TC 25 reciprocal, EURAMET, ITU Vocabulary, ITU-T
+      SG 17), ISO 80000 series status (DIS/FDIS ballots for parts 1,
+      3, 5, 7, 8, 12), project leader appointments (Knopf for 80000-3,
+      Ainslie for 80000-8), reappointment of WG 19 convenor Krystek,
+      and next meeting (Berlin 2017). Twenty-two resolutions
+      (P-2016-01 through P-2016-22), all unanimous.
+
+next_plenary:
+  date: 2017-10-20
+  location: Berlin, Germany

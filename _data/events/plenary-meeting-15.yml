@@ -1,0 +1,55 @@
+title: 15th plenary meeting (extraordinary)
+ordinal: 15
+status: completed
+year: 2018
+landing_url: /meetings/plenary-meeting-15/
+
+time:
+  from: { date: 2018-05-23 }
+  to: { date: 2018-05-23 }
+
+general_area: Virtual (WebEx)
+country_code: SE
+
+venues:
+  - name: WebEx
+    link: https://www.webex.com/
+
+host: SIS (Sweden)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+  email: sven.radhe@sis.se
+
+chair:
+  name: Dr Torgny Carlsson
+
+committee_manager: Mr Sven Radhe
+
+schedule:
+  - date: 2018-05-23
+    event: Extraordinary plenary meeting (WebEx)
+    description: |
+      15th meeting of ISO/TC 12 — an extraordinary WebEx meeting convened
+      to resolve a dispute over the definition of "unit" in
+      ISO/FDIS 80000-1:2018 clause 3.9. The committee decided that
+      "units" are "quantities" per the VIM, not "quantity values" as in
+      the current draft, and that the definition must be corrected before
+      FDIS ballot. The committee also resolved to ratify this decision
+      via a 3-week postal ballot (2018-05-25 to 2018-06-15) and to
+      forward the result to CIPM for their 2018-06-21/22 meeting.
+      Four resolutions (P-2018-01 through P-2018-04), three adopted by
+      majority vote and one (P-2018-04) by full support of the six
+      voting P-members.
+
+related_documents:
+  - N1228 — New definition of Unit (In favour) — From CCU
+  - N1229 — New definition of Unit (Against) — From JCGM WG2
+  - N1230 — Circular definition of "unit"
+  - N1233 — Circular definitions in VIM
+  - N1236 — DIN letter with secretariat replies (180420)
+
+next_plenary:
+  date: 2018-10-08
+  location: Helsinki, Finland

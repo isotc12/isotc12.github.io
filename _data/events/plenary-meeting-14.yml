@@ -1,0 +1,43 @@
+title: 14th plenary meeting
+ordinal: 14
+status: completed
+year: 2017
+landing_url: /meetings/plenary-meeting-14/
+
+time:
+  from: { date: 2017-10-20 }
+  to: { date: 2017-10-20 }
+
+general_area: Berlin, Germany
+country_code: DE
+
+venues:
+  - name: DIN Office, Berlin
+
+host: DIN (Germany)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+  email: sven.radhe@sis.se
+
+chair:
+  name: Dr Torgny Carlsson
+
+committee_manager: Mr Sven Radhe
+
+schedule:
+  - date: 2017-10-20
+    event: Plenary meeting (Berlin)
+    description: |
+      14th plenary meeting of ISO/TC 12, held in Berlin, Germany.
+      Agenda covered business plan, IEC/TC 25 Joint Working Group
+      creation (IEC lead, mode 5), EURAMET A-liaison establishment,
+      CIPM letter on "unit of measurement" definition, ISO 80000
+      series alignment with meter convention decisions, 9-month
+      extension request for FDIS ballot timing, and next meeting
+      scheduling. Ten resolutions (P-2017-01 through P-2017-10).
+
+next_plenary:
+  date: 2018-10
+  location: Outside Europe preferred (eventually Helsinki)
