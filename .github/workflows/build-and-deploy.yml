@@ -1,0 +1,69 @@
+name: build-and-deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.12.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+
+      - name: Install edoxen gem (for resolutions submodule validation)
+        working-directory: _data/resolutions
+        run: bundle install --jobs 3 --retry 3
+
+      - name: Validate resolutions YAML
+        working-directory: _data/resolutions
+        run: bundle exec edoxen validate "{plenary,ballots}/*.yaml"
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Build data + site
+        run: pnpm build
+
+      - name: Type-check (non-blocking)
+        run: pnpm check || true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
