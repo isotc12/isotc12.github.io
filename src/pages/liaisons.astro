@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
+import fs from 'node:fs'
+
+const liaisons = JSON.parse(fs.readFileSync('public/data/liaisons.json', 'utf-8'))
+const groups = JSON.parse(fs.readFileSync('public/data/groups.json', 'utf-8'))
+---
+
+<BaseLayout title="Liaisons" description="ISO/TC 12 maintains liaisons with IEC, ISO, and external bodies whose work intersects with quantities and units.">
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+    <PageHero
+      eyebrow="Coordination"
+      ordinal="04"
+      title="Liaisons"
+      lede="Quantities and units touch nearly every scientific and engineering committee. TC 12 appoints liaison representatives to coordinate with related ISO, IEC, and external bodies."
+    />
+  </div>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
+    <div class="hairline pt-8">
+      <span class="eyebrow">From ISO/TC 12</span>
+      <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2 mb-6">
+        Committees we send representatives to
+      </h2>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left">
+            <th class="eyebrow font-normal py-2">Reference</th>
+            <th class="eyebrow font-normal py-2">Title</th>
+            <th class="eyebrow font-normal py-2 hidden md:table-cell">Representative</th>
+          </tr>
+        </thead>
+        <tbody>
+          {liaisons.from_tc12.map((l) => (
+            <tr class="hairline hover:bg-vellum/50">
+              <td class="py-3 pr-4 font-mono align-top text-wine">{l.ref}</td>
+              <td class="py-3 pr-4 align-top">{l.title}{l.status === 'proposed' && <span class="ml-2 text-xs text-muted italic">(proposed)</span>}</td>
+              <td class="py-3 pr-4 align-top text-muted text-sm hidden md:table-cell">{l.representative}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
+    <div class="hairline pt-8">
+      <span class="eyebrow">External</span>
+      <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2 mb-6">
+        Organisations in liaison with TC 12
+      </h2>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left">
+            <th class="eyebrow font-normal py-2">Reference</th>
+            <th class="eyebrow font-normal py-2">Organisation</th>
+            <th class="eyebrow font-normal py-2 hidden md:table-cell">Liaison officer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {liaisons.external.map((l) => (
+            <tr class="hairline hover:bg-vellum/50">
+              <td class="py-3 pr-4 font-mono align-top text-wine">{l.ref}</td>
+              <td class="py-3 pr-4 align-top">
+                {l.title}
+                {l.liaison_type && <span class="ml-2 text-xs text-muted italic">({l.liaison_type})</span>}
+              </td>
+              <td class="py-3 pr-4 align-top text-muted text-sm hidden md:table-cell">{l.representative}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>

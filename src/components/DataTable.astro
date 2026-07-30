@@ -1,0 +1,46 @@
+---
+interface Props {
+  columns: { label: string; key: string; mono?: boolean; align?: 'left' | 'right' | 'center' }[]
+  rows: Record<string, any>[]
+  class?: string
+}
+
+const { columns, rows, class: className = '' } = Astro.props
+---
+
+<div class:list={['data-table-wrap overflow-x-auto', className]}>
+  <table class="w-full border-collapse text-sm">
+    <thead>
+      <tr class="hairline">
+        {columns.map((col) => (
+          <th
+            class:list={[
+              'text-left font-mono text-[0.7rem] uppercase tracking-wider text-muted font-normal py-2 pr-4',
+              col.align === 'right' && 'text-right',
+              col.align === 'center' && 'text-center',
+            ]}
+          >
+            {col.label}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr class="hairline hover:bg-vellum/50 transition-colors">
+          {columns.map((col) => (
+            <td
+              class:list={[
+                'py-3 pr-4 align-top',
+                col.mono && 'font-mono text-[0.85rem] data-mono',
+                col.align === 'right' && 'text-right',
+                col.align === 'center' && 'text-center',
+              ]}
+              set:html={row[col.key]}
+            />
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

@@ -1,41 +1,242 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import UnitGrid from '../components/UnitGrid.astro'
+import StatLine from '../components/StatLine.astro'
 import { committee } from '../data/committee'
+import fs from 'node:fs'
 
-const stats = [
-  { label: 'Secretariat', value: committee.secretariat },
-  { label: 'Chair', value: committee.chair },
-  { label: 'Established', value: String(committee.established) },
-  { label: 'Scope', value: 'ISO 80000 series' },
-]
+const meta = JSON.parse(fs.readFileSync('public/data/meta.json', 'utf-8'))
+const events = JSON.parse(fs.readFileSync('public/data/events.json', 'utf-8'))
+const resolutions = JSON.parse(fs.readFileSync('public/data/resolutions.json', 'utf-8'))
+const standards = JSON.parse(fs.readFileSync('public/data/standards.json', 'utf-8'))
+
+const latest = meta.latest_plenary
+const next = meta.next_plenary
+
+const latestPlenaryResolutions = (resolutions.plenary.find((p) => p.ordinal === latest.ordinal) || { decisions: [] }).decisions
+
+const publishedStandards = standards.filter((s) => s.status === 'published')
+const inDevelopmentStandards = standards.filter((s) => s.status === 'under development' || s.status === 'under revision')
+
+const ordinalSuffix = (n) => {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
 ---
 
-<BaseLayout>
-  <section class="space-y-6">
-    <h1 class="text-4xl font-bold text-brand">{committee.name}</h1>
-    <p class="text-xl text-slate-700">{committee.tagline}</p>
-    <p class="text-slate-700 max-w-3xl leading-relaxed">{committee.scope}</p>
-
-    <dl class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-      {stats.map((s) => (
-        <div class="border border-slate-200 rounded-lg p-4 bg-white">
-          <dt class="text-xs uppercase tracking-wide text-slate-500">{s.label}</dt>
-          <dd class="mt-1 font-semibold text-slate-900">{s.value}</dd>
+<BaseLayout
+  title="Quantities and units"
+  description="ISO/TC 12 maintains the ISO 80000 series — the quantities and units standards that underpin every measurement in science, engineering, and trade."
+>
+  <section class="hero relative">
+    <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12 sm:pt-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div class="lg:col-span-7 anim-fade-up">
+          <div class="eyebrow mb-6">
+            <span class="text-wine">ISO/TC 12</span>
+            <span class="mx-2 opacity-50">·</span>
+            <span>Founded 1947</span>
+            <span class="mx-2 opacity-50">·</span>
+            <span>Secretariat: SIS, Sweden</span>
+          </div>
+          <h1 class="font-display font-medium leading-[1.02] tracking-tight text-[var(--text-display)] text-balance">
+            The measure
+            <span class="block italic font-light text-muted">of all science</span>
+            <span class="block font-mono text-[0.42em] tracking-normal text-wine mt-4 not-italic">
+              and engineering.
+            </span>
+          </h1>
+          <p class="lede mt-8 max-w-xl">
+            ISO/TC 12 maintains the <strong class="text-ink font-medium">ISO 80000</strong> series —
+            the quantities and units used in every published measurement of length, mass,
+            time, current, temperature, amount, and luminance.
+          </p>
+          <div class="mt-10 flex flex-wrap gap-x-6 gap-y-3 items-baseline">
+            <a href="/standards/" class="font-mono text-sm text-wine border-b border-wine pb-0.5 hover:text-wine-deep transition-colors">
+              Browse ISO 80000 →
+            </a>
+            <a href="/about/" class="font-mono text-sm text-muted hover:text-ink border-b border-rule pb-0.5 transition-colors">
+              About the committee
+            </a>
+            <a href="/meetings/" class="font-mono text-sm text-muted hover:text-ink border-b border-rule pb-0.5 transition-colors">
+              Plenary meetings
+            </a>
+          </div>
         </div>
-      ))}
-    </dl>
+        <div class="lg:col-span-5 anim-fade-up" style="animation-delay: 0.15s;">
+          <div class="eyebrow mb-4">The seven SI base units</div>
+          <UnitGrid variant="hero" />
+          <p class="text-xs text-muted mt-4 italic font-display leading-relaxed">
+            The committee's domain, rendered as foundation.
+            Tap any unit to open its ISO 80000 part.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <div class="mt-12 p-6 border border-dashed border-slate-300 rounded-lg bg-slate-50">
-      <h2 class="font-semibold text-slate-800">Site under construction</h2>
-      <p class="mt-2 text-sm text-slate-600 max-w-2xl">
-        This site is being built from the ISO/TC 12 historic document corpus.
-        See the project <code class="px-1 py-0.5 bg-slate-200 rounded">CLAUDE.md</code>
-        in the parent directory for the build plan, and the staged content
-        sections: <a href="/about/" class="text-brand hover:underline">About</a>,{' '}
-        <a href="/meetings/" class="text-brand hover:underline">Meetings</a>,{' '}
-        <a href="/decisions/" class="text-brand hover:underline">Decisions</a>,{' '}
-        <a href="/standards/" class="text-brand hover:underline">Standards</a>.
-      </p>
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-24">
+    <div class="hairline pt-8 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
+      <StatLine
+        value={meta.counts.standards}
+        label="ISO 80000 parts"
+        caption="The series covers every SI quantity across science and technology."
+        href="/standards/"
+      />
+      <StatLine
+        value={meta.counts.plenaries}
+        label="Plenary meetings"
+        caption={`Most recent: ${latest.ordinal}${(['th','st','nd','rd'][(latest.ordinal % 100 - 20) % 10] || ['th','st','nd','rd'][latest.ordinal] || 'th')} in May ${new Date(latest.date).getFullYear()}.`}
+        href="/meetings/"
+      />
+      <StatLine
+        value={meta.counts.decisions}
+        label="Resolutions"
+        caption="From 2010 to present, transcribed from the original PDFs."
+        href="/decisions/"
+      />
+      <StatLine
+        value={meta.counts.p_members}
+        label="Participating members"
+        caption="National standards bodies actively shaping the work."
+        href="/national-bodies/"
+      />
+    </div>
+  </section>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-28">
+    <div class="hairline pt-8">
+      <div class="flex items-baseline justify-between mb-1">
+        <div>
+          <span class="eyebrow">Latest plenary</span>
+          <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
+            <span class="font-mono text-wine mr-3 text-[0.7em]">{latest.ordinal}</span>
+            {latest.title}
+          </h2>
+        </div>
+        <a href={latest.landing_url} class="font-mono text-sm text-muted hover:text-ink hidden md:inline">view →</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-6 mt-6">
+        <div class="md:col-span-4">
+          <dl class="font-mono text-sm space-y-3">
+            <div>
+              <dt class="text-[0.65rem] uppercase tracking-wider text-muted">Date</dt>
+              <dd class="mt-1">{new Date(latest.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</dd>
+            </div>
+            <div>
+              <dt class="text-[0.65rem] uppercase tracking-wider text-muted">Location</dt>
+              <dd class="mt-1">{latest.general_area}</dd>
+            </div>
+            <div>
+              <dt class="text-[0.65rem] uppercase tracking-wider text-muted">Adopted</dt>
+              <dd class="mt-1">{latest.decision_count} resolutions</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="md:col-span-8">
+          <ul class="space-y-3">
+            {latestPlenaryResolutions.slice(0, 4).map((d) => (
+              <li class="hairline pt-3 grid grid-cols-12 gap-4 text-sm">
+                <span class="col-span-3 sm:col-span-2 font-mono text-wine">{d.number}</span>
+                <span class="col-span-9 sm:col-span-10">{d.title}</span>
+              </li>
+            ))}
+          </ul>
+          <a href="/decisions/" class="font-mono text-sm text-wine hover:text-wine-deep border-b border-wine pb-0.5 mt-6 inline-block">
+            See all {meta.counts.decisions} resolutions →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-28">
+    <div class="hairline pt-8">
+      <div class="flex items-baseline justify-between">
+        <div>
+          <span class="eyebrow">The series</span>
+          <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
+            ISO/IEC 80000 — Quantities and units
+          </h2>
+        </div>
+        <a href="/standards/" class="font-mono text-sm text-muted hover:text-ink hidden md:inline">all parts →</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8 mt-8">
+        {publishedStandards.slice(0, 6).map((s) => (
+          <a href={`/standards/${s.slug}/`} class="block group">
+            <div class="flex items-baseline justify-between hairline pt-3">
+              <div>
+                <div class="font-mono text-xs text-muted">{`ISO ${s.part === 14 || s.part === 15 || s.part === 16 || s.part === 17 ? 'IEC' : ''} 80000-${s.part}`}</div>
+                <div class="font-display text-xl mt-1 group-hover:text-wine transition-colors">{s.title}</div>
+              </div>
+              <div class="font-mono text-xs text-muted">{s.edition_year ?? 'TBD'}</div>
+            </div>
+            <p class="text-sm text-muted mt-3 leading-relaxed">{s.scope}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-28">
+    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-8">
+      <div class="md:col-span-5">
+        <span class="eyebrow">Next</span>
+        <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
+          {next ? `${new Date(next.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} — ${next.location || next.format || 'plenary'}` : 'To be announced'}
+        </h2>
+        <p class="text-sm text-muted mt-3 leading-relaxed max-w-md">
+          The 24th plenary meeting of ISO/TC 12 will be held virtually on
+          25 May 2027 at 13:00 CEST, unless a member body offers to host
+          in person.
+        </p>
+        <a href="/meetings/" class="font-mono text-sm text-wine hover:text-wine-deep border-b border-wine pb-0.5 mt-6 inline-block">
+          All plenary meetings →
+        </a>
+      </div>
+      <div class="md:col-span-7 md:pl-12 md:border-l border-rule">
+        <span class="eyebrow">In development</span>
+        <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
+          Work in progress
+        </h2>
+        <ul class="mt-6 space-y-3">
+          {inDevelopmentStandards.concat(publishedStandards.filter(s => s.status === 'published' && s.stage !== '90.20').slice(0, 2)).map((s) => (
+            <li class="hairline pt-3 grid grid-cols-12 gap-3 text-sm">
+              <span class="col-span-3 font-mono text-xs text-muted pt-0.5">{`80000-${s.part}`}</span>
+              <span class="col-span-6">{s.title}</span>
+              <span class="col-span-3 font-mono text-xs text-muted text-right pt-0.5">stage {s.stage}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-28">
+    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+      <div class="md:col-span-5">
+        <span class="eyebrow">Get involved</span>
+        <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
+          Who can participate
+        </h2>
+      </div>
+      <div class="md:col-span-7 prose-tc12 max-w-none">
+        <p>
+          ISO/TC 12 is open to participation through ISO member bodies.
+          National standards bodies can join as <strong class="text-ink">P-members</strong> (voting)
+          or <strong class="text-ink">O-members</strong> (observers). Liaison
+          organizations — other ISO, IEC, or external bodies whose work
+          intersects with quantities and units — are also represented.
+        </p>
+        <p>
+          Experts are nominated by their member body to serve on
+          working groups. To join, contact your national standards body.
+        </p>
+        <a href="/national-bodies/" class="font-mono text-sm text-wine hover:text-wine-deep border-b border-wine pb-0.5 inline-block mt-2">
+          See participating members →
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

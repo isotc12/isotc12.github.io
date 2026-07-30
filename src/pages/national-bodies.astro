@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
+import fs from 'node:fs'
+
+const nb = JSON.parse(fs.readFileSync('public/data/national_bodies.json', 'utf-8'))
+---
+
+<BaseLayout title="National bodies" description="ISO/TC 12 participating members — twenty-one national standards bodies actively shaping the work.">
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+    <PageHero
+      eyebrow="Members"
+      ordinal="05"
+      title={`Participating member bodies (${nb.p_count})`}
+      lede="P-members vote on every formal question — new work items, drafts, final drafts, and resolutions. The committee currently has <strong>21 P-members</strong> actively shaping the work, with 35 additional O-members (observers) following along."
+    />
+  </div>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
+    <div class="hairline pt-8">
+      <span class="eyebrow">Participating (P-members)</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-1 mt-6">
+        {nb.participating.map((m) => (
+          <div class="hairline py-3 grid grid-cols-12 gap-3 items-baseline">
+            <div class="col-span-2 font-mono text-wine text-sm">{m.code}</div>
+            <div class="col-span-3 font-mono text-xs text-muted uppercase">{m.body}</div>
+            <div class="col-span-7">{m.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
+    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-8 prose-tc12 max-w-none">
+      <div class="md:col-span-5">
+        <span class="eyebrow">How membership works</span>
+        <h3 class="font-display text-xl font-medium mt-2">P vs O</h3>
+      </div>
+      <div class="md:col-span-7">
+        <p>
+          ISO member bodies join TC 12 as <strong class="text-ink">P-members</strong>
+          (participating) or <strong class="text-ink">O-members</strong> (observers).
+          P-members must vote on every formal question — new work items,
+          enquiry drafts, final drafts, and resolutions — and are expected to
+          nominate experts to working groups and plenary meetings.
+        </p>
+        <p>
+          O-members follow the work, receive documents, and may submit comments
+          and attend meetings, but do not vote.
+        </p>
+        <p>
+          <a href="https://www.iso.org/members.html" class="text-wine underline">Find your ISO member body ↗</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

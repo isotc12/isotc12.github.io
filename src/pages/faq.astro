@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
+
+const faqs = [
+  {
+    q: 'What is ISO/TC 12?',
+    a: 'ISO/TC 12 is the ISO technical committee responsible for <em>Quantities and units</em>. It maintains the ISO/IEC 80000 series — the standardised names, symbols, and definitions for quantities (length, mass, time, current, temperature…) and their units.',
+  },
+  {
+    q: 'What is the ISO 80000 series?',
+    a: 'A multi-part standard covering quantities and units across all domains of science and technology. Part 1 (General) sets the framework; parts 2–13 cover specific domains (mathematics, space and time, mechanics, thermodynamics, electromagnetism, light, acoustics, chemistry, atomic physics, characteristic numbers, condensed matter, information science). Parts 14–17 are IEC-led.',
+  },
+  {
+    q: 'How is ISO 80000 different from the SI Brochure?',
+    a: 'The <strong>SI Brochure</strong> (published by BIPM) defines the seven SI base units and the rules for using them. <strong>ISO 80000</strong> builds on the SI to define the full vocabulary of quantities — every named quantity used in scientific writing, its symbol, and its unit. The two work together; the SI Brochure is normatively referenced throughout ISO 80000.',
+  },
+  {
+    q: 'How do I cite ISO 80000?',
+    a: 'ISO 80000 parts are cited by their reference number. Example: <code class="font-mono text-sm">ISO 80000-3:2019</code> for Part 3 (Space and time), 2019 edition. The full citation including title appears in the ISO Store entry.',
+  },
+  {
+    q: 'How does my organisation participate?',
+    a: 'Participation is through your national standards body (the ISO member for your country). Member bodies can join as P-members (voting) or O-members (observers). Individuals participate by being nominated as experts to specific working groups. Start at <a href="https://www.iso.org/members.html" class="text-wine underline">iso.org/members</a>.',
+  },
+  {
+    q: 'Where can I read the underlying documents?',
+    a: 'All committee documents (agendas, minutes, resolutions, liaison reports) are available on the <a href="https://committee.iso.org/home/tc12" class="text-wine underline">ISO committee site</a>. The ISO 80000 standards themselves are sold through the <a href="https://www.iso.org/standards.html" class="text-wine underline">ISO Store</a>.',
+  },
+  {
+    q: 'Why are some parts IEC-led?',
+    a: 'Quantities in information science, logarithmic quantities, printing/writing rules, and time-dependency fall within IEC/TC 25\'s domain. The 80000 series is jointly branded ISO/IEC; TC 12 and IEC/TC 25 each lead on the parts aligned with their scope. The two committees jointly convene <strong>JWG 2</strong> to coordinate revisions.',
+  },
+  {
+    q: 'What is SMART standardisation?',
+    a: 'ISO\'s SMART initiative explores delivering standards as machine-readable services rather than only as PDF documents. TC 12 has resolved to coordinate with ISO/CS to explore creating ISO/IEC 80000 as an information service (Resolution P-2026-08).',
+  },
+]
+---
+
+<BaseLayout title="FAQ" description="Frequently asked questions about ISO/TC 12 and the ISO 80000 series.">
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+    <PageHero
+      eyebrow="Help"
+      ordinal="08"
+      title="Frequently asked"
+      lede="Common questions about quantities, units, ISO 80000, and how the committee works."
+    />
+  </div>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
+    <ol class="space-y-0">
+      {faqs.map((f, i) => (
+        <li class="hairline py-8 grid grid-cols-12 gap-6">
+          <div class="col-span-12 sm:col-span-3">
+            <div class="font-mono text-wine text-sm">{String(i + 1).padStart(2, '0')}</div>
+          </div>
+          <div class="col-span-12 sm:col-span-9">
+            <h3 class="font-display text-xl font-medium mb-3">{f.q}</h3>
+            <p class="prose-tc12" set:html={f.a} />
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+</BaseLayout>

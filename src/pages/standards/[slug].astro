@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PageHero from '../../components/PageHero.astro'
+import fs from 'node:fs'
+
+export function getStaticPaths() {
+  const standards = JSON.parse(fs.readFileSync('public/data/standards.json', 'utf-8'))
+  return standards.map((s) => ({ params: { slug: s.slug }, props: { standard: s } }))
+}
+
+const { standard } = Astro.props
+
+const statusLabel = (s) => {
+  if (s === 'published') return 'Published'
+  if (s === 'under development') return 'Under development'
+  if (s === 'under revision') return 'Under revision'
+  if (s === 'withdrawn') return 'Withdrawn'
+  return s
+}
+
+const stageLabel = (stage) => {
+  const map = {
+    '10.99': '10.99 — New project approved',
+    '20.00': '20.00 — New work item registered',
+    '30.00': '30.00 — Committee draft (CD) initiated',
+    '30.60': '30.60 — CD close to registration',
+    '50.00': '50.00 — FDIS registered',
+    '60.00': '60.00 — IS published',
+    '90.20': '90.20 — Systematic review due',
+    '95.99': '95.99 — Withdrawn',
+  }
+  return map[stage] || stage
+}
+
+const references = standard.part <= 12 || standard.part === 13
+  ? [
+      { label: 'BIPM SI Brochure', href: 'https://www.bipm.org/en/measurement-units/si-brochure' },
+      { label: 'ISO Store', href: `https://www.iso.org/standard.html` },
+    ]
+  : []
+---
+
+<BaseLayout
+  title={`ISO 80000-${standard.part}`}
+  description={`ISO ${standard.part >= 14 && standard.part <= 17 ? 'IEC' : ''} 80000-${standard.part}: ${standard.title}. ${standard.scope}`}
+>
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+    <a href="/standards/" class="font-mono text-xs text-muted hover:text-ink">← All ISO 80000 parts</a>
+    <PageHero
+      eyebrow={`${standard.part >= 14 && standard.part <= 17 ? 'IEC' : 'ISO'} 80000-${standard.part}`}
+      ordinal={`Part ${standard.part}`}
+      title={standard.title}
+      lede={standard.scope}
+    />
+  </div>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
+    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-12">
+      <div class="md:col-span-8 prose-tc12 max-w-none">
+        <h3 class="font-display text-xl font-medium mb-3">In the series</h3>
+        <p>
+          Part {standard.part} of the ISO/IEC 80000 series. The series defines
+          the names, symbols, and units of quantities used across science,
+          technology, and trade. Each part covers a domain.
+        </p>
+
+        <h3 class="font-display text-xl font-medium mb-3 mt-10">Status</h3>
+        <p>
+          {statusLabel(standard.status)}
+          {standard.edition_year && ` — current edition published in ${standard.edition_year}.`}
+          {standard.status === 'under revision' && ' A revision is in progress under ISO/TC 12/WG 21 (General) or a domain-specific project leader.'}
+          {standard.status === 'under development' && ' IEC-led, developed jointly with IEC/TC 25.'}
+          {standard.status === 'withdrawn' && ' Material transferred to the ISO/IEC 80003 series.'}
+        </p>
+
+        <h3 class="font-display text-xl font-medium mb-3 mt-10">Recent activity</h3>
+        <p>
+          The 23rd plenary meeting of ISO/TC 12 (May 2026) addressed
+          maintenance of the series, including stability-date reviews
+          and SMART exploration.
+        </p>
+      </div>
+
+      <aside class="md:col-span-4 md:border-l md:border-rule md:pl-8 space-y-6">
+        <dl class="text-sm space-y-3">
+          <div>
+            <dt class="eyebrow">Reference</dt>
+            <dd class="font-mono mt-1">{`ISO ${standard.part >= 14 && standard.part <= 17 ? 'IEC' : ''} 80000-${standard.part}`}</dd>
+          </div>
+          {standard.edition_year && (
+            <div>
+              <dt class="eyebrow">Edition</dt>
+              <dd class="font-mono mt-1">{standard.edition_year}</dd>
+            </div>
+          )}
+          <div>
+            <dt class="eyebrow">Stage</dt>
+            <dd class="font-mono mt-1">{stageLabel(standard.stage)}</dd>
+          </div>
+          <div>
+            <dt class="eyebrow">Status</dt>
+            <dd class="mt-1">{statusLabel(standard.status)}</dd>
+          </div>
+        </dl>
+
+        <div class="space-y-1.5">
+          <a href="https://www.iso.org/standard.html" class="block font-mono text-sm text-wine hover:text-wine-deep border-b border-wine pb-0.5">
+            View on ISO Store ↗
+          </a>
+          <a href="/decisions/" class="block font-mono text-sm text-muted hover:text-ink border-b border-rule pb-0.5">
+            See related resolutions →
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

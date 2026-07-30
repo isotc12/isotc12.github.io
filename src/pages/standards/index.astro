@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PageHero from '../../components/PageHero.astro'
+import UnitGrid from '../../components/UnitGrid.astro'
+import fs from 'node:fs'
+
+const standards = JSON.parse(fs.readFileSync('public/data/standards.json', 'utf-8'))
+const published = standards.filter((s) => s.status === 'published')
+const inDevelopment = standards.filter((s) => s.status === 'under development' || s.status === 'under revision')
+const withdrawn = standards.filter((s) => s.status === 'withdrawn')
+---
+
+<BaseLayout title="Standards" description="The ISO/IEC 80000 series — fifteen parts covering quantities and units across all domains of science and technology.">
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+    <PageHero
+      eyebrow="The series"
+      ordinal="03"
+      title="ISO/IEC 80000 — Quantities and units"
+      lede="Fifteen parts. One series. Every quantity used in measurement science — space, time, mechanics, light, sound, chemistry, atoms, information."
+    />
+  </div>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
+    <div class="hairline pt-6">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left">
+            <th class="eyebrow font-normal py-2">Part</th>
+            <th class="eyebrow font-normal py-2">Title</th>
+            <th class="eyebrow font-normal py-2 hidden sm:table-cell">Edition</th>
+            <th class="eyebrow font-normal py-2 hidden md:table-cell">Stage</th>
+            <th class="eyebrow font-normal py-2">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {standards.map((s) => (
+            <tr class="hairline hover:bg-vellum/50 transition-colors">
+              <td class="py-3 pr-4 font-mono align-top">
+                <a href={`/standards/${s.slug}/`} class="text-wine hover:text-wine-deep">{`80000-${String(s.part).padStart(2, '0')}`}</a>
+              </td>
+              <td class="py-3 pr-4 align-top">
+                <a href={`/standards/${s.slug}/`} class="hover:text-wine">
+                  <div class="font-display text-base">{s.title}</div>
+                  <div class="text-xs text-muted mt-1">{s.scope}</div>
+                </a>
+              </td>
+              <td class="py-3 pr-4 font-mono text-xs text-muted align-top hidden sm:table-cell">{s.edition_year ?? '—'}</td>
+              <td class="py-3 pr-4 font-mono text-xs text-muted align-top hidden md:table-cell">{s.stage}</td>
+              <td class="py-3 align-top">
+                <span class:list-[
+                  'inline-block text-xs px-2 py-0.5 font-mono',
+                  s.status === 'published' && 'text-calibration',
+                  s.status === 'under development' && 'text-wine',
+                  s.status === 'under revision' && 'text-wine',
+                  s.status === 'withdrawn' && 'text-muted'
+                ]>{s.status}</span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-24">
+    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+      <div class="md:col-span-7">
+        <span class="eyebrow">Why 15 parts</span>
+        <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
+          Organised by domain
+        </h2>
+        <p class="prose-tc12 mt-4">
+          The series is partitioned by physical domain. Part 1 (General)
+          defines the framework — names, symbols, prefixes, the SI. Parts 2
+          through 13 cover specific domains. Parts 14–17 are IEC-led
+          (telebiometrics, logarithmic quantities, printing rules,
+          time-dependency).
+        </p>
+      </div>
+      <div class="md:col-span-5">
+        <div class="eyebrow mb-4">Foundation</div>
+        <UnitGrid variant="compact" />
+        <p class="text-xs text-muted mt-3 italic">
+          The seven SI base units span parts 3–9.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import { committee } from '../data/committee'
+
+interface Props {
+  eyebrow?: string
+  title: string
+  lede?: string
+  ordinal?: string
+  align?: 'left' | 'center'
+  class?: string
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  ordinal,
+  align = 'left',
+  class: className = '',
+} = Astro.props
+---
+
+<header class:list={['page-hero', align === 'center' && 'text-center mx-auto', className]}>
+  <div class:list={['flex items-baseline gap-4 mb-4', align === 'center' && 'justify-center']}>
+    {ordinal && (
+      <span class="font-mono text-sm text-wine tracking-wider">{ordinal}</span>
+    )}
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  </div>
+  <h1 class="font-display font-medium leading-[1.05] tracking-tight text-[var(--text-h1)]">
+    {title}
+  </h1>
+  {lede && (
+    <p class="lede mt-6 max-w-2xl" set:html={lede} />
+  )}
+</header>

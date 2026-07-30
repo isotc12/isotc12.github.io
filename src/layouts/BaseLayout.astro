@@ -2,28 +2,36 @@
 import '../styles/main.css'
 import { committee } from '../data/committee'
 import { mainNav } from '../data/navigation'
-import type { NavItem } from '../data/navigation'
 
 interface Props {
   title?: string
   description?: string
+  eyebrow?: string
+  bodyClass?: string
+  noIndex?: boolean
 }
 
 const {
-  title = `${committee.name} — ${committee.tagline}`,
+  title,
   description = committee.scope,
+  eyebrow,
+  bodyClass = '',
+  noIndex = false,
 } = Astro.props
+
+const pageTitle = title
+  ? `${title} · ${committee.name}`
+  : `${committee.name} — ${committee.tagline}`
 
 const path = Astro.url.pathname
 function isActive(to: string): boolean {
   if (to === '/') return path === '/'
-  return path === to || path.startsWith(to)
+  return path === to || path.startsWith(to + '/') || path.startsWith(to)
 }
-function sectionContains(item: NavItem): boolean {
+function sectionContains(item: { to: string; children?: { to: string }[] }): boolean {
   if (isActive(item.to)) return true
   return item.children?.some((c) => isActive(c.to)) ?? false
 }
-
 ---
 
 <!doctype html>
@@ -31,45 +39,167 @@ function sectionContains(item: NavItem): boolean {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).toString()} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      const stored = localStorage.getItem('tc12-theme')
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      const theme = stored ?? (prefersDark ? 'dark' : 'light')
+      if (theme === 'dark') document.documentElement.classList.add('dark')
+    </script>
   </head>
-  <body class="min-h-screen flex flex-col">
-    <header class="bg-brand text-white">
-      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="/" class="font-semibold tracking-tight">{committee.name}</a>
-        <nav class="hidden md:flex gap-6 text-sm">
-          {mainNav.map((item) => (
-            <a
-              href={item.to}
-              class:list={[
-                'hover:underline',
-                sectionContains(item) ? 'font-semibold' : '',
-              ]}
+  <body class={bodyClass}>
+    <div class="flex flex-col min-h-screen">
+      <header class="hairline-strong" style="border-top: 0; border-bottom: 1px solid var(--color-rule);">
+        <div class="max-w-[1320px] mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
+          <a href="/" class="flex items-baseline gap-3 group">
+            <span class="font-mono text-[0.7rem] tracking-wider text-muted uppercase">{committee.established}</span>
+            <span class="font-display text-lg font-semibold tracking-tight">{committee.name}</span>
+            <span class="hidden md:inline text-sm text-muted italic font-display">{committee.short_title}</span>
+          </a>
+          <nav class="hidden md:flex items-center gap-7 text-sm">
+            {mainNav.map((item) => (
+              <div class="relative group">
+                <a
+                  href={item.to}
+                  class:list={[
+                    'inline-flex items-center gap-1 py-2 transition-colors',
+                    sectionContains(item) ? 'text-ink font-medium' : 'text-muted hover:text-ink',
+                  ]}
+                >
+                  {item.label}
+                  {item.children && <span class="text-[0.6em] opacity-60">▾</span>}
+                </a>
+                {item.children && (
+                  <div class="absolute left-0 top-full pt-2 hidden group-hover:block z-50">
+                    <div class="bg-vellum border border-rule shadow-lg min-w-[14rem] py-2">
+                      {item.children.map((child) => (
+                        <a
+                          href={child.to}
+                          class:list={[
+                            'block px-4 py-1.5 text-sm hover:bg-paper-deep',
+                            isActive(child.to) ? 'text-wine font-medium' : 'text-ink-soft',
+                          ]}
+                        >
+                          {child.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+            <button
+              id="theme-toggle"
+              type="button"
+              aria-label="Toggle theme"
+              class="text-muted hover:text-ink transition-colors p-1"
             >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-      </div>
-    </header>
+              <span class="dark:hidden">◐</span>
+              <span class="hidden dark:inline">◑</span>
+            </button>
+          </nav>
+          <button
+            id="mobile-menu-button"
+            type="button"
+            aria-label="Open menu"
+            class="md:hidden text-ink"
+          >
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          </button>
+        </div>
+        <div
+          id="mobile-menu"
+          class="md:hidden hidden border-t border-rule bg-vellum"
+        >
+          <nav class="px-6 py-4 flex flex-col gap-1">
+            {mainNav.map((item) => (
+              <a
+                href={item.to}
+                class:list={[
+                  'py-2 text-base',
+                  sectionContains(item) ? 'text-wine font-medium' : 'text-ink',
+                ]}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </header>
 
-    <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-10">
-      <slot />
-    </main>
+      <main class="flex-1">
+        {eyebrow && (
+          <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-10">
+            <span class="eyebrow">{eyebrow}</span>
+          </div>
+        )}
+        <slot />
+      </main>
 
-    <footer class="border-t border-slate-200 bg-white">
-      <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-slate-600 flex flex-col sm:flex-row justify-between gap-2">
-        <span>{committee.name} — {committee.title}</span>
-        <span>
-          Secretariat: {committee.secretariat} ·{' '}
-          <a href={committee.links.isoCommittee} class="text-brand hover:underline">ISO committee page</a>
-        </span>
-      </div>
-    </footer>
+      <footer class="hairline mt-32">
+        <div class="max-w-[1320px] mx-auto px-6 lg:px-10 py-12 grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div class="md:col-span-5">
+            <div class="font-mono text-[0.7rem] tracking-wider text-muted uppercase mb-2">
+              ISO/TC 12 · Secretariat SIS (Sweden)
+            </div>
+            <p class="font-display text-lg leading-snug max-w-md">
+              {committee.title}
+            </p>
+            <p class="text-sm text-muted mt-3 max-w-md leading-relaxed">
+              Maintains the ISO 80000 series — quantities and units for science,
+              technology, and trade.
+            </p>
+          </div>
+          <div class="md:col-span-3">
+            <div class="eyebrow mb-3">External</div>
+            <ul class="space-y-1.5 text-sm">
+              <li><a href={committee.links.isoCommittee} class="text-ink hover:text-wine">ISO committee page ↗</a></li>
+              <li><a href="https://www.iso.org/standards.html" class="text-ink hover:text-wine">ISO Store ↗</a></li>
+              <li><a href="https://www.bipm.org/en/measurement-units/si-brochure" class="text-ink hover:text-wine">SI Brochure (BIPM) ↗</a></li>
+              <li><a href="https://www.iso.org/committee/45976.html" class="text-ink hover:text-wine">ISO Meetings ↗</a></li>
+            </ul>
+          </div>
+          <div class="md:col-span-4">
+            <div class="eyebrow mb-3">This site</div>
+            <ul class="space-y-1.5 text-sm">
+              <li><a href="/about/" class="text-ink hover:text-wine">About TC 12</a></li>
+              <li><a href="/meetings/" class="text-ink hover:text-wine">Plenary meetings</a></li>
+              <li><a href="/decisions/" class="text-ink hover:text-wine">Resolutions</a></li>
+              <li><a href="/standards/" class="text-ink hover:text-wine">ISO 80000 series</a></li>
+              <li><a href={`mailto:${committee.secretariat_email || 'anette.noren@sis.se'}`} class="text-ink hover:text-wine">Contact secretariat</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="hairline">
+          <div class="max-w-[1320px] mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-muted">
+            <div class="font-mono">© {new Date().getFullYear()} ISO/TC 12 · Quantities and units</div>
+            <div class="font-mono">Compiled from public ISO/TC 12 documents · See <a href="/about/" class="underline">sources</a></div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const toggle = document.getElementById('theme-toggle')
+      toggle?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark')
+        localStorage.setItem('tc12-theme', isDark ? 'dark' : 'light')
+      })
+      const mobileButton = document.getElementById('mobile-menu-button')
+      const mobileMenu = document.getElementById('mobile-menu')
+      mobileButton?.addEventListener('click', () => {
+        mobileMenu?.classList.toggle('hidden')
+      })
+    </script>
   </body>
 </html>

@@ -1,12 +1,14 @@
 export const committee = {
   name: 'ISO/TC 12',
+  short_title: 'Quantities & Units',
   title: 'Quantities and units',
-  tagline: 'Quantities and units — the foundation of measurement science and engineering',
+  tagline: 'The measure of all science and engineering',
   scope:
-    'Standardization of quantities and units, and the corresponding scales, symbols, formulae, letter symbols and signs, including their nomenclature and practical use, in science, technology, and trade, in fields such as physical, chemical, mathematical, biological, physiological, and other sciences.',
+    'Standardization of units and symbols for quantities and units (and mathematical symbols) used within the different fields of science and technology, giving, where necessary, definitions of these quantities and units. Standard conversion factors between various units.',
 
   secretariat: 'SIS (Sweden)',
   chair: 'Dr Torgny Carlsson',
+  committee_manager: 'Ms Rebecca Cederholm',
   established: 1947,
 
   links: {
@@ -15,6 +17,8 @@ export const committee = {
     committeeSite: 'https://committee.iso.org/home/tc12',
     github: 'https://github.com/isotc12',
   },
+
+  secretariat_email: 'anette.noren@sis.se',
 } as const
 
 export type Committee = typeof committee

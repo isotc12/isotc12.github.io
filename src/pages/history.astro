@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
+import fs from 'node:fs'
+
+const events = JSON.parse(fs.readFileSync('public/data/events.json', 'utf-8'))
+---
+
+<BaseLayout title="History" description="Fifteen plenary meetings of ISO/TC 12 from 2010 to 2026 — Prague to Zoom.">
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+    <PageHero
+      eyebrow="History"
+      ordinal="02"
+      title="Plenaries since 2010"
+      lede="The committee has met formally fifteen times since 2010 — from a face-to-face in Prague through hybrid meetings in Berlin, Stockholm, and Helsinki to the virtual Zoom plenaries of the pandemic years."
+    />
+  </div>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
+    <ol class="relative">
+      {events.map((e, i) => (
+        <li class="grid grid-cols-12 gap-4 hairline py-6">
+          <div class="col-span-3 sm:col-span-2">
+            <div class="font-mono text-wine text-sm">{e.ordinal}</div>
+            <div class="eyebrow mt-1">{e.time?.from?.date?.slice(0, 4) || e.year}</div>
+          </div>
+          <div class="col-span-6 sm:col-span-7">
+            <h3 class="font-display text-lg leading-tight">
+              <a href={e.landing_url} class="hover:text-wine transition-colors">{e.title}</a>
+            </h3>
+            <p class="text-sm text-muted mt-1">{e.general_area}</p>
+          </div>
+          <div class="col-span-3 text-right">
+            <div class="eyebrow">Date</div>
+            <div class="font-mono text-sm mt-1">
+              {new Date(e.time?.from?.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+</BaseLayout>

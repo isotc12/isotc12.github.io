@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
+import UnitGrid from '../components/UnitGrid.astro'
+import { committee } from '../data/committee'
+---
+
+<BaseLayout
+  title="About"
+  description="ISO/TC 12 maintains the ISO 80000 series of standards for quantities and units. Founded 1947; secretariat held by SIS (Sweden) since 1982."
+>
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+    <PageHero
+      eyebrow="About"
+      ordinal="01"
+      title="Quantities, units, and the work of TC 12"
+      lede="Every measurement in science, engineering, and trade rests on a shared vocabulary of <em>quantities</em> (what we measure) and <em>units</em> (how we measure it). ISO/TC 12 maintains that vocabulary."
+    />
+  </div>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
+    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-12">
+      <div class="md:col-span-7 prose-tc12 max-w-none">
+        <h3 class="font-display text-xl font-medium mb-3">The scope</h3>
+        <p>{committee.scope}</p>
+
+        <h3 class="font-display text-xl font-medium mb-3 mt-10">What TC 12 produces</h3>
+        <p>
+          The committee's principal work is the <strong class="text-ink">ISO/IEC 80000</strong>
+          series — fifteen parts covering quantities and units across mathematics,
+          space and time, mechanics, thermodynamics, electromagnetism, light,
+          acoustics, physical chemistry, atomic and nuclear physics, characteristic
+          numbers, condensed matter, and information science. The series defines
+          names, symbols, definitions, and conversion factors used by every
+          quantitative discipline.
+        </p>
+        <p>
+          TC 12 also coordinates with <strong class="text-ink">BIPM</strong>
+          (the SI Brochure), <strong class="text-ink">JCGM</strong>
+          (the VIM and GUM), <strong class="text-ink">IEC/TC 25</strong>
+          (electrical and information-science quantities), and many ISO committees
+          that consume its work — from acoustics to health informatics.
+        </p>
+
+        <h3 class="font-display text-xl font-medium mb-3 mt-10">Why it matters</h3>
+        <p>
+          A watt is a watt everywhere. A kilogram is a kilogram. When a paper
+          publishes a measurement, a hospital records a dose, or a satellite
+          reports a position, those numbers depend on agreed quantities and
+          units. TC 12 is the body that maintains that agreement.
+        </p>
+      </div>
+
+      <aside class="md:col-span-5 md:border-l md:border-rule md:pl-8 space-y-8">
+        <div>
+          <div class="eyebrow">Leadership</div>
+          <dl class="mt-3 text-sm space-y-2">
+            <div>
+              <dt class="text-muted">Chair</dt>
+              <dd class="font-display">{committee.chair}</dd>
+              <dd class="text-xs text-muted">until end 2027</dd>
+            </div>
+            <div>
+              <dt class="text-muted">Committee Manager</dt>
+              <dd class="font-display">{committee.committee_manager}</dd>
+              <dd class="text-xs text-muted">SIS, Sweden</dd>
+            </div>
+            <div>
+              <dt class="text-muted">Secretariat</dt>
+              <dd class="font-display">{committee.secretariat}</dd>
+              <dd class="text-xs text-muted">Since 1982</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div>
+          <div class="eyebrow">The base units</div>
+          <p class="text-xs text-muted mt-2 italic">
+            Seven SI base units define the dimensions across which all ISO 80000 quantities live.
+          </p>
+          <div class="mt-4">
+            <UnitGrid variant="compact" />
+          </div>
+        </div>
+
+        <div>
+          <div class="eyebrow">External</div>
+          <ul class="mt-3 space-y-1.5 text-sm">
+            <li><a href={committee.links.isoCommittee} class="text-ink hover:text-wine">ISO committee page ↗</a></li>
+            <li><a href="https://www.bipm.org/en/measurement-units/si-brochure" class="text-ink hover:text-wine">BIPM SI Brochure ↗</a></li>
+            <li><a href="https://www.bipm.org/en/committees/jc/jcgm" class="text-ink hover:text-wine">JCGM (VIM, GUM) ↗</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

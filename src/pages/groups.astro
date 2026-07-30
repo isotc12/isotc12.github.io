@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
+import fs from 'node:fs'
+
+const groups = JSON.parse(fs.readFileSync('public/data/groups.json', 'utf-8'))
+const leadership = JSON.parse(fs.readFileSync('public/data/leadership.json', 'utf-8'))
+const active = groups.filter((g) => g.status === 'active' || g.status === 'transition')
+const disbanded = groups.filter((g) => g.status === 'disbanded')
+---
+
+<BaseLayout title="Working groups & officers" description="ISO/TC 12's working groups and committee officers.">
+  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+    <PageHero
+      eyebrow="Structure"
+      ordinal="06"
+      title="Working groups & officers"
+      lede="Most of the technical work happens in working groups. TC 12 currently has one active WG and a joint one with IEC/TC 25."
+    />
+  </div>
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
+    <div class="hairline pt-8">
+      <span class="eyebrow">Active</span>
+      <div class="mt-6 space-y-8">
+        {active.map((g) => (
+          <article class="hairline pt-6 grid grid-cols-12 gap-6">
+            <div class="col-span-12 sm:col-span-3">
+              <h3 class="font-display text-2xl font-medium text-wine">{g.name}</h3>
+              <div class="eyebrow mt-2">{g.status}</div>
+            </div>
+            <div class="col-span-12 sm:col-span-9 prose-tc12 max-w-none">
+              <p>{g.scope}</p>
+              <dl class="text-sm mt-4 grid grid-cols-2 gap-x-6 gap-y-2">
+                <div>
+                  <dt class="text-muted">Convenor</dt>
+                  <dd class="font-display mt-0.5">{g.convenor}</dd>
+                </div>
+                {g.established && (
+                  <div>
+                    <dt class="text-muted">Established</dt>
+                    <dd class="font-mono mt-0.5">{g.established}</dd>
+                  </div>
+                )}
+              </dl>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {disbanded.length > 0 && (
+    <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
+      <div class="hairline pt-8">
+        <span class="eyebrow">Disbanded (work complete)</span>
+        <table class="w-full text-sm mt-6">
+          <thead>
+            <tr class="text-left">
+              <th class="eyebrow font-normal py-2">Group</th>
+              <th class="eyebrow font-normal py-2 hidden md:table-cell">Scope</th>
+              <th class="eyebrow font-normal py-2">Disbanded</th>
+            </tr>
+          </thead>
+          <tbody>
+            {disbanded.map((g) => (
+              <tr class="hairline">
+                <td class="py-3 pr-4 font-mono text-wine align-top">{g.name}</td>
+                <td class="py-3 pr-4 text-muted hidden md:table-cell">{g.scope}</td>
+                <td class="py-3 font-mono text-xs text-muted align-top">{g.disbanded ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )}
+
+  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
+    <div class="hairline pt-8">
+      <span class="eyebrow">Committee officers</span>
+      <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2 mb-6">
+        Secretariat & leadership
+      </h2>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left">
+            <th class="eyebrow font-normal py-2">Role</th>
+            <th class="eyebrow font-normal py-2">Name</th>
+            <th class="eyebrow font-normal py-2 hidden md:table-cell">Affiliation</th>
+            <th class="eyebrow font-normal py-2 hidden lg:table-cell">Term</th>
+          </tr>
+        </thead>
+        <tbody>
+          {leadership.map((p) => (
+            <tr class="hairline hover:bg-vellum/50">
+              <td class="py-3 pr-4 font-mono text-xs text-muted uppercase tracking-wider align-top">{p.role}</td>
+              <td class="py-3 pr-4 font-display align-top">{p.name}</td>
+              <td class="py-3 pr-4 text-muted text-sm hidden md:table-cell align-top">{p.affiliation}</td>
+              <td class="py-3 text-muted text-xs hidden lg:table-cell align-top">{p.term}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>
