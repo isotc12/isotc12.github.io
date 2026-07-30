@@ -1,0 +1,64 @@
+title: 20th plenary meeting
+ordinal: 20
+status: completed
+year: 2023
+landing_url: /meetings/plenary-meeting-20/
+
+time:
+  from: { date: 2023-05-25 }
+  to: { date: 2023-05-25 }
+
+general_area: Stockholm, Sweden (hybrid with Zoom)
+country_code: SE
+
+venues:
+  - name: SIS Office, Stockholm
+    link: https://www.sis.se/
+  - name: Zoom (remote participants)
+    link: https://zoom.us/
+
+host: SIS (Sweden)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+  email: sven.radhe@sis.se
+  phone: "+46 8 555 521 12"
+
+chair:
+  name: Dr Torgny Carlsson
+  term_ends: 2027-12-31
+
+committee_manager: Mr Sven Radhe
+secretariat_support:
+  - Ms Anette Lindor Norén
+
+attendance:
+  p_members_approving: 5
+  countries:
+    - { code: CN, body: SAC, name: China }
+    - { code: ET, body: IES, name: Ethiopia, attended: false }
+    - { code: FI, body: SFS, name: Finland }
+    - { code: FR, body: AFNOR, name: France }
+    - { code: PT, body: IPQ, name: Portugal }
+    - { code: RU, body: GOST R, name: Russian Federation }
+    - { code: SE, body: SIS, name: Sweden }
+    - { code: GB, body: BSI, name: United Kingdom }
+
+schedule:
+  - date: 2023-05-25
+    event: Plenary meeting (hybrid)
+    description: |
+      20th plenary meeting of ISO/TC 12, held at SIS Stockholm with remote
+      participation via Zoom. Agenda covered adoption, drafting committee,
+      business plan v.11, disbandment of WG 21 (general) following
+      publication of ISO 80000-1:2022, JCGM/WG 1 (GUM) appointment of
+      Dr Carlsson, discontinuation of three liaisons (ISO/TC 8/SC 6,
+      ISO/TC 47, ISO/TC 115), appointment of six liaison representatives,
+      ISO 80000-3 systematic review and SI Brochure normative-reference
+      amendment, and next meeting scheduling. Ten resolutions
+      (P-2023-01 through P-2023-10) adopted unanimously; see N1499.
+
+next_plenary:
+  date: 2024-05-16
+  format: virtual

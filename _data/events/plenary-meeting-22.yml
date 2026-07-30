@@ -1,0 +1,63 @@
+title: 22nd plenary meeting
+ordinal: 22
+status: completed
+year: 2025
+landing_url: /meetings/plenary-meeting-22/
+
+time:
+  from:
+    date: 2025-05-22
+  to:
+    date: 2025-05-22
+
+general_area: Virtual (Zoom)
+country_code: SE
+
+venues:
+  - name: Zoom
+    link: https://zoom.us/
+
+host: SIS (Sweden)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+  email: sven.radhe@sis.se
+
+chair:
+  name: Dr Torgny Carlsson
+  term_ends: 2027-12-31
+acting_chair_at_meeting: Prof Göran Grimvall (Dr Carlsson sent apologies)
+
+committee_manager: Mr Sven Radhe
+secretariat_support:
+  - Ms Anette Lindor Norén
+  - Ms Rebecca Cederholm
+
+attendance:
+  heads_of_delegation: 8
+  countries:
+    - { code: AT, body: ASI, name: Austria }
+    - { code: CN, body: SAC, name: China }
+    - { code: FI, body: SFS, name: Finland }
+    - { code: DE, body: DIN, name: Germany }
+    - { code: JP, body: JISC, name: Japan }
+    - { code: PT, body: IPQ, name: Portugal }
+    - { code: RU, body: GOST R, name: Russian Federation }
+    - { code: SE, body: SIS, name: Sweden }
+
+schedule:
+  - date: 2025-05-22
+    time: "13:00–16:00 CEST"
+    event: Plenary meeting
+    description: |
+      22nd plenary meeting of ISO/TC 12, held virtually via Zoom.
+      Agenda covered secretariat report, strategic business plan (SBP v.12),
+      JWG 2 (joint with IEC/TC 25) report, JCGM/GUM/VIM liaison, CalConnect
+      introduction (UnitsML), systematic reviews of ISO 80000 parts, and
+      revision of ISO 80000-2:2019. Six resolutions (P-2025-02 through
+      P-2025-07) were adopted unanimously under Acting Chair Prof Grimvall.
+
+next_plenary:
+  date: 2026-05-26
+  format: virtual (or hybrid if a host country offers)

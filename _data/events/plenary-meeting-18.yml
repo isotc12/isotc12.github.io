@@ -1,0 +1,61 @@
+title: 18th plenary meeting
+ordinal: 18
+status: completed
+year: 2021
+landing_url: /meetings/plenary-meeting-18/
+
+time:
+  from: { date: 2021-05-26 }
+  to: { date: 2021-05-26 }
+
+general_area: Virtual (Zoom)
+country_code: SE
+
+venues:
+  - name: Zoom
+    link: https://zoom.us/
+
+host: SIS (Sweden)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+  email: sven.radhe@sis.se
+  phone: "+46 8 555 521 12"
+
+chair:
+  name: Dr Torgny Carlsson
+
+committee_manager: Mr Sven Radhe
+secretariat_support:
+  - Ms Anette Lindor Norén
+
+attendance:
+  p_members_approving: 8
+  heads_of_delegation: 8
+  total_participants: 19
+  countries:
+    - { code: CN, body: SAC, name: China }
+    - { code: FI, body: SFS, name: Finland }
+    - { code: DE, body: DIN, name: Germany }
+    - { code: PT, body: IPQ, name: Portugal }
+    - { code: RU, body: GOST R, name: Russian Federation }
+    - { code: SE, body: SIS, name: Sweden }
+    - { code: GB, body: BSI, name: United Kingdom }
+    - { code: US, body: ANSI, name: United States }
+
+schedule:
+  - date: 2021-05-26
+    event: Plenary meeting (Zoom)
+    description: |
+      18th plenary meeting of ISO/TC 12, held virtually via Zoom.
+      Agenda covered secretariat report, business plan v.9, disbandment
+      of TF 1 (ISO 80000-series revision study), call for nominations
+      for WG 21 convenor, and eight TF1 recommendations on individual
+      parts of ISO 80000. Twelve resolutions (P-2021-01 through
+      P-2021-12) adopted; eleven unanimously, one (P-2021-07 on
+      ISO 80000-3 confirmation) by majority vote with one abstention.
+
+next_plenary:
+  date: 2022-05-19
+  location: "St. Petersburg, Russian Federation (VNIIM) — later held virtually"

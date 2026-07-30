@@ -1,0 +1,66 @@
+title: 21st plenary meeting
+ordinal: 21
+status: completed
+year: 2024
+landing_url: /meetings/plenary-meeting-21/
+
+time:
+  from:
+    date: 2024-05-16
+  to:
+    date: 2024-05-16
+
+general_area: Stockholm, Sweden (hybrid with Zoom)
+country_code: SE
+
+venues:
+  - name: SIS Office, Stockholm
+    link: https://www.sis.se/
+  - name: Zoom (remote participants)
+    link: https://zoom.us/
+
+host: SIS (Sweden)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+  email: sven.radhe@sis.se
+  phone: "+46 8 555 521 12"
+
+chair:
+  name: Dr Torgny Carlsson
+  term_ends: 2027-12-31
+
+committee_manager: Mr Sven Radhe
+secretariat_support:
+  - Ms Anette Lindor Norén
+
+attendance:
+  countries:
+    - { code: AT, body: ASI, name: Austria }
+    - { code: CN, body: SAC, name: China }
+    - { code: FI, body: SFS, name: Finland }
+    - { code: FR, body: AFNOR, name: France }
+    - { code: DE, body: DIN, name: Germany }
+    - { code: RU, body: GOST R, name: Russian Federation }
+    - { code: SE, body: SIS, name: Sweden }
+    - { code: GB, body: BSI, name: United Kingdom }
+    - { code: US, body: ANSI, name: United States }
+
+schedule:
+  - date: 2024-05-16
+    time: "10:00–16:00 CEST"
+    event: Plenary meeting (hybrid)
+    description: |
+      21st plenary meeting of ISO/TC 12, held in Stockholm (SIS office) with
+      remote participation via Zoom. Agenda covered committee reports,
+      business plan v.11, JWG 2 (joint with IEC/TC 25), JCGM/GUM/VIM work,
+      liaison reports, ISO 80000 series amendments (including addition of
+      SI Brochure as normative reference, retention of Annex B on rounding),
+      relationship with IEC 80000-16, and next meeting scheduling. Nine
+      resolutions (P-2024-01 through P-2024-09) adopted unanimously; see N1524.
+
+next_plenary:
+  date: 2025-05-15
+  time: "14:00 CEST"
+  format: virtual

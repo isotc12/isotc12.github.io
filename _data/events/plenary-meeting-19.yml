@@ -1,0 +1,62 @@
+title: 19th plenary meeting
+ordinal: 19
+status: completed
+year: 2022
+landing_url: /meetings/plenary-meeting-19/
+
+time:
+  from: { date: 2022-05-19 }
+  to: { date: 2022-05-19 }
+
+general_area: Virtual (Zoom)
+country_code: SE
+
+venues:
+  - name: Zoom
+    link: https://zoom.us/
+
+host: SIS (Sweden)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+  email: sven.radhe@sis.se
+  phone: "+46 8 555 521 12"
+
+chair:
+  name: Dr Torgny Carlsson
+  acting_at_meeting: Prof Göran Grimvall (appointed by Resolution P-2022-01)
+
+committee_manager: Mr Sven Radhe
+secretariat_support:
+  - Ms Anette Lindor Norén
+
+attendance:
+  p_members_approving: 9
+  heads_of_delegation: 9
+  countries:
+    - { code: CN, body: SAC, name: China }
+    - { code: FI, body: SFS, name: Finland }
+    - { code: DE, body: DIN, name: Germany }
+    - { code: IT, body: UNI, name: Italy }
+    - { code: PT, body: IPQ, name: Portugal }
+    - { code: RU, body: GOST R, name: Russian Federation }
+    - { code: SE, body: SIS, name: Sweden }
+    - { code: GB, body: BSI, name: United Kingdom }
+    - { code: US, body: ANSI, name: United States }
+
+schedule:
+  - date: 2022-05-19
+    time: "13:00–16:00 CEST"
+    event: Plenary meeting (Zoom)
+    description: |
+      19th plenary meeting of ISO/TC 12, held virtually via Zoom.
+      Agenda covered chairing (Prof Grimvall appointed), drafting
+      committee, business plan v.10, WG 21 status update, JWG 2 report,
+      liaison reports, future role in machine-readable quantities and
+      units (Dr Knopf tasked), and next meeting in Stockholm. Six
+      resolutions (P-2022-01 through P-2022-06) adopted unanimously.
+
+next_plenary:
+  date: 2023-05-25
+  format: tbd (Stockholm hybrid or virtual)

@@ -1,0 +1,49 @@
+title: 16th plenary meeting
+ordinal: 16
+status: completed
+year: 2018
+landing_url: /meetings/plenary-meeting-16/
+
+time:
+  from: { date: 2018-10-08 }
+  to: { date: 2018-10-08 }
+
+general_area: Helsinki, Finland
+country_code: FI
+
+venues:
+  - name: Helsinki (in-person meeting)
+
+host: SFS (Finland)
+
+secretariat:
+  name: Mr Sven Radhe
+  organization: SIS
+  email: sven.radhe@sis.se
+  phone: "+46 8 555 21 12"
+
+chair:
+  name: Dr Torgny Carlsson
+
+committee_manager: Mr Sven Radhe
+secretariat_support:
+  - Ms Anette Lindor Norén
+
+schedule:
+  - date: 2018-10-08
+    event: Plenary meeting (Helsinki)
+    description: |
+      16th plenary meeting of ISO/TC 12, held in Helsinki, Finland.
+      Agenda covered business plan update, ISO 80000-1 revision
+      (cancel ongoing revision; initiate new revision under Vienna
+      Agreement with Mr Pendrill as project leader), disbandment of
+      WG 19, ITU-T SG 17 liaison on Biology-to-machine protocol,
+      data representation for quantities and units, and next meeting
+      scheduling. Eight resolutions (P-2018-01 through P-2018-08)
+      adopted; six unanimously, two (P-2018-03 and P-2018-04 on
+      ISO 80000-1 revision) by majority with one abstention (Germany).
+
+next_plenary:
+  date: 2019-09
+  location: Russian Federation (preliminary)
+  note: Eventually held as Web meetings in 2019 (Zoom, March and May).
