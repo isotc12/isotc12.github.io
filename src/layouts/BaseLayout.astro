@@ -1,0 +1,75 @@
+---
+import '../styles/main.css'
+import { committee } from '../data/committee'
+import { mainNav } from '../data/navigation'
+import type { NavItem } from '../data/navigation'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title = `${committee.name} — ${committee.tagline}`,
+  description = committee.scope,
+} = Astro.props
+
+const path = Astro.url.pathname
+function isActive(to: string): boolean {
+  if (to === '/') return path === '/'
+  return path === to || path.startsWith(to)
+}
+function sectionContains(item: NavItem): boolean {
+  if (isActive(item.to)) return true
+  return item.children?.some((c) => isActive(c.to)) ?? false
+}
+
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).toString()} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <header class="bg-brand text-white">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="/" class="font-semibold tracking-tight">{committee.name}</a>
+        <nav class="hidden md:flex gap-6 text-sm">
+          {mainNav.map((item) => (
+            <a
+              href={item.to}
+              class:list={[
+                'hover:underline',
+                sectionContains(item) ? 'font-semibold' : '',
+              ]}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-10">
+      <slot />
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white">
+      <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-slate-600 flex flex-col sm:flex-row justify-between gap-2">
+        <span>{committee.name} — {committee.title}</span>
+        <span>
+          Secretariat: {committee.secretariat} ·{' '}
+          <a href={committee.links.isoCommittee} class="text-brand hover:underline">ISO committee page</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

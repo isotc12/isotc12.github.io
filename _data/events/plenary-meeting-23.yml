@@ -1,0 +1,75 @@
+title: 23rd plenary meeting
+ordinal: 23
+status: completed
+year: 2026
+landing_url: /meetings/plenary-meeting-23/
+
+time:
+  from:
+    date: 2026-05-26
+  to:
+    date: 2026-05-26
+
+general_area: Virtual (Zoom)
+country_code: SE
+
+venues:
+  - name: Zoom
+    link: https://zoom.us/
+
+host: SIS (Sweden)
+
+secretariat:
+  name: Ms Rebecca Cederholm
+  organization: SIS
+  email: anette.noren@sis.se
+
+chair:
+  name: Dr Torgny Carlsson
+  term_ends: 2027-12-31
+
+committee_manager: Ms Rebecca Cederholm
+secretariat_support:
+  - Ms Anette Lindor Norén
+  - Mr Jörgen Wyke
+iso_technical_programme_manager: Ms Mercè Ferrés Hernández
+iso_editorial_manager: Mr Vincenzo Bazzucchi
+
+attendance:
+  delegates_present: 17
+  heads_of_delegation: 9
+  countries:
+    - { code: AT, body: ASI, name: Austria }
+    - { code: CN, body: SAC, name: China }
+    - { code: CO, body: ICONTEC, name: Colombia }
+    - { code: FI, body: SFS, name: Finland }
+    - { code: DE, body: DIN, name: Germany }
+    - { code: JP, body: JISC, name: Japan }
+    - { code: PT, body: IPQ, name: Portugal }
+    - { code: SE, body: SIS, name: Sweden }
+    - { code: GB, body: BSI, name: United Kingdom }
+  liaisons_present:
+    - IUPAP
+    - BIPM
+    - CalConnect
+
+schedule:
+  - date: 2026-05-26
+    time: "12:00–15:07 CEST"
+    event: Plenary meeting
+    description: |
+      23rd plenary meeting of ISO/TC 12, held virtually via Zoom.
+      Agenda covered committee manager's report, strategic business plan,
+      JWG 2 (joint with IEC/TC 25) report, JCGM/GUM/VIM liaison reports,
+      working-group and liaison reports, systematic reviews of ISO 80000-4
+      and ISO 80000-8, ISO/IEC Directives update, and any other business.
+      Nine resolutions (P-2026-02 through P-2026-10) were adopted unanimously.
+
+deadlines:
+  - date: 2026-06-30
+    description: Members invited to submit comments or proposed corrections to the draft minutes (N1630)
+
+next_plenary:
+  date: 2027-05-25
+  time: "13:00 CEST"
+  format: virtual

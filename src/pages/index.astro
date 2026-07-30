@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { committee } from '../data/committee'
+
+const stats = [
+  { label: 'Secretariat', value: committee.secretariat },
+  { label: 'Chair', value: committee.chair },
+  { label: 'Established', value: String(committee.established) },
+  { label: 'Scope', value: 'ISO 80000 series' },
+]
+---
+
+<BaseLayout>
+  <section class="space-y-6">
+    <h1 class="text-4xl font-bold text-brand">{committee.name}</h1>
+    <p class="text-xl text-slate-700">{committee.tagline}</p>
+    <p class="text-slate-700 max-w-3xl leading-relaxed">{committee.scope}</p>
+
+    <dl class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+      {stats.map((s) => (
+        <div class="border border-slate-200 rounded-lg p-4 bg-white">
+          <dt class="text-xs uppercase tracking-wide text-slate-500">{s.label}</dt>
+          <dd class="mt-1 font-semibold text-slate-900">{s.value}</dd>
+        </div>
+      ))}
+    </dl>
+
+    <div class="mt-12 p-6 border border-dashed border-slate-300 rounded-lg bg-slate-50">
+      <h2 class="font-semibold text-slate-800">Site under construction</h2>
+      <p class="mt-2 text-sm text-slate-600 max-w-2xl">
+        This site is being built from the ISO/TC 12 historic document corpus.
+        See the project <code class="px-1 py-0.5 bg-slate-200 rounded">CLAUDE.md</code>
+        in the parent directory for the build plan, and the staged content
+        sections: <a href="/about/" class="text-brand hover:underline">About</a>,{' '}
+        <a href="/meetings/" class="text-brand hover:underline">Meetings</a>,{' '}
+        <a href="/decisions/" class="text-brand hover:underline">Decisions</a>,{' '}
+        <a href="/standards/" class="text-brand hover:underline">Standards</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
