@@ -1,9 +1,9 @@
 import { defineConfig } from '@edoxen/browser/config'
 
 // Scoped integration: @edoxen/browser owns /meetings/ and /decisions/ only.
-// Activated once `_data/resolutions-edoxen` and `_data/events-edoxen` exist
-// (populated by scripts/prepare-edoxen-data.mjs from the resolutions-data
-// and meetings-data submodules).
+// Theme colors aligned with the main TC 12 site palette (wine + calibration
+// teal on warm paper) so the decision browser doesn't feel like a separate
+// site.
 export default defineConfig({
   site: {
     title: 'ISO/TC 12 — Meetings & Decisions',
@@ -15,9 +15,9 @@ export default defineConfig({
     meetings: '_data/events-edoxen',
   },
   theme: {
-    primary: '#0f4c81',
-    accent: '#1e6fb8',
-    surface: '#ffffff',
+    primary: '#7b1e3a',
+    accent: '#0e6b5c',
+    surface: '#f7f4ed',
   },
   features: {
     search: true,
