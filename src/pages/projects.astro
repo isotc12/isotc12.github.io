@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
+---
+<BaseLayout title="Projects — ISO/TC 12" description="Active projects of ISO/TC 12.">
+  <PageHero variant="index" bleed eyebrow="Our work" title="Projects" lead="Active and planned projects within the ISO/IEC 80000 series." />
+  <div class="page page--wide">
+    <section class="empty-section">
+      <p class="empty-text">No separate project pages yet. Active work items are listed on the <a href="/standards/" style="color: var(--accent);">standards catalogue</a> — look for items marked "under revision" or "under development".</p>
+    </section>
+  </div>
+</BaseLayout>
+<style>
+  .empty-section { max-width: 48rem; margin: 2rem auto; padding: 0 1.5rem; }
+  .empty-text { font-size: 1rem; color: var(--ink-muted); line-height: 1.7; font-family: var(--font-display); font-style: italic; }
+</style>

@@ -1,0 +1,21 @@
+"$schema": http://json-schema.org/draft-07/schema#
+title: ISO/TC 12 National Bodies
+type: object
+properties:
+  participating:
+    type: array
+    items:
+      type: object
+      required: [id, short_name, country, membership]
+      properties:
+        id: { type: string }
+        short_name: { type: string }
+        name: { type: string }
+        iso_country_code: { type: string, pattern: '^[A-Z]{2}$' }
+        country: { type: string }
+        membership: { type: string, enum: [P, O] }
+        representatives: { type: array, items: { type: string } }
+  observing:
+    type: array
+    items:
+      type: object

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
+---
+<BaseLayout title="Acknowledgments — ISO/TC 12" description="Acknowledgments.">
+  <PageHero variant="index" bleed eyebrow="About" title="Acknowledgments" lead="ISO/TC 12 thanks the national standards bodies, liaison organisations, and individual experts who contribute to its work." />
+  <div class="page page--wide">
+    <section class="ack-section">
+      <p>ISO/TC 12 acknowledges the contributions of all participating member bodies, observing members, and liaison organisations listed on this site. The committee's work depends on their expertise and dedication.</p>
+      <p style="margin-top: 1rem;"><a href="/members/" style="color: var(--accent);">View all members →</a></p>
+    </section>
+  </div>
+</BaseLayout>
+<style>
+  .ack-section { max-width: 48rem; margin: 2rem auto; padding: 0 1.5rem; font-size: 1rem; line-height: 1.7; color: var(--ink-secondary); }
+</style>

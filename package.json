@@ -12,7 +12,9 @@
     "build": "npm run build-data && astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "build-data": "node scripts/build-data.mjs"
+    "build-data": "node scripts/build-data.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@asciidoctor/core": "^3.0.4",
@@ -31,6 +33,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.0.0",
     "tailwindcss": "^4.3.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
   }
 }

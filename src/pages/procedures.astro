@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
+---
+<BaseLayout title="Procedures — ISO/TC 12" description="Working procedures of ISO/TC 12.">
+  <PageHero variant="index" bleed eyebrow="Resources" title="Procedures" lead="Standing documents and consensus rules governing the work of ISO/TC 12." />
+  <div class="page page--wide">
+    <section class="empty-section">
+      <p class="empty-text">Procedures documents will be added here.</p>
+    </section>
+  </div>
+</BaseLayout>
+<style>
+  .empty-section { max-width: 48rem; margin: 2rem auto; padding: 0 1.5rem; }
+  .empty-text { font-size: 1rem; color: var(--ink-muted); line-height: 1.7; font-family: var(--font-display); font-style: italic; }
+</style>

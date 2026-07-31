@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,300..600&display=swap');
+
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Brand */
+  --color-iso-red: #DC2626;
+  --color-iso-red-deep: #991B1B;
+
+  /* The single accent — used for things that demand attention */
+  --color-ref: #0F3D91;
+  --color-ref-deep: #0A2D6E;
+  --color-ref-light: #3B82F6;
+
+  /* Status colors — calibrated, used only on status indicators */
+  --color-published: #0F7A3E;
+  --color-published-soft: #DCFCE7;
+  --color-development: #B45309;
+  --color-development-soft: #FEF3C7;
+  --color-withdrawn: #6B7280;
+  --color-withdrawn-soft: #F3F4F6;
+
+  /* Type */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Newsreader', 'Source Serif 4', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+}
+
+:root {
+  /* Surface tokens — light mode */
+  --bg: #FFFFFF;
+  --bg-elevated: #F7F8FA;
+  --bg-sunken: #FBFBFC;
+  --ink: #0B0F1A;
+  --ink-secondary: #3F4A5F;
+  --ink-muted: #7A8499;
+  --ink-faint: #B0B7C3;
+  --rule: #E5E7EB;
+  --rule-strong: #CBD2DC;
+  --accent: var(--color-ref);
+  --accent-deep: var(--color-ref-deep);
+  --selection-bg: var(--color-ref);
+  --selection-fg: #FFFFFF;
+
+  --site-header-h: 4rem;
+  --site-max-w: 80rem;
+  --gutter: 2rem;
+}
+
+.dark {
+  --bg: #0A0E18;
+  --bg-elevated: #131826;
+  --bg-sunken: #070A12;
+  --ink: #E8EAF0;
+  --ink-secondary: #B8BCC9;
+  --ink-muted: #7C8395;
+  --ink-faint: #4A5260;
+  --rule: #1F2535;
+  --rule-strong: #2D3548;
+  --accent: #5B8DEF;
+  --accent-deep: #A5C0F7;
+  --selection-bg: #5B8DEF;
+  --selection-fg: #0A0E18;
+}

@@ -8,10 +8,6 @@ export interface NavItem {
   children?: NavChild[]
 }
 
-// Top-level nav. Most destinations are stubs at this stage — links resolve
-// once the corresponding page exists in src/pages/. The nav structure is
-// defined here so the layout can render the full IA even before pages are
-// authored.
 export const mainNav: NavItem[] = [
   {
     label: 'About',
@@ -20,7 +16,7 @@ export const mainNav: NavItem[] = [
       { label: 'About TC 12', to: '/about/' },
       { label: 'History', to: '/history/' },
       { label: 'Business Plan', to: '/business-plan/' },
-      { label: 'Working Groups', to: '/groups/' },
+      { label: 'Groups', to: '/groups/' },
       { label: 'Liaisons', to: '/liaisons/' },
       { label: 'National Bodies', to: '/national-bodies/' },
       { label: 'FAQ', to: '/faq/' },
@@ -44,7 +40,15 @@ export const mainNav: NavItem[] = [
     to: '/members/',
   },
   {
-    label: 'Decisions',
-    to: '/decisions/',
+    label: 'News',
+    to: '/posts/',
+  },
+  {
+    label: 'Resources',
+    to: '/procedures/',
+    children: [
+      { label: 'Procedures', to: '/procedures/' },
+      { label: 'Resolutions', to: '/decisions/' },
+    ],
   },
 ]
