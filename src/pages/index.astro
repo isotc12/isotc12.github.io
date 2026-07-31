@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import UnitGrid from '../components/UnitGrid.astro'
-import DefiningConstants from '../components/DefiningConstants.astro'
+import Catalogue from '../components/Catalogue.astro'
 import { committee } from '../data/committee'
 import fs from 'node:fs'
 
@@ -26,7 +26,7 @@ const daysUntil = Math.max(0, Math.ceil((nextDate - today) / (1000 * 60 * 60 * 2
 
 <BaseLayout
   title="Quantities and units"
-  description="ISO/TC 12 maintains the ISO 80000 series — the quantities and units standards that underpin every measurement in science, engineering, and trade."
+  description="ISO/TC 12 maintains the ISO 80000 series — the International System of Quantities, giving every quantity its name, symbol, and unit across all domains of science and technology."
 >
   <article class="page home">
     {/* HERO */}
@@ -40,12 +40,12 @@ const daysUntil = Math.max(0, Math.ceil((nextDate - today) / (1000 * 60 * 60 * 2
       </p>
 
       <h1 class="hero__title rise rise-2">
-        The SI,
-        <span class="hero__title-em">defined.</span>
+        Quantities,{' '}
+        <span class="hero__title-em">named.</span>
       </h1>
 
       <p class="hero__lead rise rise-3">
-        Every measurement in science, engineering, and trade rests on a shared vocabulary of <em>quantities</em> and <em>units</em>. ISO/TC 12 maintains that vocabulary — the <strong>ISO 80000</strong> series, built on the seven exact defining constants of nature.
+        Every measurement in science, engineering, and trade rests on a shared vocabulary of <em>quantities</em> and <em>units</em>. ISO/TC 12 maintains the <strong>International System of Quantities</strong> — the names, symbols, and definitions published as the ISO 80000 series.
       </p>
 
       <div class="hero__actions rise rise-4">
@@ -54,8 +54,8 @@ const daysUntil = Math.max(0, Math.ceil((nextDate - today) / (1000 * 60 * 60 * 2
       </div>
     </header>
 
-    {/* DEFINING CONSTANTS — THE SIGNATURE */}
-    <DefiningConstants />
+    {/* CATALOGUE — THE SIGNATURE */}
+    <Catalogue />
 
     {/* STATS */}
     <section class="stats-block" aria-label="At a glance">
@@ -63,7 +63,7 @@ const daysUntil = Math.max(0, Math.ceil((nextDate - today) / (1000 * 60 * 60 * 2
         <a href="/standards/" class="stat">
           <dt class="stat__label">Standards</dt>
           <dd class="stat__value num">{meta.counts.standards}</dd>
-          <dd class="stat__caption">ISO/IEC 80000 parts covering every SI quantity.</dd>
+          <dd class="stat__caption">ISO/IEC 80000 parts naming quantities across science and technology.</dd>
         </a>
         <a href="/decisions/" class="stat">
           <dt class="stat__label">Resolutions</dt>
@@ -90,8 +90,8 @@ const daysUntil = Math.max(0, Math.ceil((nextDate - today) / (1000 * 60 * 60 * 2
           <p class="eyebrow">Latest plenary</p>
           <h2 class="block-title">
             <a href={latest.landing_url} class="block-title__link">
-              {ordinal(latest.ordinal)} meeting
-              <span class="block-title__sep">·</span>
+              {ordinal(latest.ordinal)} meeting{' '}
+              <span class="block-title__sep">·</span>{' '}
               <time datetime={latest.date}>{new Date(latest.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
             </a>
           </h2>

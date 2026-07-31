@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PageHero from '../../components/PageHero.astro'
+import fs from 'node:fs'
+
+const resolutions = JSON.parse(fs.readFileSync('public/data/resolutions.json', 'utf-8'))
+
+// Flatten all decisions across plenary and ballot files
+const allDecisions = [
+  ...resolutions.plenary.flatMap((p) =>
+    p.decisions.map((d) => ({ ...d, source: `Plenary ${p.ordinal}`, source_date: p.date }))
+  ),
+  ...resolutions.ballots.flatMap((b) =>
+    b.decisions.map((d) => ({ ...d, source: b.id, source_date: b.date }))
+  ),
+].sort((a, b) => {
+  const da = a.dates?.[0]?.date || a.source_date || ''
+  const db = b.dates?.[0]?.date || b.source_date || ''
+  return db.localeCompare(da)
+})
+---
+
+<BaseLayout title="Resolutions" description="Every resolution adopted by ISO/TC 12 since 2010, transcribed from the original committee documents.">
+  <article class="page">
+    <PageHero
+      eyebrow="Decisions"
+      title="Resolutions"
+      lead={`${allDecisions.length} resolutions adopted since 2010 — every committee decision transcribed from the original PDF documents.`}
+    />
+
+    <section>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 8rem">Number</th>
+              <th>Title</th>
+              <th class="hide-mobile">Source</th>
+              <th class="hide-mobile">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allDecisions.map((d) => (
+              <tr>
+                <td class="num-cell">
+                  <a href={`/decisions/${d.number}/`} class="ref-link">{d.number}</a>
+                </td>
+                <td>
+                  <a href={`/decisions/${d.number}/`} class="title-link">
+                    <span class="title-text">{d.title}</span>
+                  </a>
+                </td>
+                <td class="hide-mobile muted">{d.source}</td>
+                <td class="hide-mobile num-cell muted">{d.dates?.[0]?.date || '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .data-table-wrap { border: 1px solid var(--rule); border-radius: 0.5rem; overflow: hidden; margin-top: 2rem; }
+  .num-cell { font-family: var(--font-mono); font-size: 0.875rem; color: var(--ink); white-space: nowrap; }
+  .ref-link { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .ref-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+  .title-link { text-decoration: none; color: inherit; }
+  .title-text { font-family: var(--font-display); font-size: 1rem; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .title-link:hover .title-text { color: var(--accent); }
+  .muted { color: var(--ink-muted); font-size: 0.875rem; }
+  @media (max-width: 767px) { .hide-mobile { display: none; } }
+</style>

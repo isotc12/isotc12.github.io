@@ -46,7 +46,7 @@ function loadPlenaryEvents() {
       year: data.year,
       status: data.status,
       title: data.title,
-      landing_url: data.landing_url,
+      landing_url: `/meetings/urn:iso:tc12:meeting:plenary-${data.ordinal}`,
       general_area: data.general_area,
       country_code: data.country_code,
       time: data.time,

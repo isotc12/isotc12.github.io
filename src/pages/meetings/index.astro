@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PageHero from '../../components/PageHero.astro'
+import fs from 'node:fs'
+
+const events = JSON.parse(fs.readFileSync('public/data/events.json', 'utf-8'))
+const resolutions = JSON.parse(fs.readFileSync('public/data/resolutions.json', 'utf-8'))
+
+function ordinal(n) {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
+const meetingsWithCounts = events.map((e) => {
+  const reso = resolutions.plenary.find((p) => p.ordinal === e.ordinal)
+  return { ...e, decision_count: reso?.decision_count ?? 0 }
+})
+---
+
+<BaseLayout title="Meetings" description="Plenary meetings of ISO/TC 12 from 2010 to present.">
+  <article class="page">
+    <PageHero
+      eyebrow="Meetings"
+      title="Plenary meetings"
+      lead={`Fifteen plenary meetings since 2010 — from Prague to Zoom. Each meeting adopts resolutions that shape the ISO 80000 series.`}
+    />
+
+    <section>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 4rem">No.</th>
+              <th>Date</th>
+              <th>Title</th>
+              <th class="hide-mobile">Location</th>
+              <th class="hide-mobile">Host</th>
+              <th>Resolutions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {meetingsWithCounts.map((e) => (
+              <tr>
+                <td class="num-cell">{e.ordinal}</td>
+                <td class="num-cell">
+                  <a href={`/meetings/plenary-${e.ordinal}/`} class="ref-link">
+                    {new Date(e.time?.from?.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </a>
+                </td>
+                <td>
+                  <a href={`/meetings/plenary-${e.ordinal}/`} class="title-link">
+                    <span class="title-text">{e.title}</span>
+                  </a>
+                </td>
+                <td class="hide-mobile muted">{e.general_area}</td>
+                <td class="hide-mobile muted">{e.host}</td>
+                <td class="num-cell">{e.decision_count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .data-table-wrap { border: 1px solid var(--rule); border-radius: 0.5rem; overflow: hidden; margin-top: 2rem; }
+  .num-cell { font-family: var(--font-mono); font-size: 0.875rem; color: var(--ink); white-space: nowrap; }
+  .ref-link { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .ref-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+  .title-link { text-decoration: none; color: inherit; }
+  .title-text { font-family: var(--font-display); font-size: 1rem; font-weight: 500; color: var(--ink); }
+  .title-link:hover .title-text { color: var(--accent); }
+  .muted { color: var(--ink-muted); font-size: 0.875rem; }
+  @media (max-width: 767px) { .hide-mobile { display: none; } }
+</style>
