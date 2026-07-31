@@ -1,0 +1,9 @@
+member-id: rebecca-cederholm
+name: Cederholm, Rebecca
+active: true
+roles:
+  - id: committee_manager
+  - id: member
+    nsbody: SIS
+    member_type: P-member
+salutation: Ms

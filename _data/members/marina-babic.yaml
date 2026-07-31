@@ -1,0 +1,8 @@
+member-id: marina-babic
+name: Babic, Marina
+active: true
+roles:
+  - id: member
+    nsbody: HZN
+    member_type: O-member
+salutation: Ms

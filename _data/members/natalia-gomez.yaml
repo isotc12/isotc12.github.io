@@ -1,0 +1,8 @@
+member-id: natalia-gomez
+name: Gómez, Natalia
+active: true
+roles:
+  - id: member
+    nsbody: ICONTEC
+    member_type: O-member
+salutation: Mrs

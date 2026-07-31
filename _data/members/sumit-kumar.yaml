@@ -1,0 +1,8 @@
+member-id: sumit-kumar
+name: Kumar, Sumit
+active: true
+roles:
+  - id: member
+    nsbody: BIS
+    member_type: P-member
+salutation: Mr

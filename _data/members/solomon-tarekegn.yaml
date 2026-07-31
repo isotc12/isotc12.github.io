@@ -1,0 +1,8 @@
+member-id: solomon-tarekegn
+name: Tarekegn, Solomon
+active: true
+roles:
+  - id: member
+    nsbody: IES
+    member_type: O-member
+salutation: Mr

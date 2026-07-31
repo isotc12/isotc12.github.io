@@ -1,0 +1,8 @@
+member-id: robert-gunn
+name: Gunn, Robert
+active: true
+roles:
+  - id: liaison_representative
+    organization: EURAMET
+    liaison_type: A-liaison
+salutation: Mr

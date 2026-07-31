@@ -1,9 +1,0 @@
-member-id: yang-xiaoya
-name: Yang, Xiaoya
-active: true
-roles:
-  - id: liaison_representative
-    organization: ITU
-    liaison_type: A-liaison
-salutation: Mr.
-email: xiaoya.yang@itu.int

@@ -1,9 +1,0 @@
-member-id: brown-richard
-name: Brown, Richard
-active: true
-roles:
-  - id: liaison_representative
-    organization: BIPM
-    liaison_type: A-liaison
-salutation: Dr
-email: richard.brown@npl.co.uk

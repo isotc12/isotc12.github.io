@@ -1,0 +1,8 @@
+member-id: ali-alsadoun
+name: AlSadoun, Ali
+active: true
+roles:
+  - id: member
+    nsbody: KOWSMD
+    member_type: P-member
+salutation: Mr

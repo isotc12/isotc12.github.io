@@ -1,0 +1,8 @@
+member-id: tamara-corten
+name: Corten, Tamara
+active: true
+roles:
+  - id: member
+    nsbody: NBN
+    member_type: O-member
+salutation: Mrs

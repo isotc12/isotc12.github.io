@@ -223,16 +223,10 @@ function loadNationalBodiesYaml() {
   return readYaml(p) || { participating: [], observing: [] }
 }
 
-function loadLiaisonsInternal() {
-  const p = path.join(DATA_DIR, 'liaisons_internal.yml')
-  if (!fs.existsSync(p)) return []
-  return readYaml(p) || []
-}
-
-function loadLiaisonsExternal() {
-  const p = path.join(DATA_DIR, 'liaisons_external.yml')
-  if (!fs.existsSync(p)) return []
-  return readYaml(p) || []
+function loadLiaisonsYaml() {
+  const p = path.join(DATA_DIR, 'liaisons.yml')
+  if (!fs.existsSync(p)) return { external_organisations: [], iso_iec_committees: [] }
+  return readYaml(p) || { external_organisations: [], iso_iec_committees: [] }
 }
 
 console.log('[build-data] reading _data/, writing public/data/')
@@ -242,7 +236,6 @@ const events = loadPlenaryEvents()
 const { plenaryMeetings, ballotYears } = loadResolutionsSubmodule()
 const standards = loadStandards()
 const groups = loadGroups()
-const liaisons = loadLiaisons()
 const national_bodies = loadNationalBodies()
 const leadership = loadMembers().filter(m =>
   m.roles.some(r => ['chair', 'committee_manager', 'secretariat_support', 'tpm'].includes(r.id))
@@ -254,8 +247,7 @@ const leadership = loadMembers().filter(m =>
 }))
 const members = loadMembers()
 const nationalBodiesYaml = loadNationalBodiesYaml()
-const liaisonsInternal = loadLiaisonsInternal()
-const liaisonsExternal = loadLiaisonsExternal()
+const liaisonsYaml = loadLiaisonsYaml()
 
 const latestPlenary = events[0]
 const nextPlenary = events.find((e) => e.status === 'upcoming') || events.find((e) => e.next_plenary != null)
@@ -276,7 +268,7 @@ writeJson('meta.json', {
     decisions: allDecisions.length,
     p_members: national_bodies.p_count,
     working_groups: groups.filter((g) => g.status === 'active' || g.status === 'transition').length,
-    active_liaisons: liaisons.from_tc12.length + liaisons.external.length,
+    active_liaisons: (liaisonsYaml.external_organisations.length + liaisonsYaml.iso_iec_committees.length),
   },
   latest_plenary: latestPlenary && {
     id: latestPlenary.id,
@@ -300,12 +292,10 @@ writeJson('resolutions.json', {
 })
 writeJson('standards.json', standards)
 writeJson('groups.json', groups)
-writeJson('liaisons.json', liaisons)
+writeJson('liaisons.json', liaisonsYaml)
 writeJson('national_bodies.json', national_bodies)
 writeJson('leadership.json', leadership)
 writeJson('members.json', members)
 writeJson('national_bodies_full.json', nationalBodiesYaml)
-writeJson('liaisons_internal.json', liaisonsInternal)
-writeJson('liaisons_external.json', liaisonsExternal)
 
 console.log('[build-data] done.')

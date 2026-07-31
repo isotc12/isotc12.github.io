@@ -1,0 +1,7 @@
+member-id: rachel-hawthorne
+name: Hawthorne, Rachel
+active: true
+roles:
+  - id: liaison_representative
+    committee: ISO/TC 215
+salutation: Ms

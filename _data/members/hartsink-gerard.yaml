@@ -1,9 +1,0 @@
-member-id: hartsink-gerard
-name: Hartsink, Gerard
-active: true
-roles:
-  - id: liaison_representative
-    organization: IMU
-    liaison_type: A-liaison
-salutation: Mr
-email: gerard.hartsink@identifierstandards.org

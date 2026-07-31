@@ -1,0 +1,8 @@
+member-id: saleh-ali
+name: Ali, Saleh
+active: true
+roles:
+  - id: member
+    nsbody: EOS
+    member_type: P-member
+salutation: Eng.

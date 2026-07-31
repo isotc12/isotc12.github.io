@@ -1,0 +1,8 @@
+member-id: aleksei-diatlev
+name: Diatlev, Aleksei
+active: true
+roles:
+  - id: member
+    nsbody: GOST R
+    member_type: P-member
+salutation: Mr

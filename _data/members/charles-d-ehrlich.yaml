@@ -1,0 +1,8 @@
+member-id: charles-d-ehrlich
+name: Ehrlich, Charles D.
+active: true
+roles:
+  - id: member
+    nsbody: ANSI
+    member_type: P-member
+salutation: Dr

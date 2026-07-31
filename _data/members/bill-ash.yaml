@@ -1,0 +1,7 @@
+member-id: bill-ash
+name: Ash, Bill
+active: true
+roles:
+  - id: liaison_representative
+    committee: ISO/IEC JTC 1/SC 32
+salutation: Mr

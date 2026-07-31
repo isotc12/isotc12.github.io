@@ -1,0 +1,8 @@
+member-id: kati-heiskanen
+name: Heiskanen, Kati
+active: true
+roles:
+  - id: member
+    nsbody: SFS
+    member_type: P-member
+salutation: Mrs.

@@ -1,0 +1,8 @@
+member-id: rein-laaneots
+name: Laaneots, Rein
+active: true
+roles:
+  - id: member
+    nsbody: EVS
+    member_type: O-member
+salutation: Mr

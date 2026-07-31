@@ -1,0 +1,11 @@
+member-id: sherin-lehmann
+name: Lehmann, Sherin
+active: true
+roles:
+  - id: liaison_representative
+    committee: ISO/TC 43
+  - id: liaison_representative
+    committee: ISO/TC 43/SC 1
+  - id: liaison_representative
+    committee: ISO/TC 43/SC 3
+salutation: Mrs

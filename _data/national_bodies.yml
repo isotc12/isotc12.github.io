@@ -1,142 +1,311 @@
 participating:
-  - body: ASI
-    code: AT
+  - id: asi
+    short_name: ASI
     name: Austria
-    member_type: P-member
-  - body: BELST
-    code: BY
+    iso_country_code: AT
+    country: Austria
+    membership: P
+    representatives:
+      - Zechner, Georg
+  - id: belst
+    short_name: BELST
     name: Belarus
-    member_type: P-member
-  - body: SAC
-    code: CN
+    iso_country_code: BY
+    country: Belarus
+    membership: P
+    representatives:
+      - Efremova, Nadezhda
+  - id: sac
+    short_name: SAC
     name: China
-    member_type: P-member
-  - body: EOS
-    code: EG
+    iso_country_code: CN
+    country: China
+    membership: P
+    representatives:
+      - Gao, Wei
+      - HU, Bo
+      - LI, Dehong
+      - Liu, Zilong
+      - Shao, Haiming
+      - ZHENG, Huaxin
+  - id: eos
+    short_name: EOS
     name: Egypt
-    member_type: P-member
-  - body: SFS
-    code: FI
+    iso_country_code: EG
+    country: Egypt
+    membership: P
+    representatives:
+      - Ali, Saleh
+      - Lotfy, Samah
+  - id: sfs
+    short_name: SFS
     name: Finland
-    member_type: P-member
-  - body: AFNOR
-    code: FR
+    iso_country_code: FI
+    country: Finland
+    membership: P
+    representatives:
+      - Heiskanen, Kati
+  - id: afnor
+    short_name: AFNOR
     name: France
-    member_type: P-member
-  - body: DIN
-    code: DE
+    iso_country_code: FR
+    country: France
+    membership: P
+    representatives:
+      - Bensalem, Fatma
+  - id: din
+    short_name: DIN
     name: Germany
-    member_type: P-member
-  - body: GOST R
-    code: ''
+    iso_country_code: DE
+    country: Germany
+    membership: P
+    representatives:
+      - Hübner, Tobias
+      - Jacobson, Erik
+      - Knopf, Dorothea
+  - id: gost-r
+    short_name: GOST R
     name: GOST R
-    member_type: P-member
-  - body: BIS
-    code: IN
+    iso_country_code: ''
+    country: GOST R
+    membership: P
+    representatives:
+      - Diatlev, Aleksei
+      - Korzinin, Evgenii
+  - id: bis
+    short_name: BIS
     name: India
-    member_type: P-member
-  - body: UNI
-    code: IT
+    iso_country_code: IN
+    country: India
+    membership: P
+    representatives:
+      - Kumar, Sumit
+  - id: uni
+    short_name: UNI
     name: Italy
-    member_type: P-member
-  - body: JISC
-    code: JP
+    iso_country_code: IT
+    country: Italy
+    membership: P
+    representatives:
+      - Delvecchio, Alessandro
+  - id: jisc
+    short_name: JISC
     name: Japan
-    member_type: P-member
-  - body: KOWSMD
-    code: KW
+    iso_country_code: JP
+    country: Japan
+    membership: P
+    representatives:
+      - Kishimoto, Isao
+      - Kuzuki, Ryota
+      - Tanaka, Mitsuru
+      - Watanabe, Noritsugu
+  - id: kowsmd
+    short_name: KOWSMD
     name: Kuwait
-    member_type: P-member
-  - body: IPQ
-    code: PT
+    iso_country_code: KW
+    country: Kuwait
+    membership: P
+    representatives:
+      - AlRokaibi, Talal
+      - AlSadoun, Ali
+      - Jamal, Hani
+  - id: ipq
+    short_name: IPQ
     name: Portugal
-    member_type: P-member
-  - body: UNE
-    code: ES
+    iso_country_code: PT
+    country: Portugal
+    membership: P
+    representatives:
+      - Cabral, Paulo
+      - Filipe, Eduarda
+      - Pellegrino, Olivier
+  - id: une
+    short_name: UNE
     name: Spain
-    member_type: P-member
-  - body: SIS
-    code: SE
+    iso_country_code: ES
+    country: Spain
+    membership: P
+    representatives:
+      - Goyanes Calderón, Diana
+  - id: sis
+    short_name: SIS
     name: Sweden
-    member_type: P-member
-  - body: SNV
-    code: CH
+    iso_country_code: SE
+    country: Sweden
+    membership: P
+    representatives:
+      - Cederholm, Rebecca
+      - Lindor Norén, Anette
+  - id: snv
+    short_name: SNV
     name: Switzerland
-    member_type: P-member
-  - body: BSI
-    code: GB
+    iso_country_code: CH
+    country: Switzerland
+    membership: P
+    representatives:
+      - Hug, Michèle
+  - id: bsi
+    short_name: BSI
     name: United Kingdom
-    member_type: P-member
-  - body: ANSI
-    code: US
+    iso_country_code: GB
+    country: United Kingdom
+    membership: P
+    representatives:
+      - Service Centre, Committee
+  - id: ansi
+    short_name: ANSI
     name: United States
-    member_type: P-member
+    iso_country_code: US
+    country: United States
+    membership: P
+    representatives:
+      - Ehrlich, Charles D.
+      - Nelson, Michael
 observing:
-  - body: NBN
-    code: BE
+  - id: nbn
+    short_name: NBN
     name: Belgium
-    member_type: O-member
-  - body: ISBIH
-    code: BA
+    iso_country_code: BE
+    country: Belgium
+    membership: O
+    representatives:
+      - Corten, Tamara
+  - id: isbih
+    short_name: ISBIH
     name: Bosnia and Herzegovina
-    member_type: O-member
-  - body: BDS
-    code: BG
+    iso_country_code: BA
+    country: Bosnia and Herzegovina
+    membership: O
+    representatives:
+      - Buha, Stana
+  - id: bds
+    short_name: BDS
     name: Bulgaria
-    member_type: O-member
-  - body: ICONTEC
-    code: CO
+    iso_country_code: BG
+    country: Bulgaria
+    membership: O
+    representatives:
+      - Argirova, Galina
+  - id: icontec
+    short_name: ICONTEC
     name: Colombia
-    member_type: O-member
-  - body: HZN
-    code: HR
+    iso_country_code: CO
+    country: Colombia
+    membership: O
+    representatives:
+      - Bohorquez Garzon, Andres Jhovanny
+      - Gómez, Natalia
+      - Martínez, Diego
+      - Sarmiento, Sonia
+  - id: hzn
+    short_name: HZN
     name: Croatia
-    member_type: O-member
-  - body: NC
-    code: CU
+    iso_country_code: HR
+    country: Croatia
+    membership: O
+    representatives:
+      - Babic, Marina
+  - id: nc
+    short_name: NC
     name: Cuba
-    member_type: O-member
-  - body: EVS
-    code: EE
+    iso_country_code: CU
+    country: Cuba
+    membership: O
+    representatives:
+      - Fernandez Infante, Rene Antonio
+  - id: evs
+    short_name: EVS
     name: Estonia
-    member_type: O-member
-  - body: IES
-    code: ET
+    iso_country_code: EE
+    country: Estonia
+    membership: O
+    representatives:
+      - Laaneots, Rein
+  - id: ies
+    short_name: IES
     name: Ethiopia
-    member_type: O-member
-  - body: ITCHKSAR
-    code: HK
+    iso_country_code: ET
+    country: Ethiopia
+    membership: O
+    representatives:
+      - Adefris, Worku
+      - Tarekegn, Solomon
+  - id: itchksar
+    short_name: ITCHKSAR
     name: Hong Kong
-    member_type: O-member
-  - body: MSZT
-    code: HU
+    iso_country_code: HK
+    country: Hong Kong
+    membership: O
+    representatives:
+      - Tsui, C.M.
+  - id: mszt
+    short_name: MSZT
     name: Hungary
-    member_type: O-member
-  - body: INSO
-    code: IR
+    iso_country_code: HU
+    country: Hungary
+    membership: O
+    representatives:
+      - Szabó, József
+  - id: inso
+    short_name: INSO
     name: Iran
-    member_type: O-member
-  - body: KATS
-    code: KR
+    iso_country_code: IR
+    country: Iran
+    membership: O
+    representatives:
+      - Arshadi, Fatemeh
+      - Mohammadi, Ahad
+      - Sabour Gilvan, Abbas
+  - id: kats
+    short_name: KATS
     name: Korea, Republic of
-    member_type: O-member
-  - body: ASRO
-    code: RO
+    iso_country_code: KR
+    country: Korea, Republic of
+    membership: O
+    representatives:
+      - Deuk Ki, Kim
+      - Jung, Soo-Il
+      - Kim, Yong Deuk
+      - Yeom, Hojun
+  - id: asro
+    short_name: ASRO
     name: Romania
-    member_type: O-member
-  - body: ISS
-    code: RS
+    iso_country_code: RO
+    country: Romania
+    membership: O
+    representatives:
+      - IVASCU, Cornelia
+  - id: iss
+    short_name: ISS
     name: Serbia
-    member_type: O-member
-  - body: SLSI
-    code: LK
+    iso_country_code: RS
+    country: Serbia
+    membership: O
+    representatives:
+      - Stepanovic, Biljana
+  - id: slsi
+    short_name: SLSI
     name: Sri Lanka
-    member_type: O-member
-  - body: TISI
-    code: TH
+    iso_country_code: LK
+    country: Sri Lanka
+    membership: O
+    representatives:
+      - Kodippili, Kumari
+  - id: tisi
+    short_name: TISI
     name: Thailand
-    member_type: O-member
-  - body: STAMEQ
-    code: VN
+    iso_country_code: TH
+    country: Thailand
+    membership: O
+    representatives:
+      - Poonsawat, Apisak
+      - Sriprapapong, Teardpong
+  - id: stameq
+    short_name: STAMEQ
     name: Viet Nam
-    member_type: O-member
+    iso_country_code: VN
+    country: Viet Nam
+    membership: O
+    representatives:
+      - Bich, Bui Ngoc
+      - Bui Ngoc, Bich

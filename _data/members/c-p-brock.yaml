@@ -1,0 +1,8 @@
+member-id: c-p-brock
+name: Brock, C.P.
+active: true
+roles:
+  - id: liaison_representative
+    organization: IUCr
+    liaison_type: A-liaison
+salutation: Prof.

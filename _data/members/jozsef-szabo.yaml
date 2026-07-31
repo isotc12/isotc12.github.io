@@ -1,0 +1,8 @@
+member-id: jozsef-szabo
+name: Szabó, József
+active: true
+roles:
+  - id: member
+    nsbody: MSZT
+    member_type: O-member
+salutation: Mr

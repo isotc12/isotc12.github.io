@@ -1,0 +1,8 @@
+member-id: ahad-mohammadi
+name: Mohammadi, Ahad
+active: true
+roles:
+  - id: member
+    nsbody: INSO
+    member_type: O-member
+salutation: Mr

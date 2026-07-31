@@ -1,0 +1,7 @@
+member-id: committee-service-centre
+name: Service Centre, Committee
+active: true
+roles:
+  - id: member
+    nsbody: BSI
+    member_type: P-member

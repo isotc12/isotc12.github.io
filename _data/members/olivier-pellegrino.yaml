@@ -1,0 +1,8 @@
+member-id: olivier-pellegrino
+name: Pellegrino, Olivier
+active: true
+roles:
+  - id: member
+    nsbody: IPQ
+    member_type: P-member
+salutation: Mr

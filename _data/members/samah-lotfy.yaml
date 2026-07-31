@@ -1,0 +1,8 @@
+member-id: samah-lotfy
+name: Lotfy, Samah
+active: true
+roles:
+  - id: member
+    nsbody: EOS
+    member_type: P-member
+salutation: Mrs.

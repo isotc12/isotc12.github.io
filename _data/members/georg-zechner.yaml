@@ -1,0 +1,11 @@
+member-id: georg-zechner
+name: Zechner, Georg
+active: true
+roles:
+  - id: member
+    nsbody: ASI
+    member_type: P-member
+  - id: liaison_representative
+    organization: OIML
+    liaison_type: A-liaison
+salutation: Mr

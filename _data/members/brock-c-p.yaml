@@ -1,9 +1,0 @@
-member-id: brock-c-p
-name: Brock, C.P.
-active: true
-roles:
-  - id: liaison_representative
-    organization: IUCr
-    liaison_type: A-liaison
-salutation: Prof.
-email: cpbrock@uky.edu

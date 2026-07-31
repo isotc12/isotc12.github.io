@@ -1,0 +1,8 @@
+member-id: mitsuru-tanaka
+name: Tanaka, Mitsuru
+active: true
+roles:
+  - id: member
+    nsbody: JISC
+    member_type: P-member
+salutation: Dr

@@ -1,0 +1,8 @@
+member-id: christian-galinski
+name: Galinski, Christian
+active: true
+roles:
+  - id: liaison_representative
+    organization: Infoterm
+    liaison_type: A-liaison
+salutation: Dr

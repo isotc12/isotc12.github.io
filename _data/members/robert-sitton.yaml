@@ -1,0 +1,8 @@
+member-id: robert-sitton
+name: Sitton, Robert
+active: true
+roles:
+  - id: liaison_representative
+    organization: BIPM
+    liaison_type: A-liaison
+salutation: Mr

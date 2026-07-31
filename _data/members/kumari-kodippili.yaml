@@ -1,0 +1,8 @@
+member-id: kumari-kodippili
+name: Kodippili, Kumari
+active: true
+roles:
+  - id: member
+    nsbody: SLSI
+    member_type: O-member
+salutation: Mrs

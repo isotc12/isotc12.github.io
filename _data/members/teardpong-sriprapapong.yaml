@@ -1,0 +1,8 @@
+member-id: teardpong-sriprapapong
+name: Sriprapapong, Teardpong
+active: true
+roles:
+  - id: member
+    nsbody: TISI
+    member_type: O-member
+salutation: Mr

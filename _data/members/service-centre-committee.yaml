@@ -1,9 +1,0 @@
-member-id: service-centre-committee
-name: Service Centre, Committee
-active: true
-roles:
-  - id: member
-    group: bsi
-    nsbody: BSI
-    member_type: P-member
-email: csc@bsigroup.com

@@ -1,0 +1,8 @@
+member-id: c-m-tsui
+name: Tsui, C.M.
+active: true
+roles:
+  - id: member
+    nsbody: ITCHKSAR
+    member_type: O-member
+salutation: Mr.

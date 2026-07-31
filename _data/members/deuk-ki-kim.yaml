@@ -1,9 +1,0 @@
-member-id: deuk-ki-kim
-name: Deuk Ki, Kim
-active: true
-roles:
-  - id: member
-    group: kats
-    nsbody: KATS
-    member_type: O-member
-email: iwilldo@ksa.or.kr

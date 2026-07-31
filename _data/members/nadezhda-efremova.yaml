@@ -1,0 +1,8 @@
+member-id: nadezhda-efremova
+name: Efremova, Nadezhda
+active: true
+roles:
+  - id: member
+    nsbody: BELST
+    member_type: P-member
+salutation: Ms

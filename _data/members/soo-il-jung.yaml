@@ -1,0 +1,7 @@
+member-id: soo-il-jung
+name: Jung, Soo-Il
+active: true
+roles:
+  - id: member
+    nsbody: KATS
+    member_type: O-member

@@ -1,0 +1,8 @@
+member-id: diego-martinez
+name: Martínez, Diego
+active: true
+roles:
+  - id: member
+    nsbody: ICONTEC
+    member_type: O-member
+salutation: Mr

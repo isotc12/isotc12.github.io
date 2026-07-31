@@ -1,0 +1,9 @@
+member-id: agnes-sayer
+name: Sayer, Agnes
+active: true
+roles:
+  - id: liaison_representative
+    committee: ISO/TC 43
+  - id: liaison_representative
+    committee: ISO/TC 43/SC 1
+salutation: Mrs Dr.

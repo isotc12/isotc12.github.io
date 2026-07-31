@@ -1,0 +1,8 @@
+member-id: biljana-stepanovic
+name: Stepanovic, Biljana
+active: true
+roles:
+  - id: member
+    nsbody: ISS
+    member_type: O-member
+salutation: Mrs

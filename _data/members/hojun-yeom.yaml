@@ -1,0 +1,8 @@
+member-id: hojun-yeom
+name: Yeom, Hojun
+active: true
+roles:
+  - id: member
+    nsbody: KATS
+    member_type: O-member
+salutation: Mr

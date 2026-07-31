@@ -1,0 +1,8 @@
+member-id: michele-hug
+name: Hug, Michèle
+active: true
+roles:
+  - id: member
+    nsbody: SNV
+    member_type: P-member
+salutation: Ms

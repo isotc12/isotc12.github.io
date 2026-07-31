@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PageHero from '../../components/PageHero.astro'
+import fs from 'node:fs'
+
+export function getStaticPaths() {
+  const data = JSON.parse(fs.readFileSync('public/data/liaisons.json', 'utf-8'))
+  const slugify = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  const all = [
+    ...data.external_organisations.map((l) => ({ ...l, id: slugify(l.short_name), _kind: 'external' })),
+    ...data.iso_iec_committees.map((l) => ({
+      id: slugify(l.ref),
+      short_name: l.ref,
+      name: l.ref,
+      category: 'committee',
+      representatives: l.representatives,
+      _kind: 'committee',
+    })),
+  ]
+  return all.map((l) => ({ params: { id: l.id }, props: { liaison: l } }))
+}
+
+const { liaison: l } = Astro.props
+const eyebrow = l._kind === 'external'
+  ? `Category ${l.category || 'A'} liaison`
+  : 'ISO/IEC committee'
+const title = l.short_name
+const subtitle = l.name !== l.short_name ? l.name : null
+---
+
+<BaseLayout title={`${l.short_name} — ISO/TC 12`} description={`${l.short_name} — ${l._kind === 'external' ? 'external organisation in liaison with ISO/TC 12' : 'ISO/IEC committee in liaison with ISO/TC 12'}.`}>
+  <article class="page page--wide">
+    <a href="/liaisons/" class="back-link">← All liaisons</a>
+
+    <header class="lia-detail-head">
+      <p class="eyebrow eyebrow--ref">{eyebrow}</p>
+      <h1 class="lia-detail-head__title">{title}</h1>
+      {subtitle && <p class="lia-detail-head__full">{subtitle}</p>}
+    </header>
+
+    <div class="lia-detail-grid">
+      <aside>
+        <dl class="lia-meta">
+          <div><dt>Reference</dt><dd class="num">{l.short_name}</dd></div>
+          {l.category && <div><dt>Category</dt><dd>{l.category}</dd></div>}
+          <div><dt>Kind</dt><dd>{l._kind === 'external' ? 'External organisation' : 'ISO/IEC committee'}</dd></div>
+        </dl>
+      </aside>
+
+      <section>
+        {l._kind === 'external' && (
+          <>
+            <p class="eyebrow">About this liaison</p>
+            <p class="lia-description">
+              {l.name !== l.short_name ? l.name : `${l.short_name} is in technical liaison with ISO/TC 12 under the divisions of labour between international standards bodies on the vocabulary of quantities and units.`}
+            </p>
+          </>
+        )}
+        {l._kind === 'committee' && (
+          <>
+            <p class="eyebrow">About this liaison</p>
+            <p class="lia-description">
+              {l.ref} is an ISO or IEC technical committee that maintains a formal liaison
+              with ISO/TC 12 to coordinate work on shared or related quantities and units.
+            </p>
+          </>
+        )}
+
+        {l.representatives && l.representatives.length > 0 && (
+          <>
+            <p class="eyebrow" style="margin-top: 2rem;">Representatives</p>
+            <ul class="lia-rep-list">
+              {l.representatives.map((r) => <li>{r}</li>)}
+            </ul>
+          </>
+        )}
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .back-link { display: inline-block; font-size: 0.8125rem; color: var(--ink-muted); text-decoration: none; margin-bottom: 2rem; font-family: var(--font-mono); }
+  .back-link:hover { color: var(--accent); }
+
+  .lia-detail-head { padding-bottom: 2rem; border-bottom: 1px solid var(--rule-strong); margin-bottom: 3rem; }
+  .lia-detail-head__title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; letter-spacing: -0.025em; color: var(--ink); margin: 0.75rem 0 0; line-height: 1.05; }
+  .lia-detail-head__full { font-family: var(--font-display); font-size: 1.1875rem; line-height: 1.5; color: var(--ink-secondary); margin: 1rem 0 0; }
+
+  .lia-detail-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 1024px) { .lia-detail-grid { grid-template-columns: 1fr 2fr; gap: 3rem; } }
+
+  .lia-meta { margin: 0; display: flex; flex-direction: column; gap: 1rem; }
+  .lia-meta dt { font-size: 0.6875rem; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.375rem; }
+  .lia-meta dd { margin: 0; font-size: 0.9375rem; color: var(--ink); }
+  .num { font-family: var(--font-mono); }
+
+  .lia-description { font-family: var(--font-display); font-size: 1.0625rem; line-height: 1.6; color: var(--ink-secondary); margin: 0.75rem 0 0; }
+
+  .lia-rep-list { list-style: none; padding: 0; margin: 0.75rem 0 0; display: flex; flex-direction: column; gap: 0.375rem; }
+  .lia-rep-list li { font-size: 0.9375rem; color: var(--ink); padding: 0.375rem 0; border-bottom: 1px solid var(--rule); }
+</style>

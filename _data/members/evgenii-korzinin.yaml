@@ -1,0 +1,8 @@
+member-id: evgenii-korzinin
+name: Korzinin, Evgenii
+active: true
+roles:
+  - id: member
+    nsbody: GOST R
+    member_type: P-member
+salutation: Dr

@@ -1,0 +1,8 @@
+member-id: worku-adefris
+name: Adefris, Worku
+active: true
+roles:
+  - id: member
+    nsbody: IES
+    member_type: O-member
+salutation: Mr

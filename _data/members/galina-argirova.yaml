@@ -1,0 +1,8 @@
+member-id: galina-argirova
+name: Argirova, Galina
+active: true
+roles:
+  - id: member
+    nsbody: BDS
+    member_type: O-member
+salutation: Mrs

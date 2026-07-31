@@ -1,0 +1,8 @@
+member-id: yong-deuk-kim
+name: Kim, Yong Deuk
+active: true
+roles:
+  - id: member
+    nsbody: KATS
+    member_type: O-member
+salutation: Mr

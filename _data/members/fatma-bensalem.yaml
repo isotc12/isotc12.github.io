@@ -1,0 +1,8 @@
+member-id: fatma-bensalem
+name: Bensalem, Fatma
+active: true
+roles:
+  - id: member
+    nsbody: AFNOR
+    member_type: P-member
+salutation: MME

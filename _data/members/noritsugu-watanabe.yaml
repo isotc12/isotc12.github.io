@@ -1,0 +1,7 @@
+member-id: noritsugu-watanabe
+name: Watanabe, Noritsugu
+active: true
+roles:
+  - id: member
+    nsbody: JISC
+    member_type: P-member

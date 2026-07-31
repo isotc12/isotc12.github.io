@@ -1,0 +1,8 @@
+member-id: laura-atwell
+name: Atwell, Laura
+active: true
+roles:
+  - id: liaison_representative
+    organization: ICRU
+    liaison_type: A-liaison
+salutation: Dr

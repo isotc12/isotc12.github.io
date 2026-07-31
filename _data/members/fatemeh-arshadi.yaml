@@ -1,0 +1,8 @@
+member-id: fatemeh-arshadi
+name: Arshadi, Fatemeh
+active: true
+roles:
+  - id: member
+    nsbody: INSO
+    member_type: O-member
+salutation: Ms

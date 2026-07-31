@@ -1,0 +1,8 @@
+member-id: michael-nelson
+name: Nelson, Michael
+active: true
+roles:
+  - id: member
+    nsbody: ANSI
+    member_type: P-member
+salutation: Dr

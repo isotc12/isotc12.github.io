@@ -1,0 +1,8 @@
+member-id: talal-alrokaibi
+name: AlRokaibi, Talal
+active: true
+roles:
+  - id: member
+    nsbody: KOWSMD
+    member_type: P-member
+salutation: Mr

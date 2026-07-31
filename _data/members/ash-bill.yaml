@@ -1,8 +1,0 @@
-member-id: ash-bill
-name: Ash, Bill
-active: true
-roles:
-  - id: liaison_representative
-    committee: ISO/IEC JTC 1/SC 32
-salutation: Mr
-email: bash@itic.org

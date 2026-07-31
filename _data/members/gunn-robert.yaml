@@ -1,9 +1,0 @@
-member-id: gunn-robert
-name: Gunn, Robert
-active: true
-roles:
-  - id: liaison_representative
-    organization: EURAMET
-    liaison_type: A-liaison
-salutation: Mr
-email: robert.gunn@npl.co.uk

@@ -1,0 +1,8 @@
+member-id: alex-ashcroft
+name: Ashcroft, Alex
+active: true
+roles:
+  - id: liaison_representative
+    organization: IUCr
+    liaison_type: A-liaison
+salutation: Mr

@@ -1,0 +1,164 @@
+external_organisations:
+  - id: bipm
+    short_name: BIPM
+    name: Bureau International des Poids et Mesures
+    category: A
+    representatives:
+      - Brown, Richard
+      - Koo, Annette
+      - Robinson, Stephen
+      - Sitton, Robert
+  - id: calconnect
+    short_name: CalConnect
+    name: The Calendaring and Scheduling Consortium
+    category: A
+    representatives:
+      - Douglass, Michael
+      - Gershon, Janssen
+      - Tse, Ronald Henry
+  - id: cie
+    short_name: CIE
+    name: International Commission on Illumination
+    category: A
+    representatives:
+      - Guan, Shuchen
+      - Wernisch, Diana
+  - id: euramet
+    short_name: EURAMET
+    name: European Association of National Metrology Institutes
+    category: A
+    representatives:
+      - Gunn, Robert
+  - id: icru
+    short_name: ICRU
+    name: International Commission on Radiation Units and Measurements
+    category: A
+    representatives:
+      - Atwell, Laura
+  - id: imo
+    short_name: IMO
+    name: International Maritime Organization
+    category: B
+    representatives:
+      - Allnutt, Sandra Rita
+  - id: imu
+    short_name: IMU
+    name: International Mathematical Union
+    category: A
+    representatives:
+      - Hartsink, Gerard
+  - id: infoterm
+    short_name: Infoterm
+    name: International Information Centre for Terminology
+    category: A
+    representatives:
+      - Galinski, Christian
+  - id: itu
+    short_name: ITU
+    name: International Telecommunication Union
+    category: A
+    representatives:
+      - Caras, John George
+      - Yang, Xiaoya
+  - id: iucr
+    short_name: IUCr
+    name: International Union of Crystallography
+    category: A
+    representatives:
+      - Ashcroft, Alex
+      - Brock, C.P.
+  - id: iupap
+    short_name: IUPAP
+    name: International Union of Pure and Applied Physics
+    category: A
+    representatives:
+      - Karshenboim, Savely
+      - Pendrill, Leslie
+  - id: oasis
+    short_name: OASIS
+    name: Organization for the Advancement of Structured Information Standards
+    category: A
+    representatives:
+      - Olken, Frank
+  - id: oiml
+    short_name: OIML
+    name: International Organization of Legal Metrology
+    category: A
+    representatives:
+      - Zechner, Georg
+  - id: unece
+    short_name: UNECE
+    name: United Nations Economic Commission for Europe
+    category: A
+    representatives:
+      - Henninot, Jean-Pierre
+      - Housing, Building and Planning, (UN/ECE)
+  - id: who
+    short_name: WHO
+    name: World Health Organization
+    category: A
+    representatives:
+      - Technical Terminology Service (WHO), WHO
+  - id: wmo
+    short_name: WMO
+    name: World Meteorological Organization
+    category: A
+    representatives:
+      - Shi, Peiliang
+iso_iec_committees:
+  - ref: IEC/TC 25
+    representatives:
+      - Nafi, Andrea
+  - ref: IEC/TC 29
+    representatives:
+      - Barham, Richard
+      - Aagesen, Lise Schmidt
+  - ref: ISO/IEC JTC 1/SC 32
+    representatives:
+      - Ash, Bill
+      - Rajchel, Lisa
+      - Wennblom, Phil
+  - ref: ISO/TC 184/SC 4
+    representatives:
+      - Sonoda, Yoshiaki
+      - Swindells, Robert
+      - Tse, Ronald
+      - Garnett, Lesli
+      - Koshy, Sheron
+      - Mayes, Ryan
+      - Swope, Kenneth
+      - Thompson, Hayley
+  - ref: ISO/TC 215
+    representatives:
+      - Girvalo, Gracie
+      - Hawthorne, Rachel
+  - ref: ISO/TC 37
+    representatives:
+      - CAO, Xinyu
+      - WANG, Haitao
+  - ref: ISO/TC 43
+    representatives:
+      - Struck, Christopher
+      - Boidol, Jeannette
+      - Lehmann, Sherin
+      - Liebing, Daniela
+      - Sayer, Agnes
+  - ref: ISO/TC 43/SC 1
+    representatives:
+      - Boidol, Jeannette
+      - Lehmann, Sherin
+      - Liebing, Daniela
+      - Sayer, Agnes
+  - ref: ISO/TC 43/SC 3
+    representatives:
+      - Ainslie, Michael
+      - Boidol, Jeannette
+      - Büttner, Clemens
+      - Lehmann, Sherin
+      - Liebing, Daniela
+  - ref: ISO/TC 69
+    representatives:
+      - Admussen, Jennifer
+  - ref: ISO/TC 85
+    representatives:
+      - GESLIN, Nathalie

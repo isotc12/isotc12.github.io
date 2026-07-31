@@ -1,0 +1,8 @@
+member-id: abbas-sabour-gilvan
+name: Sabour Gilvan, Abbas
+active: true
+roles:
+  - id: member
+    nsbody: INSO
+    member_type: O-member
+salutation: Mr

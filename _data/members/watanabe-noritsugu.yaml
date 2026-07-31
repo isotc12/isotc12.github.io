@@ -1,9 +1,0 @@
-member-id: watanabe-noritsugu
-name: Watanabe, Noritsugu
-active: true
-roles:
-  - id: member
-    group: jisc
-    nsbody: JISC
-    member_type: P-member
-email: watanabe.noritsugu@tdgc.jp

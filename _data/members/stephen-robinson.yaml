@@ -1,0 +1,8 @@
+member-id: stephen-robinson
+name: Robinson, Stephen
+active: true
+roles:
+  - id: liaison_representative
+    organization: BIPM
+    liaison_type: A-liaison
+salutation: Mr

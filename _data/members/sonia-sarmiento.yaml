@@ -1,0 +1,8 @@
+member-id: sonia-sarmiento
+name: Sarmiento, Sonia
+active: true
+roles:
+  - id: member
+    nsbody: ICONTEC
+    member_type: O-member
+salutation: Miss

@@ -1,0 +1,8 @@
+member-id: wei-gao
+name: Gao, Wei
+active: true
+roles:
+  - id: member
+    nsbody: SAC
+    member_type: P-member
+salutation: Ms

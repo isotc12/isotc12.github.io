@@ -1,0 +1,8 @@
+member-id: haiming-shao
+name: Shao, Haiming
+active: true
+roles:
+  - id: member
+    nsbody: SAC
+    member_type: P-member
+salutation: Mr

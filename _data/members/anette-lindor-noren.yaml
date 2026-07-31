@@ -1,0 +1,9 @@
+member-id: anette-lindor-noren
+name: Lindor Norén, Anette
+active: true
+roles:
+  - id: secretariat_support
+  - id: member
+    nsbody: SIS
+    member_type: P-member
+salutation: Ms

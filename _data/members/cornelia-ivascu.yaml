@@ -1,0 +1,8 @@
+member-id: cornelia-ivascu
+name: IVASCU, Cornelia
+active: true
+roles:
+  - id: member
+    nsbody: ASRO
+    member_type: O-member
+salutation: Mrs

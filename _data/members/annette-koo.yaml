@@ -1,0 +1,7 @@
+member-id: annette-koo
+name: Koo, Annette
+active: true
+roles:
+  - id: liaison_representative
+    organization: BIPM
+    liaison_type: A-liaison
