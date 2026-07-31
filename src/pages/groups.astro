@@ -4,116 +4,101 @@ import PageHero from '../components/PageHero.astro'
 import fs from 'node:fs'
 
 const groups = JSON.parse(fs.readFileSync('public/data/groups.json', 'utf-8'))
-const leadership = JSON.parse(fs.readFileSync('public/data/leadership.json', 'utf-8'))
 const active = groups.filter((g) => g.status === 'active' || g.status === 'transition')
 const disbanded = groups.filter((g) => g.status === 'disbanded')
-const statusLabel = { active: 'Active', transition: 'In transition', disbanded: 'Disbanded' }
-const pillClass = { active: 'published', transition: 'development', disbanded: 'withdrawn' }
 ---
 
-<BaseLayout title="Working groups & officers" description="ISO/TC 12's working groups and committee officers.">
-  <article class="page">
-    <PageHero
-      eyebrow="Structure"
-      title="Working groups & officers"
-      lead="Most of the technical work happens in working groups. TC 12 currently has one active WG and a joint one with IEC/TC 25."
-    />
+<BaseLayout title="Groups — ISO/TC 12" description="Working groups and structures of ISO/TC 12.">
+  <PageHero
+    variant="index"
+    bleed
+    eyebrow="Committee structure"
+    title="Groups"
+    lead={`${active.length} active groups — working groups driving today's programmes, plus disbanded groups whose work is complete.`}
+  />
 
-    <section>
-      <header class="block-head">
-        <p class="eyebrow">Active</p>
-      </header>
-      <div class="wg-grid">
-        {active.map((g) => (
-          <article class="card wg">
-            <header class="wg__head">
-              <h3 class="wg__name">{g.name}</h3>
-              <span class:list={['pill', `pill--${pillClass[g.status]}`]}>
-                <span class="pill__dot"></span>{statusLabel[g.status]}
-              </span>
-            </header>
-            <p class="wg__scope">{g.scope}</p>
-            <dl class="wg__meta">
-              <div><dt>Convenor</dt><dd>{g.convenor}</dd></div>
-              {g.established && <div><dt>Established</dt><dd class="num">{g.established}</dd></div>}
-            </dl>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    {disbanded.length > 0 && (
-      <section>
-        <header class="block-head">
-          <p class="eyebrow">Disbanded (work complete)</p>
+  <div class="page page--wide">
+    {active.length > 0 && (
+      <section class="grp-section">
+        <header class="grp-section__head">
+          <h2>Working Groups <span class="count">{active.length}</span></h2>
         </header>
-        <div class="data-table-wrap">
-          <table class="data-table">
-            <thead><tr><th>Group</th><th class="hide-mobile">Scope</th><th>Disbanded</th></tr></thead>
-            <tbody>
-              {disbanded.map((g) => (
-                <tr>
-                  <td class="num-cell">{g.name}</td>
-                  <td class="hide-mobile muted">{g.scope}</td>
-                  <td class="num-cell muted">{g.disbanded ?? '—'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <ul class="grp-grid">
+          {active.map((g) => (
+            <li>
+              <a href={g.href} class="grp-card">
+                <span class="grp-card__id">{g.name}</span>
+                <h3 class="grp-card__title">{g.scope}</h3>
+                {g.convenor && <p class="grp-card__convenor">Convenor: {g.convenor}</p>}
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
     )}
 
-    <section>
-      <header class="block-head">
-        <p class="eyebrow">Committee officers</p>
-        <h2 class="display-h2">Secretariat & leadership</h2>
-      </header>
-      <div class="data-table-wrap">
-        <table class="data-table">
-          <thead><tr><th style="width: 14rem">Role</th><th>Name</th><th class="hide-mobile">Affiliation</th><th class="hide-mobile-lt">Term</th></tr></thead>
-          <tbody>
-            {leadership.map((p) => (
-              <tr>
-                <td><span class="role">{p.role}</span></td>
-                <td class="name-cell">{p.name}</td>
-                <td class="hide-mobile muted">{p.affiliation}</td>
-                <td class="hide-mobile-lt num-cell muted">{p.term}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </article>
+    {disbanded.length > 0 && (
+      <section class="grp-section">
+        <header class="grp-section__head">
+          <h2>Disbanded <span class="count">{disbanded.length}</span></h2>
+        </header>
+        <ul class="grp-grid">
+          {disbanded.map((g) => (
+            <li>
+              <div class="grp-card grp-card--disbanded">
+                <span class="grp-card__id">{g.name}</span>
+                <h3 class="grp-card__title">{g.scope}</h3>
+                {g.disbanded && <p class="grp-card__convenor">Disbanded: {g.disbanded}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
 </BaseLayout>
 
 <style>
-  section { margin-top: 3rem; }
-  .block-head { margin-bottom: 1.5rem; }
-  .display-h2 { font-family: var(--font-display); font-size: clamp(1.625rem, 3vw, 2.25rem); font-weight: 500; color: var(--ink); margin: 0.625rem 0 0; letter-spacing: -0.02em; }
+  .grp-section { max-width: 80rem; margin: 2rem auto 3rem; padding: 0 1.5rem; }
+  @media (min-width: 1024px) { .grp-section { padding: 0 2rem; } }
+  .grp-section__head { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+  .grp-section__head h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 0; letter-spacing: -0.015em; }
+  .count { font-size: 0.875rem; color: var(--ink-muted); margin-left: 0.5rem; font-weight: 400; }
 
-  .wg-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-  @media (min-width: 768px) { .wg-grid { grid-template-columns: repeat(2, 1fr); } }
-  .wg { display: flex; flex-direction: column; gap: 0.875rem; }
-  .wg__head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-  .wg__name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; color: var(--accent); margin: 0; letter-spacing: -0.015em; }
-  .wg__scope { font-size: 0.9375rem; line-height: 1.55; color: var(--ink-secondary); margin: 0; }
-  .wg__meta { margin: auto 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-top: 0.875rem; border-top: 1px solid var(--rule); }
-  .wg__meta dt { font-size: 0.6875rem; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
-  .wg__meta dd { margin: 0; font-size: 0.875rem; color: var(--ink); }
+  .grp-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  @media (min-width: 768px) { .grp-grid { grid-template-columns: repeat(2, 1fr); } }
 
-  .data-table-wrap { border: 1px solid var(--rule); border-radius: 0.5rem; overflow: hidden; }
-  .num-cell { font-family: var(--font-mono); font-size: 0.875rem; color: var(--ink); }
-  .muted { color: var(--ink-muted) !important; font-size: 0.875rem; }
-  .role {
-    display: inline-block; padding: 0.1875rem 0.5625rem;
-    background: color-mix(in srgb, var(--accent) 8%, transparent);
-    color: var(--accent);
-    font-size: 0.75rem; font-weight: 600;
-    border-radius: 0.25rem;
+  .grp-card {
+    display: block;
+    padding: 1.25rem;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s;
+    border-radius: 0.375rem;
   }
-  .name-cell { font-weight: 500; color: var(--ink); }
-  @media (max-width: 767px) { .hide-mobile { display: none; } }
-  @media (max-width: 1023px) { .hide-mobile-lt { display: none; } }
+  .grp-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .grp-card--disbanded { opacity: 0.65; }
+  .grp-card__id {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .grp-card__title {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .grp-card__convenor {
+    margin: 0.5rem 0 0;
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+  }
 </style>

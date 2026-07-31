@@ -4,104 +4,75 @@ import PageHero from '../components/PageHero.astro'
 import fs from 'node:fs'
 
 const events = JSON.parse(fs.readFileSync('public/data/events.json', 'utf-8'))
-const byYear = new Map()
-for (const e of events) {
-  const year = e.time?.from?.date?.slice(0, 4) || String(e.year)
-  if (!byYear.has(year)) byYear.set(year, [])
-  byYear.get(year).push(e)
-}
-const years = Array.from(byYear.keys()).sort((a, b) => b.localeCompare(a))
-
-function ordinal(n) {
-  const s = ['th', 'st', 'nd', 'rd']
-  const v = n % 100
-  return n + (s[(v - 20) % 10] || s[v] || s[0])
-}
 ---
 
-<BaseLayout title="History" description="Fifteen plenary meetings of ISO/TC 12 from 2010 to 2026 — Prague to Zoom.">
-  <article class="page">
-    <PageHero
-      eyebrow="History"
-      title="From Prague to Zoom"
-      lead="Fifteen plenary meetings across sixteen years — in-person meetings in Prague, Milan, Berlin, Gaithersburg, Stockholm, and Helsinki, through hybrid meetings to the virtual Zoom plenaries of the pandemic years."
-    />
+<BaseLayout title="History — ISO/TC 12" description="Plenary meetings of ISO/TC 12 since 2010.">
+  <PageHero
+    variant="index"
+    bleed
+    eyebrow="Timeline"
+    title="History"
+    lead={`Fifteen plenary meetings since 2010 — from Prague to Zoom.`}
+  />
 
-    <div class="history">
-      <aside class="history__nav">
-        <p class="eyebrow">Jump to</p>
-        <ol>
-          {years.map((y) => (
-            <li>
-              <a href={`#year-${y}`} class="history__nav-link">
-                <span class="num">{y}</span>
-                <span class="history__nav-count">{byYear.get(y).length}</span>
-              </a>
-            </li>
-          ))}
-        </ol>
-      </aside>
-
-      <div class="history__timeline">
-        {years.map((year) => (
-          <section id={`year-${year}`} class="year">
-            <header class="year__head">
-              <h2 class="year__num num">{year}</h2>
-              <span class="year__count">{byYear.get(year).length} {byYear.get(year).length === 1 ? 'meeting' : 'meetings'}</span>
-            </header>
-            <ol class="meetings">
-              {byYear.get(year).map((e) => (
-                <li class="meeting">
-                  <div class="meeting__ordinal">
-                    <span class="meeting__num num">{e.ordinal}</span>
-                    <time class="meeting__date" datetime={e.time?.from?.date}>{new Date(e.time?.from?.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</time>
-                  </div>
-                  <div class="meeting__body">
-                    <h3 class="meeting__title"><a href={e.landing_url}>{e.title}</a></h3>
-                    <p class="meeting__meta">{e.general_area}{e.host && <> · hosted by {e.host}</>}</p>
-                    {e.acting_chair_at_meeting && <p class="meeting__note">Acting chair: {e.acting_chair_at_meeting}</p>}
-                    {e.attendance?.countries && (
-                      <ul class="meeting__countries">
-                        {e.attendance.countries.filter((c) => c.attended !== false).map((c) => <li>{c.code}</li>)}
-                      </ul>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
+  <div class="page page--wide">
+    <section class="hist-section">
+      <header class="hist-section__head">
+        <h2>Plenary meetings <span class="count">{events.length}</span></h2>
+      </header>
+      <ol class="hist-list">
+        {events.map((e) => (
+          <li>
+            <a href={`/meetings/plenary-${e.ordinal}/`} class="hist-card">
+              <span class="hist-card__num">{e.ordinal}</span>
+              <div class="hist-card__body">
+                <h3 class="hist-card__title">{e.title}</h3>
+                <div class="hist-card__meta">
+                  <span>{new Date(e.time?.from?.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                  <span>{e.general_area}</span>
+                  {e.host && <span>{e.host}</span>}
+                </div>
+              </div>
+            </a>
+          </li>
         ))}
-      </div>
-    </div>
-  </article>
+      </ol>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .history { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 3rem; }
-  @media (min-width: 1024px) { .history { grid-template-columns: 200px 1fr; gap: 4rem; } }
+  .hist-section { max-width: 80rem; margin: 2rem auto 3rem; padding: 0 1.5rem; }
+  @media (min-width: 1024px) { .hist-section { padding: 0 2rem; } }
+  .hist-section__head { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+  .hist-section__head h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 0; letter-spacing: -0.015em; }
+  .count { font-size: 0.875rem; color: var(--ink-muted); margin-left: 0.5rem; font-weight: 400; }
 
-  .history__nav { position: sticky; top: 6rem; align-self: start; }
-  .history__nav ol { list-style: none; padding: 0; margin: 0.625rem 0 0; }
-  .history__nav-link { display: flex; justify-content: space-between; align-items: baseline; padding: 0.5rem 0; font-family: var(--font-mono); font-size: 0.875rem; color: var(--ink-secondary); text-decoration: none; border-bottom: 1px solid var(--rule); }
-  .history__nav-link:hover { color: var(--accent); }
-  .history__nav-count { color: var(--ink-faint); font-size: 0.75rem; }
+  .hist-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+  @media (min-width: 768px) { .hist-list { grid-template-columns: repeat(2, 1fr); } }
 
-  .year { margin-bottom: 3rem; }
-  .year__head { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rule-strong); margin-bottom: 0.5rem; }
-  .year__num { font-family: var(--font-mono); font-feature-settings: 'tnum'; font-size: 2.5rem; font-weight: 500; color: var(--accent); letter-spacing: -0.025em; margin: 0; line-height: 1; }
-  .year__count { font-size: 0.6875rem; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; }
-
-  .meetings { list-style: none; padding: 0; margin: 0; }
-  .meeting { display: grid; grid-template-columns: 6rem 1fr; gap: 1.25rem; padding: 1.5rem 0; border-bottom: 1px solid var(--rule); }
-  @media (min-width: 768px) { .meeting { grid-template-columns: 8rem 1fr; gap: 2rem; } }
-  .meeting__num { display: block; font-family: var(--font-mono); font-feature-settings: 'tnum'; font-size: 0.875rem; font-weight: 600; color: var(--accent); }
-  .meeting__date { display: block; font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.375rem; font-family: var(--font-mono); }
-
-  .meeting__title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; margin: 0; letter-spacing: -0.015em; }
-  .meeting__title a { color: var(--ink); text-decoration: none; }
-  .meeting__title a:hover { color: var(--accent); }
-  .meeting__meta { margin: 0.375rem 0 0; font-size: 0.875rem; color: var(--ink-muted); }
-  .meeting__note { margin: 0.25rem 0 0; font-size: 0.8125rem; color: var(--ink-muted); font-style: italic; font-family: var(--font-display); }
-  .meeting__countries { list-style: none; padding: 0; margin: 0.875rem 0 0; display: flex; flex-wrap: wrap; gap: 0.375rem; }
-  .meeting__countries li { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500; padding: 0.1875rem 0.4375rem; border: 1px solid var(--rule); border-radius: 0.25rem; color: var(--ink-secondary); }
+  .hist-card {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    text-decoration: none;
+    color: inherit;
+    border-radius: 0.375rem;
+    transition: border-color 0.15s, transform 0.15s;
+    align-items: baseline;
+  }
+  .hist-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .hist-card__num {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .hist-card__title { font-family: var(--font-sans); font-size: 0.9375rem; font-weight: 500; color: var(--ink); margin: 0; line-height: 1.4; }
+  .hist-card__meta { margin-top: 0.375rem; display: flex; gap: 0.875rem; font-size: 0.75rem; color: var(--ink-muted); flex-wrap: wrap; }
 </style>

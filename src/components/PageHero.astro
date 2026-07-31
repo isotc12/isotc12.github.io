@@ -1,16 +1,64 @@
 ---
 interface Props {
+  variant?: 'landing' | 'index' | 'detail'
   eyebrow?: string
-  title: string
+  title?: string
   lead?: string
+  bleed?: boolean
   class?: string
 }
-const { eyebrow, title, lead, class: className = '' } = Astro.props
+const { variant = 'index', eyebrow, title, lead, bleed = false, class: className = '' } = Astro.props
 ---
 
-<header class:list={['page-hero', className]}>
-  {eyebrow && <p class="page-hero__eyebrow">{eyebrow}</p>}
-  <h1 class="page-hero__title" set:html={title} />
-  {lead && <p class="page-hero__lead" set:html={lead} />}
-  <slot />
+<header class:list={['ph', `ph--${variant}`, { 'ph--bleed': bleed }, className]}>
+  <div class="ph__inner">
+    {eyebrow && (
+      <p class="ph__eyebrow">
+        <span class="ph__eyebrow-rule" aria-hidden="true"></span>
+        <span>{eyebrow}</span>
+      </p>
+    )}
+    {title && <h1 class="ph__title">{title}</h1>}
+    {lead && <p class="ph__lead" set:html={lead} />}
+    <slot />
+  </div>
 </header>
+
+<style>
+  .ph { position: relative; margin: 0 0 2.5rem; padding: 2rem 0 0; max-width: 48rem; overflow: hidden; }
+  .ph--bleed { max-width: none; padding-inline: 1.5rem; }
+  @media (min-width: 1024px) { .ph--bleed { padding-inline: 2rem; } }
+  .ph__inner { position: relative; z-index: 1; max-width: 48rem; }
+  .ph--bleed .ph__inner { max-width: 64rem; }
+
+  .ph__eyebrow {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--accent);
+    margin: 0 0 1rem;
+  }
+  .ph__eyebrow-rule { display: inline-block; width: 2rem; height: 1px; background: currentColor; flex-shrink: 0; }
+
+  .ph__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 5vw, 3.75rem);
+  }
+
+  .ph__lead {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--ink-secondary);
+    margin: 0 0 1.5rem;
+    max-width: 42rem;
+  }
+  .ph__lead :global(em) { font-style: italic; }
+  .ph__lead :global(strong) { color: var(--ink); font-weight: 600; }
+</style>

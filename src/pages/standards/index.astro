@@ -4,96 +4,153 @@ import PageHero from '../../components/PageHero.astro'
 import fs from 'node:fs'
 
 const standards = JSON.parse(fs.readFileSync('public/data/standards.json', 'utf-8'))
-const sorted = [...standards].sort((a, b) => a.part - b.part)
-const pillClass = (s) => s === 'published' ? 'published' : s === 'withdrawn' ? 'withdrawn' : 'development'
+const byStatus = { published: [], revision: [], development: [], withdrawn: [] }
+for (const s of standards) {
+  if (s.status === 'published') byStatus.published.push(s)
+  else if (s.status === 'under revision') byStatus.revision.push(s)
+  else if (s.status === 'under development') byStatus.development.push(s)
+  else if (s.status === 'withdrawn') byStatus.withdrawn.push(s)
+}
+const published = [...byStatus.published].sort((a, b) => a.part - b.part)
+const revision = [...byStatus.revision].sort((a, b) => a.part - b.part)
+const development = [...byStatus.development].sort((a, b) => a.part - b.part)
+const withdrawn = [...byStatus.withdrawn].sort((a, b) => a.part - b.part)
+
+const pubCount = published.length
+const revCount = revision.length
+const devCount = development.length
+const witCount = withdrawn.length
+const isIEC = (p) => p >= 14 && p <= 17
 ---
 
-<BaseLayout title="Standards" description="The ISO/IEC 80000 series — quantities and units across all domains of science and technology.">
-  <article class="page">
-    <PageHero
-      eyebrow="The series"
-      title="ISO/IEC 80000 — Quantities and units"
-      lead="Fifteen parts. One series. Every quantity used in measurement science — space, time, mechanics, light, sound, chemistry, atoms, information."
-    />
+<BaseLayout title="Standards — ISO/TC 12" description="The standards catalogue of ISO/TC 12.">
+  <PageHero
+    variant="index"
+    bleed
+    eyebrow="Our work"
+    title="Standards"
+    lead={`${pubCount} published · ${revCount + devCount} under development · ${witCount} withdrawn. The ISO/IEC 80000 series — quantities and units for science, technology, and trade.`}
+  />
 
+  <div class="page page--wide">
     <section class="std-section">
-      <div class="data-table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th style="width: 7rem">Part</th>
-              <th>Title</th>
-              <th class="hide-mobile">Edition</th>
-              <th class="hide-mobile">Stage</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sorted.map((s) => (
-              <tr>
-                <td class="num-cell"><a href={`/standards/${s.slug}/`} class="ref-link">{`80000-${String(s.part).padStart(2, '0')}`}</a></td>
-                <td>
-                  <a href={`/standards/${s.slug}/`} class="title-link">
-                    <span class="title-text">{s.title}</span>
-                    <span class="scope-text">{s.scope}</span>
-                  </a>
-                </td>
-                <td class="num-cell hide-mobile">{s.edition_year ?? '—'}</td>
-                <td class="num-cell hide-mobile muted">{s.stage}</td>
-                <td>
-                  <span class:list={['pill', `pill--${pillClass(s.status)}`]}>
-                    <span class="pill__dot"></span>{s.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <header class="std-section__head">
+        <h2>Published <span class="count">{pubCount}</span></h2>
+      </header>
+      <ul class="std-list">
+        {published.map((s) => (
+          <li>
+            <a href={`/standards/${s.slug}/`} class="std-card">
+              <span class="std-card__num">{`ISO ${isIEC(s.part) ? 'IEC ' : ''}80000-${s.part}`}</span>
+              <div class="std-card__body">
+                <h3 class="std-card__title">{s.title}</h3>
+                <div class="std-card__meta">
+                  {s.edition_year && <span>{s.edition_year}</span>}
+                  <span>{s.scope}</span>
+                </div>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
 
-    <section class="why">
-      <div class="why-grid">
-        <div>
-          <p class="eyebrow">Why fifteen parts</p>
-          <h2 class="display-h2">Organised by domain</h2>
-        </div>
-        <div class="prose-ref">
-          <p>
-            The series is partitioned by physical domain. Part 1 (General) sets the framework — names, symbols, prefixes, the SI. Parts 2 through 13 cover specific domains. Parts 14–17 are IEC-led (telebiometrics, logarithmic quantities, printing rules, time-dependency).
-          </p>
-          <p>
-            The seven SI base units span parts 3–9. Each quantity in the series carries a dimensional symbol following ISO 80000-1 conventions.
-          </p>
-        </div>
-      </div>
-    </section>
-  </article>
+    {(revision.length > 0 || development.length > 0) && (
+      <section class="std-section">
+        <header class="std-section__head">
+          <h2>Under development <span class="count">{revCount + devCount}</span></h2>
+        </header>
+        <ul class="std-list">
+          {[...revision, ...development].map((s) => (
+            <li>
+              <a href={`/standards/${s.slug}/`} class="std-card std-card--dev">
+                <span class="std-card__num">{`ISO ${isIEC(s.part) ? 'IEC ' : ''}80000-${s.part}`}</span>
+                <div class="std-card__body">
+                  <h3 class="std-card__title">{s.title}</h3>
+                  <div class="std-card__meta">
+                    <span>stage {s.stage}</span>
+                    <span>{s.status}</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {withdrawn.length > 0 && (
+      <section class="std-section">
+        <header class="std-section__head">
+          <h2>Withdrawn <span class="count">{witCount}</span></h2>
+        </header>
+        <ul class="std-list">
+          {withdrawn.map((s) => (
+            <li>
+              <a href={`/standards/${s.slug}/`} class="std-card std-card--withdrawn">
+                <span class="std-card__num">{`ISO ${isIEC(s.part) ? 'IEC ' : ''}80000-${s.part}`}</span>
+                <div class="std-card__body">
+                  <h3 class="std-card__title">{s.title}</h3>
+                  <div class="std-card__meta">
+                    <span>{s.scope}</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
 </BaseLayout>
 
 <style>
-  .std-section { margin-top: 2.5rem; }
-  .data-table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 0.5rem; }
-  .data-table .num-cell { font-family: var(--font-mono); font-size: 0.875rem; color: var(--ink); white-space: nowrap; }
-  .ref-link { color: var(--accent); text-decoration: none; font-weight: 500; }
-  .ref-link:hover { text-decoration: underline; text-underline-offset: 2px; }
-  .title-link { text-decoration: none; color: inherit; display: block; }
-  .title-text { display: block; font-family: var(--font-display); font-size: 1.0625rem; font-weight: 500; color: var(--ink); letter-spacing: -0.015em; }
-  .title-link:hover .title-text { color: var(--accent); }
-  .scope-text { display: block; font-size: 0.8125rem; color: var(--ink-muted); margin-top: 0.375rem; line-height: 1.5; }
-  .muted { color: var(--ink-muted) !important; }
+  .std-section { max-width: 80rem; margin: 2rem auto 3rem; padding: 0 1.5rem; }
+  @media (min-width: 1024px) { .std-section { padding: 0 2rem; } }
+  .std-section__head { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+  .std-section__head h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 0; letter-spacing: -0.015em; }
+  .count { font-size: 0.875rem; color: var(--ink-muted); margin-left: 0.5rem; font-weight: 400; }
 
-  @media (max-width: 767px) { .hide-mobile { display: none; } }
+  .std-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+  @media (min-width: 768px) { .std-list { grid-template-columns: repeat(2, 1fr); } }
 
-  .why { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--rule-strong); }
-  .why-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-  @media (min-width: 1024px) { .why-grid { grid-template-columns: 1fr 1.5fr; gap: 3rem; } }
-  .display-h2 {
+  .std-card {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s;
+    align-items: baseline;
+    border-radius: 0.375rem;
+  }
+  .std-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .std-card--withdrawn { opacity: 0.65; }
+  .std-card--dev { border-left: 3px solid var(--color-development); }
+  .std-card__num {
     font-family: var(--font-display);
-    font-size: clamp(1.625rem, 3vw, 2.25rem);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+  }
+  .std-card__title {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
     font-weight: 500;
     color: var(--ink);
-    margin: 0.625rem 0 0;
-    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 1.4;
+  }
+  .std-card__meta {
+    margin-top: 0.375rem;
+    display: flex; gap: 0.875rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--ink-muted);
   }
 </style>

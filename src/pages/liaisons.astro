@@ -4,73 +4,77 @@ import PageHero from '../components/PageHero.astro'
 import fs from 'node:fs'
 
 const liaisons = JSON.parse(fs.readFileSync('public/data/liaisons.json', 'utf-8'))
-const groups = JSON.parse(fs.readFileSync('public/data/groups.json', 'utf-8'))
+const fromTc12 = liaisons.from_tc12.sort((a, b) => (a.ref || '').localeCompare(b.ref || ''))
+const external = liaisons.external.sort((a, b) => (a.ref || '').localeCompare(b.ref || ''))
 ---
 
-<BaseLayout title="Liaisons" description="ISO/TC 12 maintains liaisons with IEC, ISO, and external bodies whose work intersects with quantities and units.">
-  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
-    <PageHero
-      eyebrow="Coordination"
-      ordinal="04"
-      title="Liaisons"
-      lede="Quantities and units touch nearly every scientific and engineering committee. TC 12 appoints liaison representatives to coordinate with related ISO, IEC, and external bodies."
-    />
+<BaseLayout title="Liaisons — ISO/TC 12" description="Liaison organisations of ISO/TC 12.">
+  <PageHero
+    variant="index"
+    bleed
+    eyebrow="External relationships"
+    title="Liaisons"
+    lead={`${fromTc12.length + external.length} committees and organisations in technical liaison with ISO/TC 12.`}
+  />
+
+  <div class="page page--wide">
+    <section class="lia-section">
+      <header class="lia-section__head">
+        <h2>ISO/IEC committees <span class="count">{fromTc12.length}</span></h2>
+      </header>
+      <ul class="lia-grid">
+        {fromTc12.map((l) => (
+          <li>
+            <div class="lia-card">
+              <h3 class="lia-card__name">{l.ref}</h3>
+              <p class="lia-card__full">{l.title}</p>
+              {l.representative && <p class="lia-card__rep">Rep: {l.representative}</p>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="lia-section">
+      <header class="lia-section__head">
+        <h2>External organisations <span class="count">{external.length}</span></h2>
+      </header>
+      <ul class="lia-grid">
+        {external.map((l) => (
+          <li>
+            <div class="lia-card">
+              <h3 class="lia-card__name">{l.ref}</h3>
+              <p class="lia-card__full">{l.title}</p>
+              {l.representative && <p class="lia-card__rep">Rep: {l.representative}</p>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
   </div>
-
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
-    <div class="hairline pt-8">
-      <span class="eyebrow">From ISO/TC 12</span>
-      <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2 mb-6">
-        Committees we send representatives to
-      </h2>
-      <table class="w-full text-sm">
-        <thead>
-          <tr class="text-left">
-            <th class="eyebrow font-normal py-2">Reference</th>
-            <th class="eyebrow font-normal py-2">Title</th>
-            <th class="eyebrow font-normal py-2 hidden md:table-cell">Representative</th>
-          </tr>
-        </thead>
-        <tbody>
-          {liaisons.from_tc12.map((l) => (
-            <tr class="hairline hover:bg-vellum/50">
-              <td class="py-3 pr-4 font-mono align-top text-wine">{l.ref}</td>
-              <td class="py-3 pr-4 align-top">{l.title}{l.status === 'proposed' && <span class="ml-2 text-xs text-muted italic">(proposed)</span>}</td>
-              <td class="py-3 pr-4 align-top text-muted text-sm hidden md:table-cell">{l.representative}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
-    <div class="hairline pt-8">
-      <span class="eyebrow">External</span>
-      <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2 mb-6">
-        Organisations in liaison with TC 12
-      </h2>
-      <table class="w-full text-sm">
-        <thead>
-          <tr class="text-left">
-            <th class="eyebrow font-normal py-2">Reference</th>
-            <th class="eyebrow font-normal py-2">Organisation</th>
-            <th class="eyebrow font-normal py-2 hidden md:table-cell">Liaison officer</th>
-          </tr>
-        </thead>
-        <tbody>
-          {liaisons.external.map((l) => (
-            <tr class="hairline hover:bg-vellum/50">
-              <td class="py-3 pr-4 font-mono align-top text-wine">{l.ref}</td>
-              <td class="py-3 pr-4 align-top">
-                {l.title}
-                {l.liaison_type && <span class="ml-2 text-xs text-muted italic">({l.liaison_type})</span>}
-              </td>
-              <td class="py-3 pr-4 align-top text-muted text-sm hidden md:table-cell">{l.representative}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
 </BaseLayout>
+
+<style>
+  .lia-section { max-width: 80rem; margin: 2rem auto 3rem; padding: 0 1.5rem; }
+  @media (min-width: 1024px) { .lia-section { padding: 0 2rem; } }
+  .lia-section__head { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+  .lia-section__head h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 0; letter-spacing: -0.015em; }
+  .count { font-size: 0.875rem; color: var(--ink-muted); margin-left: 0.5rem; font-weight: 400; }
+
+  .lia-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+  @media (min-width: 768px) { .lia-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .lia-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .lia-card {
+    display: block;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    border-radius: 0.375rem;
+    transition: border-color 0.15s;
+  }
+  .lia-card:hover { border-color: var(--accent); }
+  .lia-card__name { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--accent); margin: 0 0 0.25rem; }
+  .lia-card__full { font-size: 0.875rem; color: var(--ink-secondary); margin: 0; line-height: 1.4; }
+  .lia-card__rep { margin: 0.375rem 0 0; font-size: 0.75rem; color: var(--ink-muted); }
+</style>

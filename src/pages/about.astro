@@ -1,112 +1,89 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import PageHero from '../components/PageHero.astro'
-import UnitGrid from '../components/UnitGrid.astro'
 import { committee } from '../data/committee'
 ---
 
-<BaseLayout
-  title="About"
-  description="ISO/TC 12 maintains the ISO 80000 series of standards for quantities and units. Founded 1947; secretariat held by SIS (Sweden) since 1982."
->
-  <article class="page">
-    <PageHero
-      eyebrow="About"
-      title="Quantities, units, and the work of TC 12"
-      lead="Every measurement in science, engineering, and trade rests on a shared vocabulary of <em>quantities</em> and <em>units</em>. ISO/TC 12 maintains that vocabulary."
-    />
+<BaseLayout title="About — ISO/TC 12" description="About ISO/TC 12 — Quantities and units.">
+  <PageHero
+    variant="index"
+    bleed
+    eyebrow="About"
+    title="ISO/TC 12"
+    lead="Standardization of units and symbols for quantities and units (and mathematical symbols) used within the different fields of science and technology."
+  />
 
-    <div class="about-grid">
-      <div class="prose-ref">
-        <h3>The scope</h3>
-        <p>{committee.scope}</p>
-
-        <h3>What TC 12 produces</h3>
-        <p>
-          The committee's principal work is the <strong>ISO/IEC 80000</strong>
-          series — parts covering quantities and units across mathematics,
-          space and time, mechanics, thermodynamics, electromagnetism, light,
-          acoustics, physical chemistry, atomic and nuclear physics, characteristic
-          numbers, condensed matter, and information science.
-        </p>
-        <p>
-          TC 12 also coordinates with <strong>BIPM</strong> (the SI Brochure){' '}
-          <strong>JCGM</strong> (the VIM and GUM){' '}
-          <strong>IEC/TC 25</strong> (electrical and information-science
-          quantities), and many ISO committees that consume its work — from
-          acoustics to health informatics.
-        </p>
-
-        <h3>Why it matters</h3>
-        <p>
-          A watt is a watt everywhere. A kilogram is a kilogram. When a paper
-          publishes a measurement, a hospital records a dose, or a satellite
-          reports a position, those numbers depend on agreed quantities and
-          units. TC 12 is the body that maintains that agreement.
-        </p>
-
-        <h3>How to participate</h3>
-        <p>
-          Participation is through ISO member bodies. National standards bodies
-          can join as <strong>P-members</strong> (voting) or <strong>O-members</strong>
-          (observers). Individuals are nominated by their member body to serve
-          on working groups. Start at{' '}
-          <a href="https://www.iso.org/members.html">iso.org/members</a>.
-        </p>
+  <div class="page page--wide">
+    <section class="about-section">
+      <header class="about-section__head"><h2>General</h2></header>
+      <div class="about-section__body">
+        <dl class="facts">
+          <div><dt>Name</dt><dd>{committee.title}</dd></div>
+          <div><dt>Secretariat</dt><dd>{committee.secretariat}</dd></div>
+          <div><dt>Chair</dt><dd>{committee.chair}</dd></div>
+          <div><dt>Committee Manager</dt><dd>{committee.committee_manager}</dd></div>
+          <div><dt>Creation date</dt><dd>{committee.established}</dd></div>
+        </dl>
       </div>
+    </section>
 
-      <aside class="about-aside">
-        <div class="card">
-          <p class="eyebrow">Leadership</p>
-          <dl class="dl-compact">
-            <div>
-              <dt>Chair</dt>
-              <dd>{committee.chair}</dd>
-              <dd class="muted">until end 2027</dd>
-            </div>
-            <div>
-              <dt>Committee Manager</dt>
-              <dd>{committee.committee_manager}</dd>
-              <dd class="muted">SIS, Sweden</dd>
-            </div>
-            <div>
-              <dt>Secretariat</dt>
-              <dd>{committee.secretariat}</dd>
-              <dd class="muted">Since 1982</dd>
-            </div>
-          </dl>
-        </div>
+    <section class="about-section">
+      <header class="about-section__head"><h2>Mission</h2></header>
+      <div class="about-section__body">
+        <p>In society, processes and products acquire better interoperability, improved communication, and can be more reliably traded when measurement is expressed in terms of harmonised units and symbols. Harmonised treatment of quantities and units facilitates the route to market for innovative products and services of all kinds.</p>
+        <p>TC 12 is charged with the standardization of units and symbols for quantities and units (and mathematical symbols) used within the different fields of science and technology, giving, where necessary, definitions of these quantities and units. Standard conversion factors between the various units.</p>
+      </div>
+    </section>
 
-        <div class="card">
-          <p class="eyebrow">The seven base units</p>
-          <p class="muted small">Define the dimensions across which all ISO 80000 quantities live.</p>
-          <UnitGrid variant="compact" />
-        </div>
+    <section class="about-section">
+      <header class="about-section__head"><h2>Scope</h2></header>
+      <div class="about-section__body">
+        <p>{committee.scope}</p>
+      </div>
+    </section>
 
-        <div class="card">
-          <p class="eyebrow">External</p>
-          <ul class="link-list">
-            <li><a href={committee.links.isoCommittee}>ISO committee page ↗</a></li>
-            <li><a href="https://www.bipm.org/en/measurement-units/si-brochure">BIPM SI Brochure ↗</a></li>
-            <li><a href="https://www.bipm.org/en/committees/jc/jcgm">JCGM (VIM, GUM) ↗</a></li>
-          </ul>
-        </div>
-      </aside>
-    </div>
-  </article>
+    <section class="about-section">
+      <header class="about-section__head"><h2>The ISO 80000 series</h2></header>
+      <div class="about-section__body">
+        <p>The committee's principal work is the <strong>ISO/IEC 80000</strong> series — quantities and units across mathematics, space and time, mechanics, thermodynamics, electromagnetism, light, acoustics, physical chemistry, atomic and nuclear physics, characteristic numbers, condensed matter, and information science.</p>
+        <p>TC 12 coordinates with <strong>BIPM</strong> (the SI Brochure), <strong>JCGM</strong> (the VIM and GUM), <strong>IEC/TC 25</strong> (electrical and information-science quantities), and many ISO committees that consume its work.</p>
+        <p>There is a division of labour between handling the International System of Units (CGPM/BIPM) and the International System of Quantities (ISO/TC 12).</p>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <header class="about-section__head"><h2>Working Groups</h2></header>
+      <div class="about-section__body">
+        <ul class="wg-list">
+          <li><strong>WG 21</strong> — General (revision of ISO 80000-1)</li>
+          <li><strong>JWG 2</strong> — Joint with IEC/TC 25 (revision of IEC parts of ISO/IEC 80000 series)</li>
+        </ul>
+        <p><a href="/groups/" class="text-link">See all groups →</a></p>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .about-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-top: 3rem; }
-  @media (min-width: 1024px) { .about-grid { grid-template-columns: 2fr 1fr; gap: 3rem; } }
-  .about-aside { display: flex; flex-direction: column; gap: 1rem; }
-  .dl-compact { margin: 0.75rem 0 0; display: flex; flex-direction: column; gap: 1rem; }
-  .dl-compact dt { font-size: 0.6875rem; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; }
-  .dl-compact dd { margin: 0.125rem 0 0; font-size: 0.9375rem; color: var(--ink); font-weight: 500; }
-  .dl-compact dd.muted { font-weight: 400; color: var(--ink-muted); font-size: 0.8125rem; margin-top: 0.125rem; }
-  .muted { color: var(--ink-muted); }
-  .small { font-size: 0.8125rem; line-height: 1.5; margin: 0.5rem 0 1.25rem; }
-  .link-list { list-style: none; padding: 0; margin: 0.625rem 0 0; display: flex; flex-direction: column; gap: 0.5rem; }
-  .link-list a { color: var(--accent); font-size: 0.875rem; text-decoration: none; }
-  .link-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .about-section { max-width: 48rem; margin: 0 auto 2.5rem; padding: 0 1.5rem; }
+  @media (min-width: 1024px) { .about-section { padding: 0 2rem; } }
+  .about-section__head { padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+  .about-section__head h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 0; letter-spacing: -0.015em; }
+  .about-section__body { font-size: 0.9375rem; line-height: 1.7; color: var(--ink-secondary); }
+  .about-section__body p { margin: 0 0 1rem; }
+  .about-section__body p:last-child { margin-bottom: 0; }
+  .about-section__body strong { color: var(--ink); font-weight: 600; }
+
+  .facts { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin: 0; }
+  @media (min-width: 640px) { .facts { grid-template-columns: 1fr 1fr; } }
+  .facts div { display: flex; flex-direction: column; gap: 0.125rem; }
+  .facts dt { font-size: 0.6875rem; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .facts dd { margin: 0; font-size: 0.9375rem; color: var(--ink); font-weight: 500; }
+
+  .wg-list { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .wg-list li { font-size: 0.9375rem; color: var(--ink-secondary); }
+  .wg-list strong { color: var(--accent); }
+
+  .text-link { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .text-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 </style>

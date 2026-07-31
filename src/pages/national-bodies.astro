@@ -7,64 +7,83 @@ const nb = JSON.parse(fs.readFileSync('public/data/national_bodies.json', 'utf-8
 const sorted = [...nb.participating].sort((a, b) => a.name.localeCompare(b.name))
 ---
 
-<BaseLayout title="National bodies" description={`ISO/TC 12 participating members — ${nb.p_count} national standards bodies actively shaping the work.`}>
-  <article class="page">
-    <PageHero
-      eyebrow="Members"
-      title={`Participating member bodies (${nb.p_count})`}
-      lead={`P-members vote on every formal question — new work items, drafts, final drafts, and resolutions. The committee currently has <strong>${nb.p_count} P-members</strong> actively shaping the work.`}
-    />
+<BaseLayout title="National bodies — ISO/TC 12" description="Participating member bodies of ISO/TC 12.">
+  <PageHero
+    variant="index"
+    bleed
+    eyebrow="The committee"
+    title="National bodies"
+    lead={`${nb.p_count} participating member bodies (P-members) actively shaping the work of ISO/TC 12.`}
+  />
 
-    <section>
-      <p class="eyebrow">Participating (P-members)</p>
-      <ul class="bodies">
+  <div class="page page--wide">
+    <section class="nb-section">
+      <header class="nb-section__head">
+        <h2>Participating members (P-members) <span class="count">{nb.p_count}</span></h2>
+      </header>
+      <ul class="nb-grid">
         {sorted.map((m) => (
-          <li class="body">
-            <span class="body__code num">{m.code}</span>
-            <span class="body__body-name num">{m.body}</span>
-            <span class="body__name">{m.name}</span>
+          <li>
+            <div class="nb-card">
+              <span class="nb-card__code">{m.code}</span>
+              <div class="nb-card__body">
+                <h3 class="nb-card__name">{m.name}</h3>
+                <p class="nb-card__body-id">{m.body}</p>
+              </div>
+            </div>
           </li>
         ))}
       </ul>
     </section>
 
-    <section class="how">
-      <div class="how-grid">
-        <div>
-          <p class="eyebrow">How membership works</p>
-          <h2 class="display-h2">P vs O</h2>
-        </div>
-        <div class="prose-ref">
-          <p>ISO member bodies join TC 12 as <strong>P-members</strong> (participating) or <strong>O-members</strong> (observers). P-members must vote on every formal question — new work items, enquiry drafts, final drafts, and resolutions — and are expected to nominate experts to working groups and plenary meetings.</p>
-          <p>O-members follow the work, receive documents, and may submit comments and attend meetings, but do not vote.</p>
-          <p><a href="https://www.iso.org/members.html" class="btn btn--ghost">Find your ISO member body ↗</a></p>
-        </div>
+    <section class="nb-section">
+      <header class="nb-section__head">
+        <h2>P vs O membership</h2>
+      </header>
+      <div class="nb-prose">
+        <p>ISO member bodies join TC 12 as <strong>P-members</strong> (participating) or <strong>O-members</strong> (observers). P-members must vote on every formal question and are expected to nominate experts to working groups.</p>
+        <p>O-members follow the work, receive documents, and may submit comments, but do not vote.</p>
+        <p><a href="https://www.iso.org/members.html" class="text-link">Find your ISO member body ↗</a></p>
       </div>
     </section>
-  </article>
+  </div>
 </BaseLayout>
 
 <style>
-  section { margin-top: 3rem; }
-  .display-h2 { font-family: var(--font-display); font-size: clamp(1.625rem, 3vw, 2.25rem); font-weight: 500; color: var(--ink); margin: 0.625rem 0 0; letter-spacing: -0.02em; }
+  .nb-section { max-width: 80rem; margin: 2rem auto 3rem; padding: 0 1.5rem; }
+  @media (min-width: 1024px) { .nb-section { padding: 0 2rem; } }
+  .nb-section__head { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+  .nb-section__head h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--ink); margin: 0; letter-spacing: -0.015em; }
+  .count { font-size: 0.875rem; color: var(--ink-muted); margin-left: 0.5rem; font-weight: 400; }
 
-  .bodies {
-    list-style: none; padding: 0; margin: 1.25rem 0 0;
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
-    border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
-  }
-  @media (min-width: 768px) { .bodies { grid-template-columns: repeat(3, 1fr); } }
-  .body {
-    display: grid; grid-template-columns: 3rem 1fr; grid-template-rows: auto auto;
-    gap: 0.25rem 1rem; padding: 1rem 1.25rem;
-    border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
-    align-items: baseline;
-  }
-  .body__code { grid-row: span 2; font-weight: 600; color: var(--accent); font-size: 0.9375rem; }
-  .body__body-name { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
-  .body__name { font-family: var(--font-display); font-size: 1rem; color: var(--ink); font-weight: 500; }
+  .nb-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+  @media (min-width: 768px) { .nb-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .nb-grid { grid-template-columns: repeat(3, 1fr); } }
 
-  .how { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--rule-strong); }
-  .how-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-  @media (min-width: 1024px) { .how-grid { grid-template-columns: 1fr 2fr; gap: 3rem; } }
+  .nb-card {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    border-radius: 0.375rem;
+    align-items: center;
+    transition: border-color 0.15s;
+  }
+  .nb-card:hover { border-color: var(--accent); }
+  .nb-card__code {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: center;
+  }
+  .nb-card__name { font-size: 0.875rem; font-weight: 500; color: var(--ink); margin: 0; }
+  .nb-card__body-id { font-size: 0.6875rem; color: var(--ink-muted); margin: 0.125rem 0 0; font-family: var(--font-mono); text-transform: uppercase; }
+
+  .nb-prose { max-width: 42rem; font-size: 0.9375rem; line-height: 1.7; color: var(--ink-secondary); }
+  .nb-prose strong { color: var(--ink); font-weight: 600; }
+  .text-link { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .text-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 </style>
