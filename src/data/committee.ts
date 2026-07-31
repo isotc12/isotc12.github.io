@@ -2,7 +2,7 @@ export const committee = {
   name: 'ISO/TC 12',
   short_title: 'Quantities & Units',
   title: 'Quantities and units',
-  tagline: 'The measure of all science and engineering',
+  tagline: 'Quantities and units',
   scope:
     'Standardization of units and symbols for quantities and units (and mathematical symbols) used within the different fields of science and technology, giving, where necessary, definitions of these quantities and units. Standard conversion factors between various units.',
 

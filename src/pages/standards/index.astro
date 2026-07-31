@@ -5,93 +5,111 @@ import UnitGrid from '../../components/UnitGrid.astro'
 import fs from 'node:fs'
 
 const standards = JSON.parse(fs.readFileSync('public/data/standards.json', 'utf-8'))
-const published = standards.filter((s) => s.status === 'published')
-const inDevelopment = standards.filter((s) => s.status === 'under development' || s.status === 'under revision')
-const withdrawn = standards.filter((s) => s.status === 'withdrawn')
+const sorted = [...standards].sort((a, b) => a.part - b.part)
 ---
 
-<BaseLayout title="Standards" description="The ISO/IEC 80000 series — fifteen parts covering quantities and units across all domains of science and technology.">
-  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+<BaseLayout title="Standards" description="The ISO/IEC 80000 series — quantities and units across all domains of science and technology.">
+  <div class="page page--wide">
     <PageHero
       eyebrow="The series"
-      ordinal="03"
       title="ISO/IEC 80000 — Quantities and units"
-      lede="Fifteen parts. One series. Every quantity used in measurement science — space, time, mechanics, light, sound, chemistry, atoms, information."
+      lead="Fifteen parts. One series. Every quantity used in measurement science — space, time, mechanics, light, sound, chemistry, atoms, information."
     />
-  </div>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
-    <div class="hairline pt-6">
-      <table class="w-full text-sm">
-        <thead>
-          <tr class="text-left">
-            <th class="eyebrow font-normal py-2">Part</th>
-            <th class="eyebrow font-normal py-2">Title</th>
-            <th class="eyebrow font-normal py-2 hidden sm:table-cell">Edition</th>
-            <th class="eyebrow font-normal py-2 hidden md:table-cell">Stage</th>
-            <th class="eyebrow font-normal py-2">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {standards.map((s) => (
-            <tr class="hairline hover:bg-vellum/50 transition-colors">
-              <td class="py-3 pr-4 font-mono align-top">
-                <a href={`/standards/${s.slug}/`} class="text-wine hover:text-wine-deep">{`80000-${String(s.part).padStart(2, '0')}`}</a>
-              </td>
-              <td class="py-3 pr-4 align-top">
-                <a href={`/standards/${s.slug}/`} class="hover:text-wine">
-                  <div class="font-display text-base">{s.title}</div>
-                  <div class="text-xs text-muted mt-1">{s.scope}</div>
-                </a>
-              </td>
-              <td class="py-3 pr-4 font-mono text-xs text-muted align-top hidden sm:table-cell">{s.edition_year ?? '—'}</td>
-              <td class="py-3 pr-4 font-mono text-xs text-muted align-top hidden md:table-cell">{s.stage}</td>
-              <td class="py-3 align-top">
-                <span class:list={[
-                  'inline-flex items-baseline gap-1.5 text-[0.7rem] font-mono px-2 py-0.5',
-                  s.status === 'published' && 'text-calibration bg-calibration/10',
-                  s.status === 'under development' && 'text-wine bg-wine/10',
-                  s.status === 'under revision' && 'text-wine bg-wine/10',
-                  s.status === 'withdrawn' && 'text-muted bg-muted/10 line-through',
-                ]}>
-                  <span class:list={[
-                    'inline-block w-1 h-1 rounded-full',
-                    s.status === 'published' && 'bg-calibration',
-                    (s.status === 'under development' || s.status === 'under revision') && 'bg-wine',
-                    s.status === 'withdrawn' && 'bg-muted',
-                  ]}></span>
-                  {s.status}
-                </span>
-              </td>
+    <section class="standards-section">
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Part</th>
+              <th>Title</th>
+              <th class="hide-mobile">Edition</th>
+              <th class="hide-mobile">Stage</th>
+              <th>Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
+          </thead>
+          <tbody>
+            {sorted.map((s) => (
+              <tr>
+                <td><a href={`/standards/${s.slug}/`} class="ref-link">{`80000-${String(s.part).padStart(2, '0')}`}</a></td>
+                <td>
+                  <a href={`/standards/${s.slug}/`} class="title-link">
+                    <span class="title-text">{s.title}</span>
+                    <span class="scope-text">{s.scope}</span>
+                  </a>
+                </td>
+                <td class="hide-mobile mono">{s.edition_year ?? '—'}</td>
+                <td class="hide-mobile mono muted">{s.stage}</td>
+                <td>
+                  <span class:list={['status-pill', `status-pill--${s.status === 'published' ? 'published' : s.status === 'withdrawn' ? 'withdrawn' : 'development'}`]}>
+                    <span class="status-pill__dot"></span>{s.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-24">
-    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-      <div class="md:col-span-7">
-        <span class="eyebrow">Why 15 parts</span>
-        <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
-          Organised by domain
-        </h2>
-        <p class="prose-tc12 mt-4">
-          The series is partitioned by physical domain. Part 1 (General)
-          defines the framework — names, symbols, prefixes, the SI. Parts 2
-          through 13 cover specific domains. Parts 14–17 are IEC-led
-          (telebiometrics, logarithmic quantities, printing rules,
-          time-dependency).
-        </p>
+    <section class="why-section">
+      <div class="why-grid">
+        <div>
+          <p class="eyebrow">Why fifteen parts</p>
+          <h2 class="why-title">Organised by domain</h2>
+        </div>
+        <div class="prose-tc">
+          <p>
+            The series is partitioned by physical domain. Part 1 (General)
+            defines the framework — names, symbols, prefixes, the SI. Parts 2
+            through 13 cover specific domains. Parts 14–17 are IEC-led
+            (telebiometrics, logarithmic quantities, printing rules,
+            time-dependency).
+          </p>
+          <p>
+            The seven SI base units span parts 3–9. Each quantity in the
+            series is assigned a dimensional symbol following ISO 80000-1
+            conventions.
+          </p>
+        </div>
+        <div class="why-units"><UnitGrid variant="compact" /></div>
       </div>
-      <div class="md:col-span-5">
-        <div class="eyebrow mb-4">Foundation</div>
-        <UnitGrid variant="compact" />
-        <p class="text-xs text-muted mt-3 italic">
-          The seven SI base units span parts 3–9.
-        </p>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .standards-section { margin-top: 2rem; }
+  .data-table-wrap { overflow-x: auto; }
+  .data-table td { vertical-align: top; }
+  .ref-link {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-brand);
+    text-decoration: none;
+  }
+  .ref-link:hover { text-decoration: underline; }
+  .title-link { text-decoration: none; color: inherit; display: block; }
+  .title-text { display: block; font-family: var(--font-serif); font-size: 1rem; font-weight: 600; color: var(--color-slate-900); }
+  .dark .title-text { color: #fafaf9; }
+  .title-link:hover .title-text { color: var(--color-brand); }
+  .scope-text { display: block; font-size: 0.8125rem; color: var(--color-slate-500); margin-top: 0.25rem; line-height: 1.4; }
+  .mono { font-family: var(--font-mono); font-size: 0.8125rem; }
+  .muted { color: var(--color-slate-500); }
+
+  @media (max-width: 767px) { .hide-mobile { display: none; } }
+
+  .why-section { margin-top: 4rem; padding-top: 2.5rem; border-top: 1px solid #e7e5e4; }
+  .dark .why-section { border-color: rgb(255 255 255 / 0.08); }
+  .why-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 1024px) { .why-grid { grid-template-columns: 1fr 1.5fr 1fr; gap: 3rem; } }
+  .why-title {
+    font-family: var(--font-serif);
+    font-size: 1.625rem;
+    font-weight: 600;
+    color: var(--color-slate-900);
+    margin: 0.5rem 0 0;
+  }
+  .dark .why-title { color: #fafaf9; }
+</style>

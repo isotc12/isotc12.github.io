@@ -8,7 +8,6 @@ interface BaseUnit {
   href: string
 }
 
-// The seven SI base units — TC 12's foundational subject matter.
 const units: BaseUnit[] = [
   { symbol: 'm',   name: 'metre',         quantity: 'length',                    dimension: 'L', part: '80000-3',  href: '/standards/iso-80000-3/' },
   { symbol: 'kg',  name: 'kilogram',      quantity: 'mass',                      dimension: 'M', part: '80000-4',  href: '/standards/iso-80000-4/' },
@@ -21,49 +20,142 @@ const units: BaseUnit[] = [
 
 interface Props {
   variant?: 'hero' | 'compact'
-  interactive?: boolean
   class?: string
 }
 
-const { variant = 'hero', interactive = true, class: className = '' } = Astro.props
+const { variant = 'hero', class: className = '' } = Astro.props
 ---
 
 {
   variant === 'hero' ? (
-    <div class:list={['unit-grid-hero stagger', className]} role="list" aria-label="The seven SI base units">
-      <div class="grid grid-cols-4 gap-px bg-rule">
-        {units.map((u, i) => (
-          <a
-            href={interactive ? u.href : undefined}
-            role="listitem"
-            class:list={[
-              'group bg-paper hover:bg-vellum transition-all duration-200 px-4 sm:px-7 py-8 sm:py-12 relative',
-              i === 4 && 'sm:col-start-2',
-            ]}
-          >
-            <div class="absolute top-3 right-3 sm:top-4 sm:right-4 font-mono text-[0.65rem] text-faint group-hover:text-wine transition-colors tabular-nums">
-              {String(i + 1).padStart(2, '0')}
-            </div>
-            <div class="font-mono text-[0.7rem] text-wine mb-4 sm:mb-6 tracking-wider">[{u.dimension}]</div>
-            <div class="font-mono font-medium leading-[0.85] text-[3.5rem] sm:text-[6rem] tracking-[-0.04em] text-ink group-hover:text-wine transition-colors">
-              {u.symbol}
-            </div>
-            <div class="mt-5 sm:mt-7">
-              <div class="font-display text-sm sm:text-base text-ink">{u.name}</div>
-              <div class="text-xs text-muted mt-1 italic font-display">{u.quantity}</div>
-            </div>
-          </a>
-        ))}
-      </div>
+    <div class:list={['si-units-grid', className]} role="list" aria-label="The seven SI base units">
+      {units.map((u, i) => (
+        <a href={u.href} role="listitem" class="si-unit-card">
+          <div class="si-unit-card__head">
+            <span class="si-unit-card__dim">[{u.dimension}]</span>
+            <span class="si-unit-card__part">80000-{u.part.replace('80000-', '')}</span>
+          </div>
+          <div class="si-unit-card__symbol">{u.symbol}</div>
+          <div class="si-unit-card__meta">
+            <div class="si-unit-card__name">{u.name}</div>
+            <div class="si-unit-card__quantity">{u.quantity}</div>
+          </div>
+        </a>
+      ))}
     </div>
   ) : (
-    <div class:list={['inline-grid grid-cols-7 gap-3', className]} role="list" aria-label="SI base units">
+    <div class:list={['si-units-compact', className]} role="list" aria-label="SI base units">
       {units.map((u) => (
-        <div role="listitem" class="text-center">
-          <div class="font-mono text-base font-medium">{u.symbol}</div>
-          <div class="text-[0.6rem] text-muted uppercase tracking-wide">{u.dimension}</div>
+        <div role="listitem" class="si-units-compact__item">
+          <span class="si-units-compact__symbol">{u.symbol}</span>
+          <span class="si-units-compact__dim">{u.dimension}</span>
         </div>
       ))}
     </div>
   )
 }
+
+<style>
+  .si-units-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  @media (min-width: 768px) {
+    .si-units-grid { grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  }
+
+  .si-unit-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.25rem 1.5rem;
+    background: #fff;
+    border: 1px solid rgb(229 231 235 / 0.8);
+    border-radius: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+    min-height: 11rem;
+  }
+  .dark .si-unit-card {
+    background: #1c1917;
+    border-color: rgb(255 255 255 / 0.08);
+    color: #fafaf9;
+  }
+  .si-unit-card:hover {
+    border-color: rgb(30 58 138 / 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgb(30 58 138 / 0.08);
+  }
+
+  .si-unit-card__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.875rem;
+  }
+  .si-unit-card__dim {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.875rem;
+    color: var(--color-brand);
+  }
+  .si-unit-card__part {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--color-slate-400);
+    letter-spacing: 0.025em;
+  }
+
+  .si-unit-card__symbol {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 3.5rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--color-slate-900);
+    margin-bottom: 1rem;
+  }
+  @media (min-width: 768px) {
+    .si-unit-card__symbol { font-size: 4.5rem; }
+  }
+  .dark .si-unit-card__symbol { color: #fafaf9; }
+  .si-unit-card:hover .si-unit-card__symbol { color: var(--color-brand); }
+
+  .si-unit-card__meta {
+    margin-top: auto;
+  }
+  .si-unit-card__name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-slate-900);
+  }
+  .dark .si-unit-card__name { color: #fafaf9; }
+  .si-unit-card__quantity {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.8125rem;
+    color: var(--color-slate-500);
+    margin-top: 0.125rem;
+  }
+
+  .si-units-compact {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+  }
+  .si-units-compact__item { display: flex; flex-direction: column; align-items: center; gap: 0.125rem; }
+  .si-units-compact__symbol {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-brand);
+  }
+  .si-units-compact__dim {
+    font-size: 0.625rem;
+    color: var(--color-slate-500);
+    letter-spacing: 0.05em;
+  }
+</style>

@@ -5,7 +5,6 @@ import fs from 'node:fs'
 
 const events = JSON.parse(fs.readFileSync('public/data/events.json', 'utf-8'))
 
-// Group events by year for the timeline
 const byYear = new Map()
 for (const e of events) {
   const year = e.time?.from?.date?.slice(0, 4) || String(e.year)
@@ -19,72 +18,57 @@ function ordinal(n) {
   const v = n % 100
   return n + (s[(v - 20) % 10] || s[v] || s[0])
 }
-
-const first = events[events.length - 1]
-const last = events[0]
 ---
 
 <BaseLayout title="History" description="Fifteen plenary meetings of ISO/TC 12 from 2010 to 2026 — Prague to Zoom.">
-  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+  <div class="page page--wide">
     <PageHero
       eyebrow="History"
-      ordinal="02"
       title="From Prague to Zoom"
-      lede={`Fifteen plenary meetings across sixteen years — from an in-person meeting in Prague (2010) through hybrid meetings in Berlin, Stockholm, and Helsinki, to the virtual Zoom plenaries of the pandemic years and beyond.`}
+      lead="Fifteen plenary meetings across sixteen years — from an in-person meeting in Prague (2010) through hybrid meetings in Berlin, Stockholm, and Helsinki, to the virtual Zoom plenaries of the pandemic years."
     />
-  </div>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-      <aside class="lg:col-span-3 lg:sticky lg:top-20 self-start">
-        <div class="eyebrow mb-3">Jump to year</div>
-        <ol class="space-y-1.5 text-sm">
-          {years.map((y, i) => (
+    <div class="history-grid">
+      <aside class="history-nav">
+        <p class="eyebrow">Jump to year</p>
+        <ol>
+          {years.map((y) => (
             <li>
-              <a href={`#year-${y}`} class="font-mono text-muted hover:text-wine flex justify-between items-baseline border-b border-rule py-1.5">
+              <a href={`#year-${y}`}>
                 <span>{y}</span>
-                <span class="text-xs text-faint">{byYear.get(y).length} {byYear.get(y).length === 1 ? 'meeting' : 'meetings'}</span>
+                <span class="count">{byYear.get(y).length}</span>
               </a>
             </li>
           ))}
         </ol>
       </aside>
 
-      <div class="lg:col-span-9">
+      <div class="history-timeline">
         {years.map((year) => (
-          <section id={`year-${year}`} class="year-section mb-20 scroll-mt-20">
-            <div class="flex items-baseline gap-6 mb-8 sticky top-0 bg-paper py-4 z-10 hairline">
-              <span class="font-display font-medium text-5xl text-wine tabular-nums">{year}</span>
-              <span class="font-mono text-xs text-muted uppercase tracking-wider">{byYear.get(year).length} {byYear.get(year).length === 1 ? 'meeting' : 'meetings'}</span>
-            </div>
+          <section id={`year-${year}`} class="year-section">
+            <header class="year-header">
+              <span class="year-header__num">{year}</span>
+              <span class="year-header__count">{byYear.get(year).length} {byYear.get(year).length === 1 ? 'meeting' : 'meetings'}</span>
+            </header>
             <ol>
               {byYear.get(year).map((e) => (
-                <li class="grid grid-cols-12 gap-4 hairline pt-6 pb-8">
-                  <div class="col-span-3 sm:col-span-2">
-                    <div class="font-mono text-wine text-sm tabular-nums">{e.ordinal}</div>
-                    <div class="eyebrow mt-1">
-                      {new Date(e.time?.from?.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
-                    </div>
+                <li class="meeting">
+                  <div class="meeting__ordinal">
+                    <span class="meeting__num">{e.ordinal}</span>
+                    <span class="meeting__date">{new Date(e.time?.from?.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
                   </div>
-                  <div class="col-span-9 sm:col-span-10">
-                    <h3 class="font-display text-xl leading-tight">
-                      <a href={e.landing_url} class="hover:text-wine transition-colors">{e.title}</a>
-                    </h3>
-                    <div class="text-sm text-muted mt-2 flex flex-wrap gap-x-4 gap-y-1">
-                      <span>{e.general_area}</span>
-                      {e.host && <span class="text-faint">· hosted by {e.host}</span>}
-                    </div>
+                  <div class="meeting__body">
+                    <h3 class="meeting__title"><a href={e.landing_url}>{e.title}</a></h3>
+                    <p class="meeting__meta">{e.general_area}{e.host && <> · hosted by {e.host}</>}</p>
                     {e.acting_chair_at_meeting && (
-                      <div class="text-xs text-muted mt-2 italic">
-                        Acting chair: {e.acting_chair_at_meeting}
-                      </div>
+                      <p class="meeting__note">Acting chair: {e.acting_chair_at_meeting}</p>
                     )}
                     {e.attendance?.countries && (
-                      <div class="mt-4 flex flex-wrap gap-2">
+                      <ul class="meeting__countries">
                         {e.attendance.countries.filter((c) => c.attended !== false).map((c) => (
-                          <span class="font-mono text-[0.65rem] text-muted border border-rule px-1.5 py-0.5">{c.code}</span>
+                          <li>{c.code}</li>
                         ))}
-                      </div>
+                      </ul>
                     )}
                   </div>
                 </li>
@@ -94,5 +78,116 @@ const last = events[0]
         ))}
       </div>
     </div>
-  </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .history-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .history-grid { grid-template-columns: 220px 1fr; gap: 3rem; }
+  }
+
+  .history-nav { position: sticky; top: 6rem; align-self: start; }
+  .history-nav ol { list-style: none; padding: 0; margin: 0.75rem 0 0; }
+  .history-nav li { border-bottom: 1px solid #f5f5f4; }
+  .dark .history-nav li { border-color: rgb(255 255 255 / 0.04); }
+  .history-nav a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.625rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-slate-600);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .dark .history-nav a { color: var(--color-slate-300); }
+  .history-nav a:hover { color: var(--color-brand); }
+  .history-nav .count { font-size: 0.75rem; color: var(--color-slate-400); }
+
+  .year-section { margin-bottom: 3rem; }
+  .year-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.875rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e7e5e4;
+    margin-bottom: 0.5rem;
+  }
+  .dark .year-header { border-color: rgb(255 255 255 / 0.08); }
+  .year-header__num {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--color-brand);
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .year-header__count {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-slate-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .year-section ol { list-style: none; padding: 0; margin: 0; }
+  .meeting {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid #f5f5f4;
+  }
+  .dark .meeting { border-color: rgb(255 255 255 / 0.04); }
+  @media (min-width: 768px) { .meeting { grid-template-columns: 8rem 1fr; gap: 2rem; } }
+
+  .meeting__num {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-brand);
+  }
+  .meeting__date {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-slate-500);
+    margin-top: 0.25rem;
+  }
+
+  .meeting__title { font-family: var(--font-serif); font-size: 1.1875rem; font-weight: 600; margin: 0; }
+  .meeting__title a { color: var(--color-slate-900); text-decoration: none; }
+  .dark .meeting__title a { color: #fafaf9; }
+  .meeting__title a:hover { color: var(--color-brand); }
+  .meeting__meta { margin: 0.375rem 0 0; font-size: 0.875rem; color: var(--color-slate-500); }
+  .meeting__note { margin: 0.25rem 0 0; font-size: 0.8125rem; font-style: italic; color: var(--color-slate-500); }
+
+  .meeting__countries {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+  .meeting__countries li {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    padding: 0.125rem 0.4375rem;
+    border: 1px solid #e7e5e4;
+    border-radius: 0.25rem;
+    color: var(--color-slate-600);
+  }
+  .dark .meeting__countries li {
+    border-color: rgb(255 255 255 / 0.1);
+    color: var(--color-slate-300);
+  }
+</style>

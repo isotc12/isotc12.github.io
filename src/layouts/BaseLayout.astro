@@ -6,7 +6,6 @@ import { mainNav } from '../data/navigation'
 interface Props {
   title?: string
   description?: string
-  eyebrow?: string
   bodyClass?: string
   noIndex?: boolean
 }
@@ -14,7 +13,6 @@ interface Props {
 const {
   title,
   description = committee.scope,
-  eyebrow,
   bodyClass = '',
   noIndex = false,
 } = Astro.props
@@ -49,156 +47,154 @@ function sectionContains(item: { to: string; children?: { to: string }[] }): boo
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script is:inline>
-      const stored = localStorage.getItem('tc12-theme')
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      const theme = stored ?? (prefersDark ? 'dark' : 'light')
+      const theme = (() => {
+        try {
+          const stored = localStorage.getItem('theme')
+          if (stored === 'light' || stored === 'dark') return stored
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        } catch {
+          return 'light'
+        }
+      })()
       if (theme === 'dark') document.documentElement.classList.add('dark')
     </script>
   </head>
   <body class={bodyClass}>
-    <div class="flex flex-col min-h-screen">
-      <header class="hairline-strong" style="border-top: 0; border-bottom: 1px solid var(--color-rule);">
-        <div class="max-w-[1320px] mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
-          <a href="/" class="flex items-baseline gap-3 group">
-            <span class="font-mono text-[0.7rem] tracking-wider text-muted uppercase">{committee.established}</span>
-            <span class="font-display text-lg font-semibold tracking-tight">{committee.name}</span>
-            <span class="hidden md:inline text-sm text-muted italic font-display">{committee.short_title}</span>
-          </a>
-          <nav class="hidden md:flex items-center gap-7 text-sm">
-            {mainNav.map((item) => (
-              <div class="relative group">
-                <a
-                  href={item.to}
-                  class:list={[
-                    'inline-flex items-center gap-1 py-2 transition-colors',
-                    sectionContains(item) ? 'text-ink font-medium' : 'text-muted hover:text-ink',
-                  ]}
-                >
+    <div class="site-brand-bar" aria-hidden="true"></div>
+
+    <header id="nav-header" class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="site-header__logo">
+          <img src="/assets/iso-red.svg" alt="ISO" />
+          <span class="site-header__logo-text">
+            {committee.name}
+            <span class="site-header__logo-subtitle">{committee.short_title}</span>
+          </span>
+        </a>
+
+        <nav class="site-header__nav" aria-label="Primary">
+          {mainNav.map((item) => (
+            item.children?.length ? (
+              <div class="site-header__nav-group">
+                <a href={item.to} class:list={['site-header__nav-link', { 'is-active': sectionContains(item) }]}>
                   {item.label}
-                  {item.children && <span class="text-[0.6em] opacity-60">▾</span>}
+                  <svg viewBox="0 0 12 12" fill="currentColor" style="width:0.75rem;height:0.75rem;opacity:0.4"><path d="M6 8L2 4h8z" /></svg>
                 </a>
-                {item.children && (
-                  <div class="absolute left-0 top-full pt-2 hidden group-hover:block z-50">
-                    <div class="bg-vellum border border-rule shadow-lg min-w-[14rem] py-2">
-                      {item.children.map((child) => (
-                        <a
-                          href={child.to}
-                          class:list={[
-                            'block px-4 py-1.5 text-sm hover:bg-paper-deep',
-                            isActive(child.to) ? 'text-wine font-medium' : 'text-ink-soft',
-                          ]}
-                        >
-                          {child.label}
-                        </a>
-                      ))}
-                    </div>
+                <div class="site-header__dropdown">
+                  <div class="site-header__dropdown-inner">
+                    {item.children.map((child) => (
+                      <a href={child.to} class:list={['site-header__dropdown-item', { 'is-active': isActive(child.to) }]}>{child.label}</a>
+                    ))}
                   </div>
-                )}
+                </div>
               </div>
-            ))}
-            <button
-              id="theme-toggle"
-              type="button"
-              aria-label="Toggle theme"
-              class="text-muted hover:text-ink transition-colors p-1"
-            >
-              <span class="dark:hidden">◐</span>
-              <span class="hidden dark:inline">◑</span>
-            </button>
-          </nav>
-          <button
-            id="mobile-menu-button"
-            type="button"
-            aria-label="Open menu"
-            class="md:hidden text-ink"
-          >
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.5" />
-            </svg>
+            ) : (
+              <a href={item.to} class:list={['site-header__nav-link', { 'is-active': isActive(item.to) }]}>{item.label}</a>
+            )
+          ))}
+        </nav>
+
+        <div class="site-header__actions">
+          <button type="button" class="site-header__icon-btn" id="theme-toggle" aria-label="Switch theme">
+            <svg class="header-icon icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            <svg class="header-icon icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+          </button>
+
+          <button type="button" class="site-header__icon-btn site-header__icon-btn--mobile" id="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
+            <svg class="header-icon icon-menu" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            <svg class="header-icon icon-close" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
         </div>
-        <div
-          id="mobile-menu"
-          class="md:hidden hidden border-t border-rule bg-vellum"
-        >
-          <nav class="px-6 py-4 flex flex-col gap-1">
-            {mainNav.map((item) => (
-              <a
-                href={item.to}
-                class:list={[
-                  'py-2 text-base',
-                  sectionContains(item) ? 'text-wine font-medium' : 'text-ink',
-                ]}
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </header>
+      </div>
 
-      <main class="flex-1">
-        {eyebrow && (
-          <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-10">
-            <span class="eyebrow">{eyebrow}</span>
-          </div>
-        )}
-        <slot />
-      </main>
+      <div class="mobile-menu" id="mobile-menu" hidden>
+        {mainNav.flatMap((item) => {
+          const items = []
+          items.push({ href: item.to, label: item.label, sub: false })
+          if (item.children) {
+            for (const c of item.children) {
+              items.push({ href: c.to, label: c.label, sub: true })
+            }
+          }
+          return items
+        }).map((link) => (
+          <a href={link.href} class:list={['mobile-menu__link', { 'mobile-menu__link--sub': link.sub }]}>{link.label}</a>
+        ))}
+      </div>
+    </header>
 
-      <footer class="hairline mt-32">
-        <div class="max-w-[1320px] mx-auto px-6 lg:px-10 py-12 grid grid-cols-1 md:grid-cols-12 gap-8">
-          <div class="md:col-span-5">
-            <div class="font-mono text-[0.7rem] tracking-wider text-muted uppercase mb-2">
-              ISO/TC 12 · Secretariat SIS (Sweden)
-            </div>
-            <p class="font-display text-lg leading-snug max-w-md">
-              {committee.title}
-            </p>
-            <p class="text-sm text-muted mt-3 max-w-md leading-relaxed">
-              Maintains the ISO 80000 series — quantities and units for science,
-              technology, and trade.
-            </p>
+    <main class="site-main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div class="site-footer__grid">
+          <div class="site-footer__brand">
+            <a href="/" class="site-footer__logo">
+              <img src="/assets/iso-red.svg" alt="ISO" />
+              <span class="site-footer__logo-text">{committee.name}</span>
+            </a>
+            <p class="site-footer__tagline">{committee.tagline}</p>
+            <p class="site-footer__tagline">{committee.scope}</p>
           </div>
-          <div class="md:col-span-3">
-            <div class="eyebrow mb-3">External</div>
-            <ul class="space-y-1.5 text-sm">
-              <li><a href={committee.links.isoCommittee} class="text-ink hover:text-wine">ISO committee page ↗</a></li>
-              <li><a href="https://www.iso.org/standards.html" class="text-ink hover:text-wine">ISO Store ↗</a></li>
-              <li><a href="https://www.bipm.org/en/measurement-units/si-brochure" class="text-ink hover:text-wine">SI Brochure (BIPM) ↗</a></li>
-              <li><a href="https://www.iso.org/committee/45976.html" class="text-ink hover:text-wine">ISO Meetings ↗</a></li>
+
+          <div>
+            <h4 class="site-footer__heading">Committee</h4>
+            <ul class="site-footer__facts">
+              <li><strong>Secretariat:</strong> {committee.secretariat}</li>
+              <li><strong>Chair:</strong> {committee.chair}</li>
+              <li><strong>Established:</strong> {committee.established}</li>
             </ul>
           </div>
-          <div class="md:col-span-4">
-            <div class="eyebrow mb-3">This site</div>
-            <ul class="space-y-1.5 text-sm">
-              <li><a href="/about/" class="text-ink hover:text-wine">About TC 12</a></li>
-              <li><a href="/meetings/" class="text-ink hover:text-wine">Plenary meetings</a></li>
-              <li><a href="/decisions/" class="text-ink hover:text-wine">Resolutions</a></li>
-              <li><a href="/standards/" class="text-ink hover:text-wine">ISO 80000 series</a></li>
-              <li><a href={`mailto:${committee.secretariat_email || 'anette.noren@sis.se'}`} class="text-ink hover:text-wine">Contact secretariat</a></li>
+
+          <div>
+            <h4 class="site-footer__heading">Explore</h4>
+            <ul class="site-footer__links">
+              <li><a href="/standards/" class="site-footer__link">Standards</a></li>
+              <li><a href="/members/" class="site-footer__link">National bodies</a></li>
+              <li><a href="/meetings/" class="site-footer__link">Meetings</a></li>
+              <li><a href="/decisions/" class="site-footer__link">Resolutions</a></li>
+              <li><a href="/about/" class="site-footer__link">About</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="site-footer__heading">External</h4>
+            <ul class="site-footer__links">
+              <li><a href={committee.links.iso} class="site-footer__link" target="_blank" rel="noopener noreferrer">ISO.org</a></li>
+              <li><a href={committee.links.isoCommittee} class="site-footer__link" target="_blank" rel="noopener noreferrer">ISO committee page</a></li>
+              <li><a href={committee.links.committeeSite} class="site-footer__link" target="_blank" rel="noopener noreferrer">Committee site</a></li>
+              <li><a href={committee.links.github} class="site-footer__link" target="_blank" rel="noopener noreferrer">GitHub</a></li>
             </ul>
           </div>
         </div>
-        <div class="hairline">
-          <div class="max-w-[1320px] mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-muted">
-            <div class="font-mono">© {new Date().getFullYear()} ISO/TC 12 · Quantities and units</div>
-            <div class="font-mono">Compiled from public ISO/TC 12 documents · See <a href="/about/" class="underline">sources</a></div>
-          </div>
+        <div class="site-footer__bottom">
+          <p class="site-footer__copy">© {new Date().getFullYear()} {committee.name} · {committee.short_title}</p>
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
 
     <script>
       const toggle = document.getElementById('theme-toggle')
       toggle?.addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark')
-        localStorage.setItem('tc12-theme', isDark ? 'dark' : 'light')
+        localStorage.setItem('theme', isDark ? 'dark' : 'light')
       })
-      const mobileButton = document.getElementById('mobile-menu-button')
+
+      const mobileButton = document.getElementById('mobile-menu-toggle')
       const mobileMenu = document.getElementById('mobile-menu')
       mobileButton?.addEventListener('click', () => {
-        mobileMenu?.classList.toggle('hidden')
+        const isHidden = mobileMenu?.hasAttribute('hidden')
+        if (isHidden) {
+          mobileMenu?.removeAttribute('hidden')
+          document.body.classList.add('menu-open')
+          mobileButton.setAttribute('aria-expanded', 'true')
+        } else {
+          mobileMenu?.setAttribute('hidden', '')
+          document.body.classList.remove('menu-open')
+          mobileButton.setAttribute('aria-expanded', 'false')
+        }
       })
     </script>
   </body>

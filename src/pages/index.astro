@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import PageHero from '../components/PageHero.astro'
 import UnitGrid from '../components/UnitGrid.astro'
-import StatLine from '../components/StatLine.astro'
 import { committee } from '../data/committee'
 import fs from 'node:fs'
 
@@ -11,232 +11,441 @@ const resolutions = JSON.parse(fs.readFileSync('public/data/resolutions.json', '
 const standards = JSON.parse(fs.readFileSync('public/data/standards.json', 'utf-8'))
 
 const latest = meta.latest_plenary
-const next = meta.next_plenary
-
 const latestPlenaryResolutions = (resolutions.plenary.find((p) => p.ordinal === latest.ordinal) || { decisions: [] }).decisions
 
 const publishedStandards = standards.filter((s) => s.status === 'published')
-const inDevelopmentStandards = standards.filter((s) => s.status === 'under development' || s.status === 'under revision')
 
-const ordinalSuffix = (n) => {
+function ordinal(n) {
   const s = ['th', 'st', 'nd', 'rd']
   const v = n % 100
   return n + (s[(v - 20) % 10] || s[v] || s[0])
 }
+
+const stats = [
+  { value: meta.counts.standards, label: 'Standards in the catalogue', caption: 'ISO/IEC 80000 series, spanning every SI quantity.', to: '/standards/' },
+  { value: meta.counts.decisions, label: 'Resolutions transcribed', caption: 'From 2010 to present, every committee decision.', to: '/decisions/' },
+  { value: meta.counts.p_members, label: 'Participating member bodies', caption: 'National standards bodies shaping the work.', to: '/national-bodies/' },
+  { value: meta.counts.plenaries, label: 'Plenary meetings', caption: `Latest: ${ordinal(latest.ordinal)} plenary in ${new Date(latest.date).getFullYear()}.`, to: '/meetings/' },
+]
+
+const sections = [
+  { n: '01', label: 'Standards', to: '/standards/', blurb: 'ISO/IEC 80000 — quantities and units across science, technology, and trade.' },
+  { n: '02', label: 'Resolutions', to: '/decisions/', blurb: 'Every committee decision, searchable by number, topic, or meeting.' },
+  { n: '03', label: 'Members', to: '/national-bodies/', blurb: 'Twenty-one participating member bodies plus liaison organisations.' },
+  { n: '04', label: 'Meetings', to: '/meetings/', blurb: 'Plenary meetings since 2010 — agendas, minutes, attendance, resolutions.' },
+  { n: '05', label: 'History', to: '/history/', blurb: 'Fifteen plenaries — Prague 2010 through Stockholm, Berlin, Helsinki, to virtual Zoom meetings.' },
+  { n: '06', label: 'About', to: '/about/', blurb: "The committee's scope, structure, and relationship to BIPM, JCGM, and IEC/TC 25." },
+]
+
+const nextDate = new Date('2027-05-25')
+const today = new Date()
+const daysUntil = Math.max(0, Math.ceil((nextDate - today) / (1000 * 60 * 60 * 24)))
 ---
 
 <BaseLayout
-  title="Quantities and units"
+  title={committee.tagline}
   description="ISO/TC 12 maintains the ISO 80000 series — the quantities and units standards that underpin every measurement in science, engineering, and trade."
 >
-  <section class="hero relative">
-    <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12 sm:pt-16">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-        <div class="lg:col-span-7 anim-fade-up">
-          <div class="eyebrow mb-6">
-            <span class="text-wine">ISO/TC 12</span>
-            <span class="mx-2 opacity-50">·</span>
-            <span>Founded 1947</span>
-            <span class="mx-2 opacity-50">·</span>
-            <span>Secretariat: SIS, Sweden</span>
-          </div>
-          <h1 class="font-display font-medium leading-[1.02] tracking-tight text-[var(--text-display)] text-balance">
-            The measure
-            <span class="block italic font-light text-muted">of all science</span>
-            <span class="block font-mono text-[0.42em] tracking-normal text-wine mt-4 not-italic">
-              and engineering.
-            </span>
-          </h1>
-          <p class="lede mt-8 max-w-xl">
-            ISO/TC 12 maintains the <strong class="text-ink font-medium">ISO 80000</strong> series —
-            the quantities and units used in every published measurement of length, mass,
-            time, current, temperature, amount, and luminance.
-          </p>
-          <div class="mt-10 flex flex-wrap gap-x-6 gap-y-3 items-baseline">
-            <a href="/standards/" class="font-mono text-sm text-wine border-b border-wine pb-0.5 hover:text-wine-deep transition-colors">
-              Browse ISO 80000 →
-            </a>
-            <a href="/about/" class="font-mono text-sm text-muted hover:text-ink border-b border-rule pb-0.5 transition-colors">
-              About the committee
-            </a>
-            <a href="/meetings/" class="font-mono text-sm text-muted hover:text-ink border-b border-rule pb-0.5 transition-colors">
-              Plenary meetings
-            </a>
-          </div>
-        </div>
-        <div class="lg:col-span-5 anim-fade-up" style="animation-delay: 0.15s;">
-          <div class="eyebrow mb-4">The seven SI base units</div>
-          <UnitGrid variant="hero" />
-          <p class="text-xs text-muted mt-4 italic font-display leading-relaxed">
-            The committee's domain, rendered as foundation.
-            Tap any unit to open its ISO 80000 part.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="page page--wide">
+    <PageHero
+      eyebrow={`${committee.name} · since ${committee.established}`}
+      title="A common language for <em>measurement</em>."
+      lead="The kilogram is a kilogram everywhere. The second is a second. ISO/TC 12 maintains the <strong>ISO 80000</strong> series — the names, symbols, and units that every quantitative discipline agrees on."
+    />
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-24">
-    <div class="hairline pt-8 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
-      <StatLine
-        value={meta.counts.standards}
-        label="ISO 80000 parts"
-        caption="The series covers every SI quantity across science and technology."
-        href="/standards/"
-      />
-      <StatLine
-        value={meta.counts.plenaries}
-        label="Plenary meetings"
-        caption={`Most recent: ${latest.ordinal}${(['th','st','nd','rd'][(latest.ordinal % 100 - 20) % 10] || ['th','st','nd','rd'][latest.ordinal] || 'th')} in May ${new Date(latest.date).getFullYear()}.`}
-        href="/meetings/"
-      />
-      <StatLine
-        value={meta.counts.decisions}
-        label="Resolutions"
-        caption="From 2010 to present, transcribed from the original PDFs."
-        href="/decisions/"
-      />
-      <StatLine
-        value={meta.counts.p_members}
-        label="Participating members"
-        caption="National standards bodies actively shaping the work."
-        href="/national-bodies/"
-      />
-    </div>
-  </section>
-
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-28">
-    <div class="hairline pt-8">
-      <div class="flex items-baseline justify-between mb-1">
-        <div>
-          <span class="eyebrow">Latest plenary</span>
-          <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
-            <span class="font-mono text-wine mr-3 text-[0.7em]">{latest.ordinal}</span>
-            {latest.title}
-          </h2>
-        </div>
-        <a href={latest.landing_url} class="font-mono text-sm text-muted hover:text-ink hidden md:inline">view →</a>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-6 mt-6">
-        <div class="md:col-span-4">
-          <dl class="font-mono text-sm space-y-3">
-            <div>
-              <dt class="text-[0.65rem] uppercase tracking-wider text-muted">Date</dt>
-              <dd class="mt-1">{new Date(latest.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</dd>
-            </div>
-            <div>
-              <dt class="text-[0.65rem] uppercase tracking-wider text-muted">Location</dt>
-              <dd class="mt-1">{latest.general_area}</dd>
-            </div>
-            <div>
-              <dt class="text-[0.65rem] uppercase tracking-wider text-muted">Adopted</dt>
-              <dd class="mt-1">{latest.decision_count} resolutions</dd>
-            </div>
-          </dl>
-        </div>
-        <div class="md:col-span-8">
-          <ul class="space-y-3">
-            {latestPlenaryResolutions.slice(0, 4).map((d) => (
-              <li class="hairline pt-3 grid grid-cols-12 gap-4 text-sm">
-                <span class="col-span-3 sm:col-span-2 font-mono text-wine">{d.number}</span>
-                <span class="col-span-9 sm:col-span-10">{d.title}</span>
-              </li>
-            ))}
-          </ul>
-          <a href="/decisions/" class="font-mono text-sm text-wine hover:text-wine-deep border-b border-wine pb-0.5 mt-6 inline-block">
-            See all {meta.counts.decisions} resolutions →
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-28">
-    <div class="hairline pt-8">
-      <div class="flex items-baseline justify-between">
-        <div>
-          <span class="eyebrow">The series</span>
-          <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
-            ISO/IEC 80000 — Quantities and units
-          </h2>
-        </div>
-        <a href="/standards/" class="font-mono text-sm text-muted hover:text-ink hidden md:inline">all parts →</a>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8 mt-8">
-        {publishedStandards.slice(0, 6).map((s) => (
-          <a href={`/standards/${s.slug}/`} class="block group">
-            <div class="flex items-baseline justify-between hairline pt-3">
-              <div>
-                <div class="font-mono text-xs text-muted">{`ISO ${s.part === 14 || s.part === 15 || s.part === 16 || s.part === 17 ? 'IEC' : ''} 80000-${s.part}`}</div>
-                <div class="font-display text-xl mt-1 group-hover:text-wine transition-colors">{s.title}</div>
-              </div>
-              <div class="font-mono text-xs text-muted">{s.edition_year ?? 'TBD'}</div>
-            </div>
-            <p class="text-sm text-muted mt-3 leading-relaxed">{s.scope}</p>
+    <section class="stats">
+      <div class="stats__inner">
+        {stats.map((stat) => (
+          <a href={stat.to} class="stats__cell">
+            <span class="stats__value">{stat.value}</span>
+            <span class="stats__label">{stat.label}</span>
+            <span class="stats__caption">{stat.caption}</span>
           </a>
         ))}
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-28">
-    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-8">
-      <div class="md:col-span-5">
-        <span class="eyebrow">Next</span>
-        <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
-          {next ? `${new Date(next.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} — ${next.location || next.format || 'plenary'}` : 'To be announced'}
+    <section class="home-section">
+      <header class="home-section__head">
+        <p class="eyebrow">The foundation</p>
+        <h2 class="home-section__title">Seven base units. One committee.</h2>
+        <p class="home-section__lede">The SI defines seven base quantities — length, mass, time, electric current, temperature, amount of substance, and luminous intensity. Every other quantity is derived from them. TC 12 maintains the standardised vocabulary that spans them all.</p>
+      </header>
+      <UnitGrid variant="hero" />
+      <p class="home-section__note">
+        Each card links to the ISO 80000 part covering that quantity. Dimensional symbols <code>[L]</code>, <code>[M]</code>, <code>[T]</code>, <code>[I]</code>, <code>[Θ]</code>, <code>[N]</code>, <code>[J]</code> follow ISO 80000-1 conventions.
+      </p>
+    </section>
+
+    <section class="home-section">
+      <header class="home-section__head">
+        <p class="eyebrow">Latest plenary</p>
+        <h2 class="home-section__title">
+          <a href={latest.landing_url} class="home-section__title-link">
+            {ordinal(latest.ordinal)} plenary · {new Date(latest.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </a>
         </h2>
-        <p class="text-sm text-muted mt-3 leading-relaxed max-w-md">
-          The 24th plenary meeting of ISO/TC 12 will be held virtually on
-          25 May 2027 at 13:00 CEST, unless a member body offers to host
-          in person.
-        </p>
-        <a href="/meetings/" class="font-mono text-sm text-wine hover:text-wine-deep border-b border-wine pb-0.5 mt-6 inline-block">
-          All plenary meetings →
-        </a>
-      </div>
-      <div class="md:col-span-7 md:pl-12 md:border-l border-rule">
-        <span class="eyebrow">In development</span>
-        <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
-          Work in progress
-        </h2>
-        <ul class="mt-6 space-y-3">
-          {inDevelopmentStandards.concat(publishedStandards.filter(s => s.status === 'published' && s.stage !== '90.20').slice(0, 2)).map((s) => (
-            <li class="hairline pt-3 grid grid-cols-12 gap-3 text-sm">
-              <span class="col-span-3 font-mono text-xs text-muted pt-0.5">{`80000-${s.part}`}</span>
-              <span class="col-span-6">{s.title}</span>
-              <span class="col-span-3 font-mono text-xs text-muted text-right pt-0.5">stage {s.stage}</span>
+        <p class="home-section__lede">{latest.general_area}. {latest.decision_count} resolutions adopted — covering ISO 80000-2/-4 revisions, liaison appointments, the Strategic Business Plan, and SMART exploration.</p>
+      </header>
+
+      <div class="latest-grid">
+        <ol class="latest-resolutions">
+          {latestPlenaryResolutions.slice(0, 5).map((d) => (
+            <li class="latest-resolution">
+              <a href={`/decisions/${d.urn}`} class="latest-resolution__link">
+                <span class="latest-resolution__num">{d.number}</span>
+                <span class="latest-resolution__title">{d.title}</span>
+              </a>
             </li>
           ))}
-        </ul>
-      </div>
-    </div>
-  </section>
+        </ol>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-28">
-    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-      <div class="md:col-span-5">
-        <span class="eyebrow">Get involved</span>
-        <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2">
-          Who can participate
-        </h2>
+        <aside class="next-up">
+          <p class="eyebrow next-up__eyebrow">Next</p>
+          <h3 class="next-up__title">24th plenary</h3>
+          <p class="next-up__date">25 May 2027 · 13:00 CEST</p>
+          <div class="next-up__countdown">
+            <span class="next-up__days">{daysUntil.toLocaleString()}</span>
+            <span class="next-up__days-label">days away</span>
+          </div>
+          <p class="next-up__note">Virtual via Zoom. A member body may offer to host in person.</p>
+          <a href="/meetings/" class="next-up__link">Meeting details →</a>
+        </aside>
       </div>
-      <div class="md:col-span-7 prose-tc12 max-w-none">
-        <p>
-          ISO/TC 12 is open to participation through ISO member bodies.
-          National standards bodies can join as <strong class="text-ink">P-members</strong> (voting)
-          or <strong class="text-ink">O-members</strong> (observers). Liaison
-          organizations — other ISO, IEC, or external bodies whose work
-          intersects with quantities and units — are also represented.
-        </p>
-        <p>
-          Experts are nominated by their member body to serve on
-          working groups. To join, contact your national standards body.
-        </p>
-        <a href="/national-bodies/" class="font-mono text-sm text-wine hover:text-wine-deep border-b border-wine pb-0.5 inline-block mt-2">
-          See participating members →
-        </a>
+    </section>
+
+    <section class="home-section">
+      <header class="home-section__head">
+        <p class="eyebrow">Explore</p>
+        <h2 class="home-section__title">What's here</h2>
+      </header>
+      <ol class="explore-grid">
+        {sections.map((s) => (
+          <li>
+            <a href={s.to} class="explore-card">
+              <span class="explore-card__n">{s.n}</span>
+              <span class="explore-card__body">
+                <span class="explore-card__label">{s.label}</span>
+                <span class="explore-card__blurb">{s.blurb}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="home-section">
+      <header class="home-section__head">
+        <p class="eyebrow">The series</p>
+        <h2 class="home-section__title">ISO/IEC 80000 in brief</h2>
+      </header>
+      <div class="standards-grid">
+        {publishedStandards.slice(0, 6).map((s) => (
+          <a href={`/standards/${s.slug}/`} class="standard-card">
+            <div class="standard-card__head">
+              <span class="standard-card__ref">{`ISO ${s.part >= 14 && s.part <= 17 ? 'IEC ' : ''}80000-${s.part}`}</span>
+              <span class="standard-card__year">{s.edition_year ?? 'TBD'}</span>
+            </div>
+            <h3 class="standard-card__title">{s.title}</h3>
+            <p class="standard-card__scope">{s.scope}</p>
+          </a>
+        ))}
       </div>
-    </div>
-  </section>
+      <p style="margin-top:1.5rem"><a href="/standards/" class="btn-secondary">All {standards.length} parts →</a></p>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .stats {
+    margin: 2.5rem 0 4rem;
+    border-top: 1px solid #e7e5e4;
+    border-bottom: 1px solid #e7e5e4;
+  }
+  .dark .stats { border-color: rgb(255 255 255 / 0.08); }
+  .stats__inner {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 768px) { .stats__inner { grid-template-columns: repeat(4, 1fr); } }
+  .stats__cell {
+    display: block;
+    padding: 1.5rem 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    border-right: 1px solid #e7e5e4;
+    transition: background-color 0.15s;
+  }
+  .stats__cell:last-child { border-right: 0; }
+  @media (max-width: 767px) {
+    .stats__cell:nth-child(2n) { border-right: 0; }
+    .stats__cell:nth-child(n+3) { border-top: 1px solid #e7e5e4; }
+  }
+  .dark .stats__cell { border-color: rgb(255 255 255 / 0.08); }
+  .stats__cell:hover { background: rgb(30 58 138 / 0.04); }
+  .dark .stats__cell:hover { background: rgb(255 255 255 / 0.02); }
+  .stats__value {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    line-height: 1;
+    font-weight: 600;
+    color: var(--color-brand);
+    letter-spacing: -0.025em;
+  }
+  .stats__label {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-slate-900);
+  }
+  .dark .stats__label { color: #fafaf9; }
+  .stats__caption {
+    display: block;
+    margin-top: 0.375rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-slate-500);
+  }
+
+  .home-section { margin-bottom: 4rem; }
+  .home-section__head { margin-bottom: 1.75rem; max-width: 56ch; }
+  .home-section__title {
+    font-family: var(--font-serif);
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--color-slate-900);
+    margin: 0.5rem 0 0;
+  }
+  .dark .home-section__title { color: #fafaf9; }
+  .home-section__title-link { color: inherit; text-decoration: none; }
+  .home-section__title-link:hover { color: var(--color-brand); }
+  .home-section__lede {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-slate-600);
+    margin: 0.75rem 0 0;
+  }
+  .dark .home-section__lede { color: var(--color-slate-300); }
+  .home-section__note {
+    margin-top: 1.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--color-slate-500);
+  }
+  .home-section__note code {
+    font-family: var(--font-mono);
+    background: rgb(30 58 138 / 0.06);
+    padding: 0.0625rem 0.25rem;
+    border-radius: 0.1875rem;
+    font-size: 0.875rem;
+    color: var(--color-brand);
+  }
+  .dark .home-section__note code { background: rgb(255 255 255 / 0.06); }
+
+  .latest-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .latest-grid { grid-template-columns: 2fr 1fr; gap: 2rem; }
+  }
+
+  .latest-resolutions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #e7e5e4;
+  }
+  .dark .latest-resolutions { border-color: rgb(255 255 255 / 0.08); }
+  .latest-resolution { border-bottom: 1px solid #f5f5f4; }
+  .dark .latest-resolution { border-color: rgb(255 255 255 / 0.04); }
+  .latest-resolution__link {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.15s;
+  }
+  .latest-resolution__link:hover { background: rgb(30 58 138 / 0.04); }
+  .dark .latest-resolution__link:hover { background: rgb(255 255 255 / 0.02); }
+  .latest-resolution__num {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-brand);
+    letter-spacing: 0.025em;
+  }
+  .latest-resolution__title {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--color-slate-700);
+  }
+  .dark .latest-resolution__title { color: var(--color-slate-300); }
+
+  .next-up {
+    background: var(--color-brand);
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+  }
+  .next-up__eyebrow { color: rgb(255 255 255 / 0.7) !important; }
+  .next-up__title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0.5rem 0 0;
+  }
+  .next-up__date {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.85);
+  }
+  .next-up__countdown {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin: 1.25rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid rgb(255 255 255 / 0.2);
+    border-bottom: 1px solid rgb(255 255 255 / 0.2);
+  }
+  .next-up__days {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  .next-up__days-label {
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.7);
+  }
+  .next-up__note {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: rgb(255 255 255 / 0.75);
+    margin: 0 0 1rem;
+  }
+  .next-up__link {
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .explore-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    border-top: 1px solid #e7e5e4;
+  }
+  @media (min-width: 768px) { .explore-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .explore-grid { grid-template-columns: repeat(3, 1fr); } }
+  .dark .explore-grid { border-color: rgb(255 255 255 / 0.08); }
+  .explore-card {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.875rem;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid #e7e5e4;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.15s;
+  }
+  @media (min-width: 768px) {
+    .explore-card { border-right: 1px solid #e7e5e4; }
+    .explore-card:nth-child(2n) { border-right: 0; }
+  }
+  @media (min-width: 1024px) {
+    .explore-card:nth-child(2n) { border-right: 1px solid #e7e5e4; }
+    .explore-card:nth-child(3n) { border-right: 0; }
+  }
+  .dark .explore-card { border-color: rgb(255 255 255 / 0.08); }
+  .explore-card:hover { background: rgb(30 58 138 / 0.04); }
+  .dark .explore-card:hover { background: rgb(255 255 255 / 0.02); }
+  .explore-card__n {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-slate-400);
+    letter-spacing: 0.025em;
+    padding-top: 0.125rem;
+  }
+  .explore-card__body { display: flex; flex-direction: column; gap: 0.25rem; }
+  .explore-card__label { font-weight: 600; color: var(--color-slate-900); }
+  .dark .explore-card__label { color: #fafaf9; }
+  .explore-card__blurb {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-slate-500);
+  }
+
+  .standards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 768px) { .standards-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .standards-grid { grid-template-columns: repeat(3, 1fr); } }
+  .standard-card {
+    display: block;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid rgb(229 231 235 / 0.8);
+    border-radius: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+  }
+  .dark .standard-card {
+    background: #1c1917;
+    border-color: rgb(255 255 255 / 0.08);
+  }
+  .standard-card:hover {
+    border-color: rgb(30 58 138 / 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgb(30 58 138 / 0.08);
+  }
+  .standard-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+  .standard-card__ref {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-slate-500);
+    letter-spacing: 0.025em;
+  }
+  .standard-card__year {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-slate-400);
+  }
+  .standard-card__title {
+    font-family: var(--font-serif);
+    font-size: 1.1875rem;
+    font-weight: 600;
+    color: var(--color-slate-900);
+    margin: 0;
+  }
+  .dark .standard-card__title { color: #fafaf9; }
+  .standard-card:hover .standard-card__title { color: var(--color-brand); }
+  .standard-card__scope {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--color-slate-500);
+    margin: 0.5rem 0 0;
+  }
+</style>

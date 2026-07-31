@@ -4,55 +4,117 @@ import PageHero from '../components/PageHero.astro'
 import fs from 'node:fs'
 
 const nb = JSON.parse(fs.readFileSync('public/data/national_bodies.json', 'utf-8'))
+const sorted = [...nb.participating].sort((a, b) => a.name.localeCompare(b.name))
 ---
 
-<BaseLayout title="National bodies" description="ISO/TC 12 participating members — twenty-one national standards bodies actively shaping the work.">
-  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+<BaseLayout title="National bodies" description={`ISO/TC 12 participating members — ${nb.p_count} national standards bodies actively shaping the work.`}>
+  <div class="page page--wide">
     <PageHero
       eyebrow="Members"
-      ordinal="05"
       title={`Participating member bodies (${nb.p_count})`}
-      lede="P-members vote on every formal question — new work items, drafts, final drafts, and resolutions. The committee currently has <strong>21 P-members</strong> actively shaping the work, with 35 additional O-members (observers) following along."
+      lead={`P-members vote on every formal question — new work items, drafts, final drafts, and resolutions. The committee currently has <strong>${nb.p_count} P-members</strong> actively shaping the work, with additional O-members (observers) following along.`}
     />
-  </div>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
-    <div class="hairline pt-8">
-      <span class="eyebrow">Participating (P-members)</span>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-1 mt-6">
-        {nb.participating.map((m) => (
-          <div class="hairline py-3 grid grid-cols-12 gap-3 items-baseline">
-            <div class="col-span-2 font-mono text-wine text-sm">{m.code}</div>
-            <div class="col-span-3 font-mono text-xs text-muted uppercase">{m.body}</div>
-            <div class="col-span-7">{m.name}</div>
-          </div>
+    <section>
+      <header class="section-head">
+        <p class="eyebrow">Participating (P-members)</p>
+      </header>
+      <ul class="bodies-grid">
+        {sorted.map((m) => (
+          <li class="body-card">
+            <span class="body-card__code">{m.code}</span>
+            <span class="body-card__body">
+              <span class="body-card__body-name">{m.body}</span>
+              <span class="body-card__name">{m.name}</span>
+            </span>
+          </li>
         ))}
-      </div>
-    </div>
-  </section>
+      </ul>
+    </section>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
-    <div class="hairline pt-8 grid grid-cols-1 md:grid-cols-12 gap-8 prose-tc12 max-w-none">
-      <div class="md:col-span-5">
-        <span class="eyebrow">How membership works</span>
-        <h3 class="font-display text-xl font-medium mt-2">P vs O</h3>
+    <section class="how-section">
+      <div class="how-grid">
+        <div>
+          <p class="eyebrow">How membership works</p>
+          <h2 class="section-title">P vs O</h2>
+        </div>
+        <div class="prose-tc">
+          <p>
+            ISO member bodies join TC 12 as <strong>P-members</strong>
+            (participating) or <strong>O-members</strong> (observers).
+            P-members must vote on every formal question — new work items,
+            enquiry drafts, final drafts, and resolutions — and are expected
+            to nominate experts to working groups and plenary meetings.
+          </p>
+          <p>
+            O-members follow the work, receive documents, and may submit
+            comments and attend meetings, but do not vote.
+          </p>
+          <p><a href="https://www.iso.org/members.html" class="btn-secondary">Find your ISO member body ↗</a></p>
+        </div>
       </div>
-      <div class="md:col-span-7">
-        <p>
-          ISO member bodies join TC 12 as <strong class="text-ink">P-members</strong>
-          (participating) or <strong class="text-ink">O-members</strong> (observers).
-          P-members must vote on every formal question — new work items,
-          enquiry drafts, final drafts, and resolutions — and are expected to
-          nominate experts to working groups and plenary meetings.
-        </p>
-        <p>
-          O-members follow the work, receive documents, and may submit comments
-          and attend meetings, but do not vote.
-        </p>
-        <p>
-          <a href="https://www.iso.org/members.html" class="text-wine underline">Find your ISO member body ↗</a>
-        </p>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  section { margin-top: 2.5rem; }
+  .section-head { margin-bottom: 1.25rem; }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.625rem;
+    font-weight: 600;
+    color: var(--color-slate-900);
+    margin: 0.375rem 0 0;
+  }
+  .dark .section-title { color: #fafaf9; }
+  .bodies-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border-top: 1px solid #e7e5e4;
+  }
+  @media (min-width: 768px) { .bodies-grid { grid-template-columns: repeat(3, 1fr); } }
+  .dark .bodies-grid { border-color: rgb(255 255 255 / 0.08); }
+  .body-card {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.875rem;
+    align-items: baseline;
+    padding: 1rem;
+    border-bottom: 1px solid #e7e5e4;
+    border-right: 1px solid #e7e5e4;
+  }
+  @media (min-width: 768px) { .body-card:nth-child(3n) { border-right: 0; } }
+  .dark .body-card { border-color: rgb(255 255 255 / 0.08); }
+  .body-card__code {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-brand);
+  }
+  .body-card__body-name {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-slate-500);
+  }
+  .body-card__name {
+    display: block;
+    font-size: 0.9375rem;
+    color: var(--color-slate-900);
+    font-weight: 500;
+    margin-top: 0.125rem;
+  }
+  .dark .body-card__name { color: #fafaf9; }
+
+  .how-section { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e7e5e4; }
+  .dark .how-section { border-color: rgb(255 255 255 / 0.08); }
+  .how-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+  @media (min-width: 1024px) { .how-grid { grid-template-columns: 1fr 2fr; gap: 3rem; } }
+</style>

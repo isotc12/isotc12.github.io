@@ -7,101 +7,163 @@ const groups = JSON.parse(fs.readFileSync('public/data/groups.json', 'utf-8'))
 const leadership = JSON.parse(fs.readFileSync('public/data/leadership.json', 'utf-8'))
 const active = groups.filter((g) => g.status === 'active' || g.status === 'transition')
 const disbanded = groups.filter((g) => g.status === 'disbanded')
+const statusLabel = { active: 'Active', transition: 'In transition', disbanded: 'Disbanded' }
+const statusClass = { active: 'published', transition: 'development', disbanded: 'withdrawn' }
 ---
 
 <BaseLayout title="Working groups & officers" description="ISO/TC 12's working groups and committee officers.">
-  <div class="max-w-[1320px] mx-auto px-6 lg:px-10 pt-12">
+  <div class="page page--wide">
     <PageHero
       eyebrow="Structure"
-      ordinal="06"
       title="Working groups & officers"
-      lede="Most of the technical work happens in working groups. TC 12 currently has one active WG and a joint one with IEC/TC 25."
+      lead="Most of the technical work happens in working groups. TC 12 currently has one active WG and a joint one with IEC/TC 25."
     />
-  </div>
 
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-16">
-    <div class="hairline pt-8">
-      <span class="eyebrow">Active</span>
-      <div class="mt-6 space-y-8">
+    <section>
+      <header class="section-head">
+        <p class="eyebrow">Active</p>
+      </header>
+      <div class="wg-grid">
         {active.map((g) => (
-          <article class="hairline pt-6 grid grid-cols-12 gap-6">
-            <div class="col-span-12 sm:col-span-3">
-              <h3 class="font-display text-2xl font-medium text-wine">{g.name}</h3>
-              <div class="eyebrow mt-2">{g.status}</div>
-            </div>
-            <div class="col-span-12 sm:col-span-9 prose-tc12 max-w-none">
-              <p>{g.scope}</p>
-              <dl class="text-sm mt-4 grid grid-cols-2 gap-x-6 gap-y-2">
+          <article class="wg-card">
+            <header class="wg-card__head">
+              <h3 class="wg-card__name">{g.name}</h3>
+              <span class:list={['status-pill', `status-pill--${statusClass[g.status]}`]}>
+                <span class="status-pill__dot"></span>{statusLabel[g.status]}
+              </span>
+            </header>
+            <p class="wg-card__scope">{g.scope}</p>
+            <dl class="wg-card__meta">
+              <div>
+                <dt>Convenor</dt>
+                <dd>{g.convenor}</dd>
+              </div>
+              {g.established && (
                 <div>
-                  <dt class="text-muted">Convenor</dt>
-                  <dd class="font-display mt-0.5">{g.convenor}</dd>
+                  <dt>Established</dt>
+                  <dd>{g.established}</dd>
                 </div>
-                {g.established && (
-                  <div>
-                    <dt class="text-muted">Established</dt>
-                    <dd class="font-mono mt-0.5">{g.established}</dd>
-                  </div>
-                )}
-              </dl>
-            </div>
+              )}
+            </dl>
           </article>
         ))}
       </div>
-    </div>
-  </section>
+    </section>
 
-  {disbanded.length > 0 && (
-    <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
-      <div class="hairline pt-8">
-        <span class="eyebrow">Disbanded (work complete)</span>
-        <table class="w-full text-sm mt-6">
-          <thead>
-            <tr class="text-left">
-              <th class="eyebrow font-normal py-2">Group</th>
-              <th class="eyebrow font-normal py-2 hidden md:table-cell">Scope</th>
-              <th class="eyebrow font-normal py-2">Disbanded</th>
-            </tr>
-          </thead>
+    {disbanded.length > 0 && (
+      <section>
+        <header class="section-head">
+          <p class="eyebrow">Disbanded (work complete)</p>
+        </header>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Group</th><th class="hide-mobile">Scope</th><th>Disbanded</th></tr></thead>
+            <tbody>
+              {disbanded.map((g) => (
+                <tr>
+                  <td><span class="mono">{g.name}</span></td>
+                  <td class="hide-mobile muted">{g.scope}</td>
+                  <td class="mono muted">{g.disbanded ?? '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    <section>
+      <header class="section-head">
+        <p class="eyebrow">Committee officers</p>
+        <h2 class="section-title">Secretariat & leadership</h2>
+      </header>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Role</th><th>Name</th><th class="hide-mobile">Affiliation</th><th class="hide-mobile-lt">Term</th></tr></thead>
           <tbody>
-            {disbanded.map((g) => (
-              <tr class="hairline">
-                <td class="py-3 pr-4 font-mono text-wine align-top">{g.name}</td>
-                <td class="py-3 pr-4 text-muted hidden md:table-cell">{g.scope}</td>
-                <td class="py-3 font-mono text-xs text-muted align-top">{g.disbanded ?? '—'}</td>
+            {leadership.map((p) => (
+              <tr>
+                <td><span class="role-pill">{p.role}</span></td>
+                <td class="name-cell">{p.name}</td>
+                <td class="hide-mobile muted">{p.affiliation}</td>
+                <td class="hide-mobile-lt mono muted">{p.term}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
     </section>
-  )}
-
-  <section class="max-w-[1320px] mx-auto px-6 lg:px-10 mt-20">
-    <div class="hairline pt-8">
-      <span class="eyebrow">Committee officers</span>
-      <h2 class="font-display font-medium tracking-tight text-[var(--text-h2)] mt-2 mb-6">
-        Secretariat & leadership
-      </h2>
-      <table class="w-full text-sm">
-        <thead>
-          <tr class="text-left">
-            <th class="eyebrow font-normal py-2">Role</th>
-            <th class="eyebrow font-normal py-2">Name</th>
-            <th class="eyebrow font-normal py-2 hidden md:table-cell">Affiliation</th>
-            <th class="eyebrow font-normal py-2 hidden lg:table-cell">Term</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leadership.map((p) => (
-            <tr class="hairline hover:bg-vellum/50">
-              <td class="py-3 pr-4 font-mono text-xs text-muted uppercase tracking-wider align-top">{p.role}</td>
-              <td class="py-3 pr-4 font-display align-top">{p.name}</td>
-              <td class="py-3 pr-4 text-muted text-sm hidden md:table-cell align-top">{p.affiliation}</td>
-              <td class="py-3 text-muted text-xs hidden lg:table-cell align-top">{p.term}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
+  </div>
 </BaseLayout>
+
+<style>
+  section { margin-top: 2.5rem; }
+  .section-head { margin-bottom: 1.25rem; }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.625rem;
+    font-weight: 600;
+    color: var(--color-slate-900);
+    margin: 0.375rem 0 0;
+  }
+  .dark .section-title { color: #fafaf9; }
+
+  .wg-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 768px) { .wg-grid { grid-template-columns: repeat(2, 1fr); } }
+  .wg-card {
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid rgb(229 231 235 / 0.8);
+    border-radius: 0.75rem;
+  }
+  .dark .wg-card {
+    background: #1c1917;
+    border-color: rgb(255 255 255 / 0.08);
+  }
+  .wg-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: 0.875rem;
+  }
+  .wg-card__name {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--color-brand);
+    margin: 0;
+  }
+  .wg-card__scope {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-slate-700);
+    margin: 0 0 1rem;
+  }
+  .dark .wg-card__scope { color: var(--color-slate-300); }
+  .wg-card__meta { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
+  .wg-card__meta dt { font-size: 0.6875rem; font-weight: 600; color: var(--color-slate-500); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.125rem; }
+  .wg-card__meta dd { margin: 0; font-size: 0.875rem; color: var(--color-slate-900); }
+  .dark .wg-card__meta dd { color: #fafaf9; }
+
+  .mono { font-family: var(--font-mono); font-size: 0.875rem; }
+  .muted { color: var(--color-slate-500); font-size: 0.875rem; }
+  .role-pill {
+    display: inline-block;
+    padding: 0.1875rem 0.5rem;
+    background: rgb(30 58 138 / 0.08);
+    color: var(--color-brand);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 0.3125rem;
+  }
+  .dark .role-pill { background: rgb(255 255 255 / 0.08); }
+  .name-cell { font-weight: 600; color: var(--color-slate-900); }
+  .dark .name-cell { color: #fafaf9; }
+  @media (max-width: 767px) { .hide-mobile { display: none; } }
+  @media (max-width: 1023px) { .hide-mobile-lt { display: none; } }
+</style>
