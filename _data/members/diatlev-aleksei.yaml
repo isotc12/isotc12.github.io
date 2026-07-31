@@ -1,0 +1,10 @@
+member-id: diatlev-aleksei
+name: Diatlev, Aleksei
+active: true
+roles:
+  - id: member
+    group: gost-r
+    nsbody: GOST R
+    member_type: P-member
+salutation: Mr
+email: dab@vniim.ru

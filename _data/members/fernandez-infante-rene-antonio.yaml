@@ -1,0 +1,10 @@
+member-id: fernandez-infante-rene-antonio
+name: Fernandez Infante, Rene Antonio
+active: true
+roles:
+  - id: member
+    group: nc
+    nsbody: NC
+    member_type: O-member
+salutation: Mr
+email: renef@ncnorma.cu

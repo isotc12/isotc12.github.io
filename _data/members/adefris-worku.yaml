@@ -1,0 +1,10 @@
+member-id: adefris-worku
+name: Adefris, Worku
+active: true
+roles:
+  - id: member
+    group: ies
+    nsbody: IES
+    member_type: O-member
+salutation: Mr
+email: mathiasworku25@gmail.com

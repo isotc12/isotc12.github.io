@@ -1,0 +1,10 @@
+member-id: sabour-gilvan-abbas
+name: Sabour Gilvan, Abbas
+active: true
+roles:
+  - id: member
+    group: inso
+    nsbody: INSO
+    member_type: O-member
+salutation: Mr
+email: abbassaboor@gmail.com

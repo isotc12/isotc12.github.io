@@ -1,0 +1,9 @@
+member-id: olken-frank
+name: Olken, Frank
+active: true
+roles:
+  - id: liaison_representative
+    organization: OASIS
+    liaison_type: A-liaison
+salutation: Mr.
+email: frank.olken@intellegere.org

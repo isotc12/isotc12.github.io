@@ -1,0 +1,10 @@
+member-id: li-dehong
+name: LI, Dehong
+active: true
+roles:
+  - id: member
+    group: sac
+    nsbody: SAC
+    member_type: P-member
+salutation: Mr
+email: lideh2000cn@163.com

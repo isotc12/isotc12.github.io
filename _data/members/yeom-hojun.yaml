@@ -1,0 +1,10 @@
+member-id: yeom-hojun
+name: Yeom, Hojun
+active: true
+roles:
+  - id: member
+    group: kats
+    nsbody: KATS
+    member_type: O-member
+salutation: Mr
+email: yhjjsj0428@naver.com

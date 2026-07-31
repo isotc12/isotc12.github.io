@@ -1,0 +1,8 @@
+member-id: technical-terminology-service-who-who
+name: Technical Terminology Service (WHO), WHO
+active: true
+roles:
+  - id: liaison_representative
+    organization: WHO
+    liaison_type: A-liaison
+email: info@who.int

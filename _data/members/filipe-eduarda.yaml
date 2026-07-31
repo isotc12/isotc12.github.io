@@ -1,0 +1,10 @@
+member-id: filipe-eduarda
+name: Filipe, Eduarda
+active: true
+roles:
+  - id: member
+    group: ipq
+    nsbody: IPQ
+    member_type: P-member
+salutation: Mrs
+email: ecrfilipe@gmail.com

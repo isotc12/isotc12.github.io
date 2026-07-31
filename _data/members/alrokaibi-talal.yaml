@@ -1,0 +1,10 @@
+member-id: alrokaibi-talal
+name: AlRokaibi, Talal
+active: true
+roles:
+  - id: member
+    group: kowsmd
+    nsbody: KOWSMD
+    member_type: P-member
+salutation: Mr
+email: talal.rkb@gmail.com

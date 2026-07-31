@@ -1,0 +1,10 @@
+member-id: mohammadi-ahad
+name: Mohammadi, Ahad
+active: true
+roles:
+  - id: member
+    group: inso
+    nsbody: INSO
+    member_type: O-member
+salutation: Mr
+email: isiritc12@gmail.com

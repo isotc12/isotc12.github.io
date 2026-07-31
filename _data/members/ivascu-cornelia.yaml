@@ -1,0 +1,10 @@
+member-id: ivascu-cornelia
+name: IVASCU, Cornelia
+active: true
+roles:
+  - id: member
+    group: asro
+    nsbody: ASRO
+    member_type: O-member
+salutation: Mrs
+email: cornelia.ivascu@asro.ro

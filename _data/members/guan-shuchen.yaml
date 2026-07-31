@@ -1,0 +1,9 @@
+member-id: guan-shuchen
+name: Guan, Shuchen
+active: true
+roles:
+  - id: liaison_representative
+    organization: CIE
+    liaison_type: A-liaison
+salutation: Ms
+email: shuchen.guan@cie.co.at

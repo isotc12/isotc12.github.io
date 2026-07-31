@@ -1,0 +1,10 @@
+member-id: kuzuki-ryota
+name: Kuzuki, Ryota
+active: true
+roles:
+  - id: member
+    group: jisc
+    nsbody: JISC
+    member_type: P-member
+salutation: Dr
+email: kuzuki.ryota@gas.or.jp

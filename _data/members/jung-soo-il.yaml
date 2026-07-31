@@ -1,0 +1,9 @@
+member-id: jung-soo-il
+name: Jung, Soo-Il
+active: true
+roles:
+  - id: member
+    group: kats
+    nsbody: KATS
+    member_type: O-member
+email: sooiljung@inha.ac.kr

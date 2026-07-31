@@ -1,0 +1,9 @@
+member-id: shi-peiliang
+name: Shi, Peiliang
+active: true
+roles:
+  - id: liaison_representative
+    organization: WMO
+    liaison_type: A-liaison
+salutation: Mr.
+email: pshi@wmo.int

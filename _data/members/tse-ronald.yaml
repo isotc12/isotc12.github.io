@@ -1,0 +1,8 @@
+member-id: tse-ronald
+name: Tse, Ronald
+active: true
+roles:
+  - id: liaison_representative
+    committee: ISO/TC 184/SC 4
+salutation: Mr
+email: Ronald.Tse@eccma.org

@@ -1,0 +1,10 @@
+member-id: arshadi-fatemeh
+name: Arshadi, Fatemeh
+active: true
+roles:
+  - id: member
+    group: inso
+    nsbody: INSO
+    member_type: O-member
+salutation: Ms
+email: F_arshadi_oiml@yahoo.com

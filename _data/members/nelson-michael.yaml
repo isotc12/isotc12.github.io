@@ -1,0 +1,10 @@
+member-id: nelson-michael
+name: Nelson, Michael
+active: true
+roles:
+  - id: member
+    group: ansi
+    nsbody: ANSI
+    member_type: P-member
+salutation: Dr
+email: michael.nelson@nist.gov

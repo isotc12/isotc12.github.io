@@ -1,0 +1,9 @@
+member-id: karshenboim-savely
+name: Karshenboim, Savely
+active: true
+roles:
+  - id: liaison_representative
+    organization: IUPAP
+    liaison_type: A-liaison
+salutation: Dr.
+email: savely.karshenboim@mpq.mpg.de

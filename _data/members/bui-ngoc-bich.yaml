@@ -1,0 +1,10 @@
+member-id: bui-ngoc-bich
+name: Bui Ngoc, Bich
+active: true
+roles:
+  - id: member
+    group: stameq
+    nsbody: STAMEQ
+    member_type: O-member
+salutation: Mrs.
+email: buingocbich@vsqi.gov.vn

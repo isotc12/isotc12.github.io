@@ -1,0 +1,10 @@
+member-id: sriprapapong-teardpong
+name: Sriprapapong, Teardpong
+active: true
+roles:
+  - id: member
+    group: tisi
+    nsbody: TISI
+    member_type: O-member
+salutation: Mr
+email: teardpong.sr@gmail.com

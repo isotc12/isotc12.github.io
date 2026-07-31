@@ -1,0 +1,9 @@
+member-id: galinski-christian
+name: Galinski, Christian
+active: true
+roles:
+  - id: liaison_representative
+    organization: Infoterm
+    liaison_type: A-liaison
+salutation: Dr
+email: cgalinski@eurodoc.info

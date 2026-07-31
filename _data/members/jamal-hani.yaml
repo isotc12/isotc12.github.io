@@ -1,0 +1,10 @@
+member-id: jamal-hani
+name: Jamal, Hani
+active: true
+roles:
+  - id: member
+    group: kowsmd
+    nsbody: KOWSMD
+    member_type: P-member
+salutation: Mr
+email: hanijamal2010@gmail.com

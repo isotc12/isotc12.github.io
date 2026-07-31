@@ -1,0 +1,10 @@
+member-id: shao-haiming
+name: Shao, Haiming
+active: true
+roles:
+  - id: member
+    group: sac
+    nsbody: SAC
+    member_type: P-member
+salutation: Mr
+email: shaohm@nim.ac.cn

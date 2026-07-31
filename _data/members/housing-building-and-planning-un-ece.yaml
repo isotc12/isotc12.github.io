@@ -1,0 +1,9 @@
+member-id: housing-building-and-planning-un-ece
+name: Housing, Building and Planning, (UN/ECE)
+active: true
+roles:
+  - id: liaison_representative
+    organization: UNECE
+    liaison_type: A-liaison
+salutation: Mr
+email: unece@unece.org

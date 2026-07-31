@@ -1,0 +1,12 @@
+member-id: lindor-nor-n-anette
+name: Lindor Norén, Anette
+active: true
+roles:
+  - id: secretariat_support
+    organization: SIS
+  - id: member
+    group: sis
+    nsbody: SIS
+    member_type: P-member
+salutation: Ms
+email: anette.noren@sis.se

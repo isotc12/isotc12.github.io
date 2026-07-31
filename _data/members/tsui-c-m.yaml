@@ -1,0 +1,10 @@
+member-id: tsui-c-m
+name: Tsui, C.M.
+active: true
+roles:
+  - id: member
+    group: itchksar
+    nsbody: ITCHKSAR
+    member_type: O-member
+salutation: Mr.
+email: cmtsui@itc.gov.hk

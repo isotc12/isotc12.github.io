@@ -1,0 +1,10 @@
+member-id: zheng-huaxin
+name: ZHENG, Huaxin
+active: true
+roles:
+  - id: member
+    group: sac
+    nsbody: SAC
+    member_type: P-member
+salutation: Ms
+email: zhenghuaxin@samr.gov.cn

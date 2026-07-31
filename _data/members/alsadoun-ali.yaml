@@ -1,0 +1,10 @@
+member-id: alsadoun-ali
+name: AlSadoun, Ali
+active: true
+roles:
+  - id: member
+    group: kowsmd
+    nsbody: KOWSMD
+    member_type: P-member
+salutation: Mr
+email: alialsadoun@icloud.com

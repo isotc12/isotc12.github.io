@@ -1,0 +1,10 @@
+member-id: efremova-nadezhda
+name: Efremova, Nadezhda
+active: true
+roles:
+  - id: member
+    group: belst
+    nsbody: BELST
+    member_type: P-member
+salutation: Ms
+email: efremova@belgim.by

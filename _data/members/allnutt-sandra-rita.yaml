@@ -1,0 +1,9 @@
+member-id: allnutt-sandra-rita
+name: Allnutt, Sandra Rita
+active: true
+roles:
+  - id: liaison_representative
+    organization: IMO
+    liaison_type: B-liaison
+salutation: Mrs
+email: sallnutt@imo.org

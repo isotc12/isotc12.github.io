@@ -1,0 +1,10 @@
+member-id: poonsawat-apisak
+name: Poonsawat, Apisak
+active: true
+roles:
+  - id: member
+    group: tisi
+    nsbody: TISI
+    member_type: O-member
+salutation: Mr
+email: apisak0991@hotmail.com

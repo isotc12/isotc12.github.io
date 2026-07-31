@@ -204,15 +204,35 @@ function loadNationalBodies() {
   return { participating: p, p_count: p.length }
 }
 
-function loadLeadership() {
-  return [
-    { role: 'Chair', name: 'Dr Torgny Carlsson', affiliation: 'Chalmers University of Technology', term: 'until end 2027' },
-    { role: 'Committee Manager', name: 'Ms Rebecca Cederholm', affiliation: 'SIS — Swedish Standards Institute', term: 'since 2024' },
-    { role: 'Secretariat Support', name: 'Ms Anette Lindor Norén', affiliation: 'SIS', term: '' },
-    { role: 'Secretariat Support', name: 'Mr Jörgen Wyke', affiliation: 'SIS', term: 'since 2024' },
-    { role: 'ISO Technical Programme Manager', name: 'Ms Mercè Ferrés Hernández', affiliation: 'ISO Central Secretariat', term: '' },
-    { role: 'ISO Editorial Manager', name: 'Mr Vincenzo Bazzucchi', affiliation: 'ISO Central Secretariat', term: '' },
-  ]
+function loadMembers() {
+  const dir = path.join(DATA_DIR, 'members')
+  const files = readYamlDir(dir)
+  return files.filter(({ id }) => id !== 'README').map(({ data }) => ({
+    id: data['member-id'],
+    name: data.name,
+    salutation: data.salutation || '',
+    email: data.email || '',
+    active: data.active !== false,
+    roles: data.roles || [],
+  }))
+}
+
+function loadNationalBodiesYaml() {
+  const p = path.join(DATA_DIR, 'national_bodies.yml')
+  if (!fs.existsSync(p)) return { participating: [], observing: [] }
+  return readYaml(p) || { participating: [], observing: [] }
+}
+
+function loadLiaisonsInternal() {
+  const p = path.join(DATA_DIR, 'liaisons_internal.yml')
+  if (!fs.existsSync(p)) return []
+  return readYaml(p) || []
+}
+
+function loadLiaisonsExternal() {
+  const p = path.join(DATA_DIR, 'liaisons_external.yml')
+  if (!fs.existsSync(p)) return []
+  return readYaml(p) || []
 }
 
 console.log('[build-data] reading _data/, writing public/data/')
@@ -224,7 +244,18 @@ const standards = loadStandards()
 const groups = loadGroups()
 const liaisons = loadLiaisons()
 const national_bodies = loadNationalBodies()
-const leadership = loadLeadership()
+const leadership = loadMembers().filter(m =>
+  m.roles.some(r => ['chair', 'committee_manager', 'secretariat_support', 'tpm'].includes(r.id))
+).map(m => ({
+  name: m.name,
+  email: m.email,
+  salutation: m.salutation,
+  roles: m.roles.filter(r => ['chair', 'committee_manager', 'secretariat_support', 'tpm'].includes(r.id)),
+}))
+const members = loadMembers()
+const nationalBodiesYaml = loadNationalBodiesYaml()
+const liaisonsInternal = loadLiaisonsInternal()
+const liaisonsExternal = loadLiaisonsExternal()
 
 const latestPlenary = events[0]
 const nextPlenary = events.find((e) => e.status === 'upcoming') || events.find((e) => e.next_plenary != null)
@@ -272,5 +303,9 @@ writeJson('groups.json', groups)
 writeJson('liaisons.json', liaisons)
 writeJson('national_bodies.json', national_bodies)
 writeJson('leadership.json', leadership)
+writeJson('members.json', members)
+writeJson('national_bodies_full.json', nationalBodiesYaml)
+writeJson('liaisons_internal.json', liaisonsInternal)
+writeJson('liaisons_external.json', liaisonsExternal)
 
 console.log('[build-data] done.')

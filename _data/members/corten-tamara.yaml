@@ -1,0 +1,10 @@
+member-id: corten-tamara
+name: Corten, Tamara
+active: true
+roles:
+  - id: member
+    group: nbn
+    nsbody: NBN
+    member_type: O-member
+salutation: Mrs
+email: nbntc_admin@nbn.be

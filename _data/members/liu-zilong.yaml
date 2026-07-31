@@ -1,0 +1,10 @@
+member-id: liu-zilong
+name: Liu, Zilong
+active: true
+roles:
+  - id: member
+    group: sac
+    nsbody: SAC
+    member_type: P-member
+salutation: Mr
+email: liuzl@nim.ac.cn

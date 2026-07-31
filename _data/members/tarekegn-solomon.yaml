@@ -1,0 +1,10 @@
+member-id: tarekegn-solomon
+name: Tarekegn, Solomon
+active: true
+roles:
+  - id: member
+    group: ies
+    nsbody: IES
+    member_type: O-member
+salutation: Mr
+email: solomontarekegn1213@gmail.com

@@ -1,0 +1,12 @@
+member-id: liebing-daniela
+name: Liebing, Daniela
+active: true
+roles:
+  - id: secretariat_support
+    committee: ISO/TC 43
+  - id: secretariat_support
+    committee: ISO/TC 43/SC 1
+  - id: secretariat_support
+    committee: ISO/TC 43/SC 3
+salutation: Mrs
+email: daniela.liebing@din.de

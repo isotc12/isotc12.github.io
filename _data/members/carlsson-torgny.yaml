@@ -1,0 +1,8 @@
+member-id: carlsson-torgny
+name: Carlsson, Torgny
+active: true
+roles:
+  - id: chair
+    organization: SIS
+salutation: Dr
+email: torgny_car@telia.com

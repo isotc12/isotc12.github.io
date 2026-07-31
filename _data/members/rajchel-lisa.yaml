@@ -1,0 +1,8 @@
+member-id: rajchel-lisa
+name: Rajchel, Lisa
+active: true
+roles:
+  - id: secretariat_support
+    committee: ISO/IEC JTC 1/SC 32
+salutation: Mrs.
+email: lrajchel@ansi.org

@@ -1,0 +1,9 @@
+member-id: gershon-janssen
+name: Gershon, Janssen
+active: true
+roles:
+  - id: liaison_representative
+    organization: CalConnect
+    liaison_type: A-liaison
+salutation: Mr
+email: gershon.janssen@calconnect.org

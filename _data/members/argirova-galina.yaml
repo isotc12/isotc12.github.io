@@ -1,0 +1,10 @@
+member-id: argirova-galina
+name: Argirova, Galina
+active: true
+roles:
+  - id: member
+    group: bds
+    nsbody: BDS
+    member_type: O-member
+salutation: Mrs
+email: galina.argirova@bds-bg.org
