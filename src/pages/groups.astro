@@ -8,11 +8,11 @@ const leadership = JSON.parse(fs.readFileSync('public/data/leadership.json', 'ut
 const active = groups.filter((g) => g.status === 'active' || g.status === 'transition')
 const disbanded = groups.filter((g) => g.status === 'disbanded')
 const statusLabel = { active: 'Active', transition: 'In transition', disbanded: 'Disbanded' }
-const statusClass = { active: 'published', transition: 'development', disbanded: 'withdrawn' }
+const pillClass = { active: 'published', transition: 'development', disbanded: 'withdrawn' }
 ---
 
 <BaseLayout title="Working groups & officers" description="ISO/TC 12's working groups and committee officers.">
-  <div class="page page--wide">
+  <article class="page">
     <PageHero
       eyebrow="Structure"
       title="Working groups & officers"
@@ -20,30 +20,22 @@ const statusClass = { active: 'published', transition: 'development', disbanded:
     />
 
     <section>
-      <header class="section-head">
+      <header class="block-head">
         <p class="eyebrow">Active</p>
       </header>
       <div class="wg-grid">
         {active.map((g) => (
-          <article class="wg-card">
-            <header class="wg-card__head">
-              <h3 class="wg-card__name">{g.name}</h3>
-              <span class:list={['status-pill', `status-pill--${statusClass[g.status]}`]}>
-                <span class="status-pill__dot"></span>{statusLabel[g.status]}
+          <article class="card wg">
+            <header class="wg__head">
+              <h3 class="wg__name">{g.name}</h3>
+              <span class:list={['pill', `pill--${pillClass[g.status]}`]}>
+                <span class="pill__dot"></span>{statusLabel[g.status]}
               </span>
             </header>
-            <p class="wg-card__scope">{g.scope}</p>
-            <dl class="wg-card__meta">
-              <div>
-                <dt>Convenor</dt>
-                <dd>{g.convenor}</dd>
-              </div>
-              {g.established && (
-                <div>
-                  <dt>Established</dt>
-                  <dd>{g.established}</dd>
-                </div>
-              )}
+            <p class="wg__scope">{g.scope}</p>
+            <dl class="wg__meta">
+              <div><dt>Convenor</dt><dd>{g.convenor}</dd></div>
+              {g.established && <div><dt>Established</dt><dd class="num">{g.established}</dd></div>}
             </dl>
           </article>
         ))}
@@ -52,7 +44,7 @@ const statusClass = { active: 'published', transition: 'development', disbanded:
 
     {disbanded.length > 0 && (
       <section>
-        <header class="section-head">
+        <header class="block-head">
           <p class="eyebrow">Disbanded (work complete)</p>
         </header>
         <div class="data-table-wrap">
@@ -61,9 +53,9 @@ const statusClass = { active: 'published', transition: 'development', disbanded:
             <tbody>
               {disbanded.map((g) => (
                 <tr>
-                  <td><span class="mono">{g.name}</span></td>
+                  <td class="num-cell">{g.name}</td>
                   <td class="hide-mobile muted">{g.scope}</td>
-                  <td class="mono muted">{g.disbanded ?? '—'}</td>
+                  <td class="num-cell muted">{g.disbanded ?? '—'}</td>
                 </tr>
               ))}
             </tbody>
@@ -73,97 +65,55 @@ const statusClass = { active: 'published', transition: 'development', disbanded:
     )}
 
     <section>
-      <header class="section-head">
+      <header class="block-head">
         <p class="eyebrow">Committee officers</p>
-        <h2 class="section-title">Secretariat & leadership</h2>
+        <h2 class="display-h2">Secretariat & leadership</h2>
       </header>
       <div class="data-table-wrap">
         <table class="data-table">
-          <thead><tr><th>Role</th><th>Name</th><th class="hide-mobile">Affiliation</th><th class="hide-mobile-lt">Term</th></tr></thead>
+          <thead><tr><th style="width: 14rem">Role</th><th>Name</th><th class="hide-mobile">Affiliation</th><th class="hide-mobile-lt">Term</th></tr></thead>
           <tbody>
             {leadership.map((p) => (
               <tr>
-                <td><span class="role-pill">{p.role}</span></td>
+                <td><span class="role">{p.role}</span></td>
                 <td class="name-cell">{p.name}</td>
                 <td class="hide-mobile muted">{p.affiliation}</td>
-                <td class="hide-mobile-lt mono muted">{p.term}</td>
+                <td class="hide-mobile-lt num-cell muted">{p.term}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
     </section>
-  </div>
+  </article>
 </BaseLayout>
 
 <style>
-  section { margin-top: 2.5rem; }
-  .section-head { margin-bottom: 1.25rem; }
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: 1.625rem;
-    font-weight: 600;
-    color: var(--color-slate-900);
-    margin: 0.375rem 0 0;
-  }
-  .dark .section-title { color: #fafaf9; }
+  section { margin-top: 3rem; }
+  .block-head { margin-bottom: 1.5rem; }
+  .display-h2 { font-family: var(--font-display); font-size: clamp(1.625rem, 3vw, 2.25rem); font-weight: 500; color: var(--ink); margin: 0.625rem 0 0; letter-spacing: -0.02em; }
 
-  .wg-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+  .wg-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
   @media (min-width: 768px) { .wg-grid { grid-template-columns: repeat(2, 1fr); } }
-  .wg-card {
-    padding: 1.5rem;
-    background: #fff;
-    border: 1px solid rgb(229 231 235 / 0.8);
-    border-radius: 0.75rem;
-  }
-  .dark .wg-card {
-    background: #1c1917;
-    border-color: rgb(255 255 255 / 0.08);
-  }
-  .wg-card__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.875rem;
-    margin-bottom: 0.875rem;
-  }
-  .wg-card__name {
-    font-family: var(--font-serif);
-    font-size: 1.375rem;
-    font-weight: 600;
-    color: var(--color-brand);
-    margin: 0;
-  }
-  .wg-card__scope {
-    font-size: 0.9375rem;
-    line-height: 1.55;
-    color: var(--color-slate-700);
-    margin: 0 0 1rem;
-  }
-  .dark .wg-card__scope { color: var(--color-slate-300); }
-  .wg-card__meta { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
-  .wg-card__meta dt { font-size: 0.6875rem; font-weight: 600; color: var(--color-slate-500); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.125rem; }
-  .wg-card__meta dd { margin: 0; font-size: 0.875rem; color: var(--color-slate-900); }
-  .dark .wg-card__meta dd { color: #fafaf9; }
+  .wg { display: flex; flex-direction: column; gap: 0.875rem; }
+  .wg__head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .wg__name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; color: var(--accent); margin: 0; letter-spacing: -0.015em; }
+  .wg__scope { font-size: 0.9375rem; line-height: 1.55; color: var(--ink-secondary); margin: 0; }
+  .wg__meta { margin: auto 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-top: 0.875rem; border-top: 1px solid var(--rule); }
+  .wg__meta dt { font-size: 0.6875rem; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+  .wg__meta dd { margin: 0; font-size: 0.875rem; color: var(--ink); }
 
-  .mono { font-family: var(--font-mono); font-size: 0.875rem; }
-  .muted { color: var(--color-slate-500); font-size: 0.875rem; }
-  .role-pill {
-    display: inline-block;
-    padding: 0.1875rem 0.5rem;
-    background: rgb(30 58 138 / 0.08);
-    color: var(--color-brand);
-    font-size: 0.75rem;
-    font-weight: 600;
-    border-radius: 0.3125rem;
+  .data-table-wrap { border: 1px solid var(--rule); border-radius: 0.5rem; overflow: hidden; }
+  .num-cell { font-family: var(--font-mono); font-size: 0.875rem; color: var(--ink); }
+  .muted { color: var(--ink-muted) !important; font-size: 0.875rem; }
+  .role {
+    display: inline-block; padding: 0.1875rem 0.5625rem;
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    color: var(--accent);
+    font-size: 0.75rem; font-weight: 600;
+    border-radius: 0.25rem;
   }
-  .dark .role-pill { background: rgb(255 255 255 / 0.08); }
-  .name-cell { font-weight: 600; color: var(--color-slate-900); }
-  .dark .name-cell { color: #fafaf9; }
+  .name-cell { font-weight: 500; color: var(--ink); }
   @media (max-width: 767px) { .hide-mobile { display: none; } }
   @media (max-width: 1023px) { .hide-mobile-lt { display: none; } }
 </style>

@@ -3,43 +3,14 @@ interface Props {
   eyebrow?: string
   title: string
   lead?: string
-  align?: 'left' | 'center'
   class?: string
 }
-
-const { eyebrow, title, lead, align = 'left', class: className = '' } = Astro.props
+const { eyebrow, title, lead, class: className = '' } = Astro.props
 ---
 
-<header class:list={['page-hero', align === 'center' && 'text-center mx-auto', className]}>
-  {eyebrow && <p class="eyebrow hero-enter" style="--nth:0">{eyebrow}</p>}
-  <h1 class="page-hero__title hero-enter" style="--nth:1" set:html={title} />
-  {lead && <p class="page-hero__lead hero-enter" style="--nth:2" set:html={lead} />}
+<header class:list={['page-hero', className]}>
+  {eyebrow && <p class="page-hero__eyebrow">{eyebrow}</p>}
+  <h1 class="page-hero__title" set:html={title} />
+  {lead && <p class="page-hero__lead" set:html={lead} />}
   <slot />
 </header>
-
-<style>
-  .page-hero { margin-bottom: 2.5rem; }
-  .page-hero__title {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    color: var(--color-slate-900);
-    margin: 0.75rem 0 0;
-    max-width: 36ch;
-  }
-  .dark .page-hero__title { color: #fafaf9; }
-  .page-hero__lead {
-    font-family: var(--font-serif);
-    font-size: 1.1875rem;
-    line-height: 1.6;
-    color: var(--color-slate-600);
-    margin: 1.25rem 0 0;
-    max-width: 56ch;
-  }
-  .dark .page-hero__lead { color: var(--color-slate-300); }
-  .page-hero__lead :global(em) { font-style: italic; }
-  .page-hero__lead :global(strong) { color: var(--color-slate-900); font-weight: 600; }
-  .dark .page-hero__lead :global(strong) { color: #fafaf9; }
-</style>

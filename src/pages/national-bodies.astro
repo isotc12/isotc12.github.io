@@ -8,113 +8,63 @@ const sorted = [...nb.participating].sort((a, b) => a.name.localeCompare(b.name)
 ---
 
 <BaseLayout title="National bodies" description={`ISO/TC 12 participating members — ${nb.p_count} national standards bodies actively shaping the work.`}>
-  <div class="page page--wide">
+  <article class="page">
     <PageHero
       eyebrow="Members"
       title={`Participating member bodies (${nb.p_count})`}
-      lead={`P-members vote on every formal question — new work items, drafts, final drafts, and resolutions. The committee currently has <strong>${nb.p_count} P-members</strong> actively shaping the work, with additional O-members (observers) following along.`}
+      lead={`P-members vote on every formal question — new work items, drafts, final drafts, and resolutions. The committee currently has <strong>${nb.p_count} P-members</strong> actively shaping the work.`}
     />
 
     <section>
-      <header class="section-head">
-        <p class="eyebrow">Participating (P-members)</p>
-      </header>
-      <ul class="bodies-grid">
+      <p class="eyebrow">Participating (P-members)</p>
+      <ul class="bodies">
         {sorted.map((m) => (
-          <li class="body-card">
-            <span class="body-card__code">{m.code}</span>
-            <span class="body-card__body">
-              <span class="body-card__body-name">{m.body}</span>
-              <span class="body-card__name">{m.name}</span>
-            </span>
+          <li class="body">
+            <span class="body__code num">{m.code}</span>
+            <span class="body__body-name num">{m.body}</span>
+            <span class="body__name">{m.name}</span>
           </li>
         ))}
       </ul>
     </section>
 
-    <section class="how-section">
+    <section class="how">
       <div class="how-grid">
         <div>
           <p class="eyebrow">How membership works</p>
-          <h2 class="section-title">P vs O</h2>
+          <h2 class="display-h2">P vs O</h2>
         </div>
-        <div class="prose-tc">
-          <p>
-            ISO member bodies join TC 12 as <strong>P-members</strong>
-            (participating) or <strong>O-members</strong> (observers).
-            P-members must vote on every formal question — new work items,
-            enquiry drafts, final drafts, and resolutions — and are expected
-            to nominate experts to working groups and plenary meetings.
-          </p>
-          <p>
-            O-members follow the work, receive documents, and may submit
-            comments and attend meetings, but do not vote.
-          </p>
-          <p><a href="https://www.iso.org/members.html" class="btn-secondary">Find your ISO member body ↗</a></p>
+        <div class="prose-ref">
+          <p>ISO member bodies join TC 12 as <strong>P-members</strong> (participating) or <strong>O-members</strong> (observers). P-members must vote on every formal question — new work items, enquiry drafts, final drafts, and resolutions — and are expected to nominate experts to working groups and plenary meetings.</p>
+          <p>O-members follow the work, receive documents, and may submit comments and attend meetings, but do not vote.</p>
+          <p><a href="https://www.iso.org/members.html" class="btn btn--ghost">Find your ISO member body ↗</a></p>
         </div>
       </div>
     </section>
-  </div>
+  </article>
 </BaseLayout>
 
 <style>
-  section { margin-top: 2.5rem; }
-  .section-head { margin-bottom: 1.25rem; }
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: 1.625rem;
-    font-weight: 600;
-    color: var(--color-slate-900);
-    margin: 0.375rem 0 0;
-  }
-  .dark .section-title { color: #fafaf9; }
-  .bodies-grid {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0;
-    border-top: 1px solid #e7e5e4;
-  }
-  @media (min-width: 768px) { .bodies-grid { grid-template-columns: repeat(3, 1fr); } }
-  .dark .bodies-grid { border-color: rgb(255 255 255 / 0.08); }
-  .body-card {
-    display: grid;
-    grid-template-columns: 3rem 1fr;
-    gap: 0.875rem;
-    align-items: baseline;
-    padding: 1rem;
-    border-bottom: 1px solid #e7e5e4;
-    border-right: 1px solid #e7e5e4;
-  }
-  @media (min-width: 768px) { .body-card:nth-child(3n) { border-right: 0; } }
-  .dark .body-card { border-color: rgb(255 255 255 / 0.08); }
-  .body-card__code {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-brand);
-  }
-  .body-card__body-name {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-slate-500);
-  }
-  .body-card__name {
-    display: block;
-    font-size: 0.9375rem;
-    color: var(--color-slate-900);
-    font-weight: 500;
-    margin-top: 0.125rem;
-  }
-  .dark .body-card__name { color: #fafaf9; }
+  section { margin-top: 3rem; }
+  .display-h2 { font-family: var(--font-display); font-size: clamp(1.625rem, 3vw, 2.25rem); font-weight: 500; color: var(--ink); margin: 0.625rem 0 0; letter-spacing: -0.02em; }
 
-  .how-section { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e7e5e4; }
-  .dark .how-section { border-color: rgb(255 255 255 / 0.08); }
+  .bodies {
+    list-style: none; padding: 0; margin: 1.25rem 0 0;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+    border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+  }
+  @media (min-width: 768px) { .bodies { grid-template-columns: repeat(3, 1fr); } }
+  .body {
+    display: grid; grid-template-columns: 3rem 1fr; grid-template-rows: auto auto;
+    gap: 0.25rem 1rem; padding: 1rem 1.25rem;
+    border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .body__code { grid-row: span 2; font-weight: 600; color: var(--accent); font-size: 0.9375rem; }
+  .body__body-name { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+  .body__name { font-family: var(--font-display); font-size: 1rem; color: var(--ink); font-weight: 500; }
+
+  .how { margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--rule-strong); }
   .how-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
   @media (min-width: 1024px) { .how-grid { grid-template-columns: 1fr 2fr; gap: 3rem; } }
 </style>

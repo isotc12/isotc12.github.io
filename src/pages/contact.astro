@@ -5,7 +5,7 @@ import { committee } from '../data/committee'
 ---
 
 <BaseLayout title="Contact" description="How to reach ISO/TC 12 — secretariat held by SIS (Sweden).">
-  <div class="page page--medium">
+  <article class="page">
     <PageHero
       eyebrow="Contact"
       title="Reach the committee"
@@ -17,14 +17,8 @@ import { committee } from '../data/committee'
         <p class="eyebrow">Secretariat</p>
         <h2 class="contact-name">{committee.secretariat}</h2>
         <dl class="contact-dl">
-          <div>
-            <dt>Committee Manager</dt>
-            <dd>{committee.committee_manager}</dd>
-          </div>
-          <div>
-            <dt>Email</dt>
-            <dd><a href={`mailto:${committee.secretariat_email}`} class="contact-email">{committee.secretariat_email}</a></dd>
-          </div>
+          <div><dt>Committee Manager</dt><dd>{committee.committee_manager}</dd></div>
+          <div><dt>Email</dt><dd><a href={`mailto:${committee.secretariat_email}`} class="contact-email">{committee.secretariat_email}</a></dd></div>
         </dl>
       </div>
 
@@ -51,58 +45,29 @@ import { committee } from '../data/committee'
           </li>
         </ul>
 
-        <p class="eyebrow" style="margin-top: 1.5rem;">For ISO member bodies</p>
+        <p class="eyebrow" style="margin-top: 2rem;">For ISO member bodies</p>
         <p class="member-note">
-          Member bodies conduct formal correspondence through the ISO Global
-          Directory. Individuals cannot write to TC 12 directly — they
-          participate via their national standards body.
+          Member bodies conduct formal correspondence through the ISO Global Directory. Individuals cannot write to TC 12 directly — they participate via their national standards body.
         </p>
       </div>
     </div>
-  </div>
+  </article>
 </BaseLayout>
 
 <style>
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin-top: 2rem;
-  }
+  .contact-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 3rem; }
   @media (min-width: 768px) { .contact-grid { grid-template-columns: repeat(2, 1fr); } }
-  .contact-name {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--color-slate-900);
-    margin: 0.625rem 0 1rem;
-  }
-  .dark .contact-name { color: #fafaf9; }
-  .contact-dl { margin: 0; display: flex; flex-direction: column; gap: 0.875rem; }
-  .contact-dl dt { font-size: 0.75rem; font-weight: 600; color: var(--color-slate-500); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-  .contact-dl dd { margin: 0; font-size: 0.9375rem; color: var(--color-slate-900); }
-  .dark .contact-dl dd { color: #fafaf9; }
-  .contact-email { color: var(--color-brand); text-decoration: none; font-family: var(--font-mono); font-size: 0.875rem; }
-  .contact-email:hover { text-decoration: underline; }
+  .contact-name { font-family: var(--font-display); font-size: 1.75rem; font-weight: 500; color: var(--ink); margin: 0.75rem 0 1.25rem; letter-spacing: -0.02em; }
+  .contact-dl { margin: 0; display: flex; flex-direction: column; gap: 1rem; }
+  .contact-dl dt { font-size: 0.6875rem; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.375rem; }
+  .contact-dl dd { margin: 0; font-size: 0.9375rem; color: var(--ink); font-weight: 500; }
+  .contact-email { color: var(--accent); font-family: var(--font-mono); font-size: 0.875rem; font-weight: 400; text-decoration: none; }
+  .contact-email:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-  .iso-channels { list-style: none; padding: 0; margin: 0.75rem 0 0; display: flex; flex-direction: column; gap: 0.875rem; }
-  .iso-channels a {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #f5f5f4;
-    text-decoration: none;
-    color: inherit;
-  }
-  .dark .iso-channels a { border-color: rgb(255 255 255 / 0.04); }
-  .iso-channels a:last-child { border-bottom: 0; }
-  .channel-label { font-family: var(--font-serif); font-size: 1.0625rem; font-weight: 600; color: var(--color-brand); }
-  .channel-desc { font-size: 0.8125rem; color: var(--color-slate-500); }
-  .member-note {
-    margin: 0.5rem 0 0;
-    font-size: 0.875rem;
-    line-height: 1.55;
-    color: var(--color-slate-500);
-  }
+  .iso-channels { list-style: none; padding: 0; margin: 0.875rem 0 0; display: flex; flex-direction: column; gap: 0.875rem; }
+  .iso-channels a { display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 0.875rem; border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit; }
+  .iso-channels a:last-child { border-bottom: 0; padding-bottom: 0; }
+  .channel-label { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 500; color: var(--accent); }
+  .channel-desc { font-size: 0.8125rem; color: var(--ink-muted); }
+  .member-note { margin: 0.5rem 0 0; font-size: 0.875rem; line-height: 1.55; color: var(--ink-muted); }
 </style>

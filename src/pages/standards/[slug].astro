@@ -17,62 +17,43 @@ const statusLabel = (s) => {
   return s
 }
 
-const stageLabel = (stage) => {
-  const map = {
-    '10.99': '10.99 — New project approved',
-    '20.00': '20.00 — New work item registered',
-    '30.00': '30.00 — Committee draft (CD) initiated',
-    '30.60': '30.60 — CD close to registration',
-    '50.00': '50.00 — FDIS registered',
-    '60.00': '60.00 — IS published',
-    '90.20': '90.20 — Systematic review due',
-    '95.99': '95.99 — Withdrawn',
-  }
-  return map[stage] || stage
-}
+const stageLabel = (stage) => ({
+  '10.99': '10.99 — New project approved',
+  '20.00': '20.00 — New work item registered',
+  '30.00': '30.00 — Committee draft initiated',
+  '30.60': '30.60 — CD close to registration',
+  '50.00': '50.00 — FDIS registered',
+  '60.00': '60.00 — IS published',
+  '90.20': '90.20 — Systematic review due',
+  '95.99': '95.99 — Withdrawn',
+}[stage] || stage)
 
 const isIEC = standard.part >= 14 && standard.part <= 17
-const orgPrefix = isIEC ? 'ISO/IEC' : 'ISO'
-const fullRef = `${orgPrefix} 80000-${standard.part}`
-const statusClass = standard.status === 'published' ? 'published' : standard.status === 'withdrawn' ? 'withdrawn' : 'development'
+const fullRef = `${isIEC ? 'ISO/IEC' : 'ISO'} 80000-${standard.part}`
+const pillClass = standard.status === 'published' ? 'published' : standard.status === 'withdrawn' ? 'withdrawn' : 'development'
 ---
 
-<BaseLayout
-  title={`${fullRef} — ${standard.title}`}
-  description={`${fullRef}: ${standard.title}. ${standard.scope}`}
->
-  <div class="page page--wide">
+<BaseLayout title={`${fullRef} — ${standard.title}`} description={`${fullRef}: ${standard.title}. ${standard.scope}`}>
+  <article class="page">
     <a href="/standards/" class="back-link">← All parts</a>
 
     <header class="std-header">
       <div class="std-header__main">
-        <p class="eyebrow">{orgPrefix} 80000 · Part {standard.part}</p>
+        <p class="eyebrow eyebrow--ref">{isIEC ? 'ISO/IEC' : 'ISO'} 80000 · Part {standard.part}</p>
         <h1 class="std-header__title">{standard.title}</h1>
         <p class="std-header__scope">{standard.scope}</p>
       </div>
 
       <aside class="std-header__meta">
         <dl>
-          <div>
-            <dt>Reference</dt>
-            <dd>{fullRef}</dd>
-          </div>
-          {standard.edition_year && (
-            <div>
-              <dt>Edition</dt>
-              <dd>{standard.edition_year}</dd>
-            </div>
-          )}
-          <div>
-            <dt>Stage</dt>
-            <dd>{stageLabel(standard.stage)}</dd>
-          </div>
+          <div><dt>Reference</dt><dd class="num">{fullRef}</dd></div>
+          {standard.edition_year && <div><dt>Edition</dt><dd class="num">{standard.edition_year}</dd></div>}
+          <div><dt>Stage</dt><dd>{stageLabel(standard.stage)}</dd></div>
           <div>
             <dt>Status</dt>
             <dd>
-              <span class:list={['status-pill', `status-pill--${statusClass}`]}>
-                <span class="status-pill__dot"></span>
-                {statusLabel(standard.status)}
+              <span class:list={['pill', `pill--${pillClass}`]}>
+                <span class="pill__dot"></span>{statusLabel(standard.status)}
               </span>
             </dd>
           </div>
@@ -81,149 +62,69 @@ const statusClass = standard.status === 'published' ? 'published' : standard.sta
     </header>
 
     <section class="std-section">
-      <div class="std-section__head">
-        <p class="eyebrow">In the series</p>
-      </div>
-      <div class="prose-tc">
+      <p class="eyebrow std-section__label">In the series</p>
+      <div class="prose-ref">
         <p>
-          Part {standard.part} of the ISO/IEC 80000 series. The series
-          defines names, symbols, and units of quantities used across
-          science, technology, and trade. Each part covers a single domain.
+          Part {standard.part} of the ISO/IEC 80000 series. The series defines names, symbols, and units of quantities used across science, technology, and trade. Each part covers a single domain.
         </p>
-        {isIEC && (
-          <p>
-            Developed jointly with <strong>IEC/TC 25</strong> under joint
-            working group <strong>JWG 2</strong>.
-          </p>
-        )}
-        {standard.status === 'under revision' && (
-          <p>A revision is currently in progress, coordinated through ISO/TC 12 working groups.</p>
-        )}
-        {standard.status === 'withdrawn' && (
-          <p>Material from this part has been transferred to the ISO/IEC 80003 series.</p>
-        )}
+        {isIEC && <p>Developed jointly with <strong>IEC/TC 25</strong> under joint working group <strong>JWG 2</strong>.</p>}
+        {standard.status === 'under revision' && <p>A revision is currently in progress, coordinated through ISO/TC 12 working groups.</p>}
+        {standard.status === 'withdrawn' && <p>Material from this part has been transferred to the ISO/IEC 80003 series.</p>}
       </div>
     </section>
 
     <section class="std-section">
-      <div class="std-section__head">
-        <p class="eyebrow">Recent activity</p>
-      </div>
-      <div class="prose-tc">
+      <p class="eyebrow std-section__label">Recent activity</p>
+      <div class="prose-ref">
         <p>
-          The committee most recently addressed this part at the
-          <a href="/decisions/">23rd plenary meeting (May 2026)</a>,
-          which covered systematic reviews, stability dates, and SMART
-          exploration for the ISO/IEC 80000 series as a whole.
+          The committee most recently addressed this part at the <a href="/decisions/">23rd plenary meeting (May 2026)</a>, which covered systematic reviews, stability dates, and SMART exploration for the ISO/IEC 80000 series as a whole.
         </p>
-        <p><a href="/decisions/" class="btn-secondary">See all resolutions →</a></p>
+        <p><a href="/decisions/" class="btn btn--ghost">See all resolutions →</a></p>
       </div>
     </section>
 
     <section class="std-section">
-      <div class="std-section__head">
-        <p class="eyebrow">External</p>
-      </div>
+      <p class="eyebrow std-section__label">External</p>
       <ul class="ext-list">
         <li>
-          <a href="https://www.iso.org/standard.html">
-            <span class="mono">{fullRef}</span>
-            <span>ISO Store ↗</span>
+          <a href="https://www.iso.org/standard.html" class="ext-link">
+            <span class="num">{fullRef}</span>
+            <span class="muted">on the ISO Store ↗</span>
           </a>
         </li>
         <li>
-          <a href="https://www.bipm.org/en/measurement-units/si-brochure">
-            <span class="mono muted">BIPM SI Brochure</span>
-            <span>Foundational reference for all ISO 80000 quantities ↗</span>
+          <a href="https://www.bipm.org/en/measurement-units/si-brochure" class="ext-link">
+            <span class="num">BIPM SI Brochure</span>
+            <span class="muted">Foundational reference for all ISO 80000 quantities ↗</span>
           </a>
         </li>
       </ul>
     </section>
-  </div>
+  </article>
 </BaseLayout>
 
 <style>
-  .back-link {
-    display: inline-block;
-    font-size: 0.875rem;
-    color: var(--color-slate-500);
-    text-decoration: none;
-    margin-bottom: 1.5rem;
-  }
-  .back-link:hover { color: var(--color-brand); }
+  .back-link { display: inline-block; font-size: 0.8125rem; color: var(--ink-muted); text-decoration: none; margin-bottom: 2rem; font-family: var(--font-mono); }
+  .back-link:hover { color: var(--accent); }
 
-  .std-header {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #e7e5e4;
-    margin-bottom: 2rem;
-  }
-  @media (min-width: 1024px) { .std-header { grid-template-columns: 2fr 1fr; gap: 3rem; } }
-  .dark .std-header { border-color: rgb(255 255 255 / 0.08); }
-  .std-header__title {
-    font-family: var(--font-serif);
-    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    color: var(--color-slate-900);
-    margin: 0.5rem 0 0;
-  }
-  .dark .std-header__title { color: #fafaf9; }
-  .std-header__scope {
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
-    line-height: 1.6;
-    color: var(--color-slate-600);
-    margin: 1rem 0 0;
-    max-width: 56ch;
-  }
-  .dark .std-header__scope { color: var(--color-slate-300); }
+  .std-header { display: grid; grid-template-columns: 1fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid var(--rule-strong); margin-bottom: 1rem; }
+  @media (min-width: 1024px) { .std-header { grid-template-columns: 2fr 1fr; gap: 4rem; } }
+  .std-header__title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; line-height: 1.05; letter-spacing: -0.025em; color: var(--ink); margin: 0.875rem 0 0; }
+  .std-header__scope { font-family: var(--font-display); font-size: 1.1875rem; line-height: 1.55; color: var(--ink-secondary); margin: 1.25rem 0 0; max-width: 52ch; }
 
-  .std-header__meta dl { margin: 0; display: flex; flex-direction: column; gap: 1rem; }
-  .std-header__meta dt {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--color-slate-500);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.25rem;
-  }
-  .std-header__meta dd {
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--color-slate-900);
-  }
-  .dark .std-header__meta dd { color: #fafaf9; }
+  .std-header__meta dl { margin: 0; display: flex; flex-direction: column; gap: 1.25rem; }
+  .std-header__meta dt { font-size: 0.6875rem; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.375rem; }
+  .std-header__meta dd { margin: 0; font-family: var(--font-mono); font-size: 0.875rem; color: var(--ink); }
 
-  .std-section {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 1.75rem 0;
-    border-bottom: 1px solid #f5f5f4;
-  }
-  @media (min-width: 1024px) { .std-section { grid-template-columns: 200px 1fr; gap: 3rem; } }
-  .dark .std-section { border-color: rgb(255 255 255 / 0.04); }
-  .std-section__head { padding-top: 0.25rem; }
+  .std-section { display: grid; grid-template-columns: 1fr; gap: 1.5rem; padding: 2.5rem 0; border-bottom: 1px solid var(--rule); }
+  @media (min-width: 1024px) { .std-section { grid-template-columns: 220px 1fr; gap: 3rem; } }
+  .std-section__label { padding-top: 0.25rem; }
 
-  .ext-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.875rem; }
-  .ext-list a {
-    display: grid;
-    grid-template-columns: 12rem 1fr;
-    gap: 1rem;
-    align-items: baseline;
-    padding: 0.625rem 0;
-    color: var(--color-slate-700);
-    text-decoration: none;
-    border-bottom: 1px solid #f5f5f4;
-  }
-  @media (max-width: 640px) { .ext-list a { grid-template-columns: 1fr; gap: 0.25rem; } }
-  .dark .ext-list a { color: var(--color-slate-300); border-color: rgb(255 255 255 / 0.04); }
-  .ext-list a:hover { color: var(--color-brand); }
-  .mono { font-family: var(--font-mono); font-size: 0.875rem; }
-  .muted { color: var(--color-slate-500); }
+  .ext-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
+  .ext-link { display: grid; grid-template-columns: 14rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); color: var(--ink); text-decoration: none; align-items: baseline; }
+  @media (max-width: 640px) { .ext-link { grid-template-columns: 1fr; gap: 0.25rem; } }
+  .ext-link:hover { color: var(--accent); }
+  .ext-link:last-child { border-bottom: 0; }
+  .num { font-family: var(--font-mono); font-size: 0.875rem; font-weight: 500; color: var(--ink); }
+  .muted { color: var(--ink-muted); font-size: 0.875rem; }
 </style>

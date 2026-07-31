@@ -2,42 +2,28 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 ---
 
-<BaseLayout title="404 — Not found" description="The page you requested could not be found." noIndex={true}>
-  <div class="page page--medium error-page">
-    <p class="eyebrow">Error 404</p>
-    <h1 class="error-title">Not<br /><span>found.</span></h1>
-    <p class="error-lead">
-      The page you requested doesn't exist.
+<BaseLayout title="Not found" description="The page you requested could not be found." noIndex={true}>
+  <article class="page error">
+    <p class="eyebrow eyebrow--ref">Error 404</p>
+    <h1 class="error__title">
+      Not<br />
+      <span class="error__em">found.</span>
+    </h1>
+    <p class="error__lead">
+      The page you requested doesn't exist. The reference is out of range.
     </p>
-    <p class="error-actions">
-      <a href="/" class="btn-primary">Home →</a>
-      <a href="/standards/" class="btn-secondary">ISO 80000 series</a>
-      <a href="/decisions/" class="btn-secondary">All resolutions</a>
-    </p>
-  </div>
+    <div class="error__actions">
+      <a href="/" class="btn btn--ref">Home →</a>
+      <a href="/standards/" class="btn btn--ghost">ISO 80000 series</a>
+      <a href="/decisions/" class="btn btn--ghost">All resolutions</a>
+    </div>
+  </article>
 </BaseLayout>
 
 <style>
-  .error-page { padding-top: 4rem; }
-  .error-title {
-    font-family: var(--font-serif);
-    font-size: clamp(4rem, 12vw, 8rem);
-    font-weight: 600;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    color: var(--color-slate-900);
-    margin: 0.75rem 0 0;
-  }
-  .dark .error-title { color: #fafaf9; }
-  .error-title span { color: var(--color-brand); }
-  .error-lead {
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    line-height: 1.5;
-    color: var(--color-slate-600);
-    margin: 1.5rem 0 2rem;
-    max-width: 36ch;
-  }
-  .dark .error-lead { color: var(--color-slate-300); }
-  .error-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0; }
+  .error { padding-top: 4rem; max-width: 48rem; }
+  .error__title { font-family: var(--font-display); font-size: clamp(4rem, 12vw, 9rem); font-weight: 500; line-height: 0.95; letter-spacing: -0.035em; color: var(--ink); margin: 1.25rem 0 0; }
+  .error__em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .error__lead { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.5; color: var(--ink-secondary); margin: 1.75rem 0 2rem; max-width: 38ch; }
+  .error__actions { display: flex; flex-wrap: wrap; gap: 0.625rem; }
 </style>

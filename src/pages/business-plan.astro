@@ -5,7 +5,7 @@ import { committee } from '../data/committee'
 ---
 
 <BaseLayout title="Business plan" description="ISO/TC 12's strategic business plan — published on the ISO website, periodically reviewed at plenary meetings.">
-  <div class="page page--wide">
+  <article class="page">
     <PageHero
       eyebrow="Strategy"
       title="Strategic Business Plan"
@@ -13,87 +13,38 @@ import { committee } from '../data/committee'
     />
 
     <div class="bp-grid">
-      <div class="prose-tc">
+      <div class="prose-ref">
         <h3>Current plan</h3>
-        <p>
-          The Strategic Business Plan describes TC 12's scope, the
-          global relevance of its work, the structure of its programme,
-          and its objectives. It is reviewed at every plenary meeting.
-        </p>
-        <p>
-          At the 23rd plenary (May 2026), the committee resolved to
-          reformat the draft SBP (N1609) into the latest ISO template
-          and circulate it for approval via Committee Internal Ballot.
-        </p>
+        <p>The Strategic Business Plan describes TC 12's scope, the global relevance of its work, the structure of its programme, and its objectives. It is reviewed at every plenary meeting.</p>
+        <p>At the 23rd plenary (May 2026), the committee resolved to reformat the draft SBP (N1609) into the latest ISO template and circulate it for approval via Committee Internal Ballot.</p>
 
         <h3>Recent reviews</h3>
         <ul class="reviews">
-          <li>
-            <span class="reviews__date">2026-05-26</span>
-            <span>23rd plenary — draft SBP (N1609) to be reformatted to ISO template, then CIB</span>
-          </li>
-          <li>
-            <span class="reviews__date">2025-05-22</span>
-            <span>22nd plenary — update to SBP v.12, comments invited then CIB</span>
-          </li>
-          <li>
-            <span class="reviews__date">2024-05-16</span>
-            <span>21st plenary — confirmed SBP v.11 (N1488)</span>
-          </li>
-          <li>
-            <span class="reviews__date">2020-09-14</span>
-            <span>CIB approved SBP Final v.9 rev 2 (N1377)</span>
-          </li>
+          <li><span class="reviews__date num">2026-05-26</span><span>23rd plenary — draft SBP (N1609) to be reformatted to ISO template, then CIB</span></li>
+          <li><span class="reviews__date num">2025-05-22</span><span>22nd plenary — update to SBP v.12, comments invited then CIB</span></li>
+          <li><span class="reviews__date num">2024-05-16</span><span>21st plenary — confirmed SBP v.11 (N1488)</span></li>
+          <li><span class="reviews__date num">2020-09-14</span><span>CIB approved SBP Final v.9 rev 2 (N1377)</span></li>
         </ul>
       </div>
 
-      <aside class="card bp-aside">
+      <aside class="card">
         <p class="eyebrow">Published plan</p>
         <a href="https://www.iso.org/committee/45976.html" class="bp-link">ISO/TC 12 SBP on iso.org ↗</a>
-        <p class="bp-note">
-          The current plan is hosted on the ISO website.
-        </p>
+        <p class="muted small">The current plan is hosted on the ISO website.</p>
       </aside>
     </div>
-  </div>
+  </article>
 </BaseLayout>
 
 <style>
-  .bp-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
+  .bp-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 3rem; }
   @media (min-width: 1024px) { .bp-grid { grid-template-columns: 2fr 1fr; gap: 3rem; } }
-  .bp-aside { background: #fff; }
-  .dark .bp-aside { background: #1c1917; }
-  .bp-link {
-    display: block;
-    font-family: var(--font-serif);
-    font-size: 1.1875rem;
-    font-weight: 600;
-    color: var(--color-brand);
-    text-decoration: none;
-    margin: 0.625rem 0 0;
-  }
-  .bp-link:hover { text-decoration: underline; }
-  .bp-note {
-    margin: 0.75rem 0 0;
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    color: var(--color-slate-500);
-  }
+  .bp-link { display: block; font-family: var(--font-display); font-size: 1.1875rem; font-weight: 500; color: var(--accent); text-decoration: none; margin: 0.625rem 0 0; }
+  .bp-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .muted { color: var(--ink-muted); }
+  .small { font-size: 0.8125rem; line-height: 1.55; margin: 0.75rem 0 0; }
   .reviews { list-style: none; padding: 0; margin: 1rem 0 0; }
-  .reviews li {
-    display: grid;
-    grid-template-columns: 8rem 1fr;
-    gap: 1rem;
-    padding: 0.75rem 0;
-    border-top: 1px solid #f5f5f4;
-    font-size: 0.9375rem;
-  }
+  .reviews li { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding: 0.75rem 0; border-top: 1px solid var(--rule); font-size: 0.9375rem; }
   @media (max-width: 640px) { .reviews li { grid-template-columns: 1fr; gap: 0.25rem; } }
-  .dark .reviews li { border-color: rgb(255 255 255 / 0.04); }
-  .reviews__date { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--color-brand); }
+  .reviews__date { color: var(--accent); font-size: 0.8125rem; }
 </style>

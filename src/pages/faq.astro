@@ -3,83 +3,49 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import PageHero from '../components/PageHero.astro'
 
 const faqs = [
-  {
-    q: 'What is ISO/TC 12?',
-    a: 'ISO/TC 12 is the ISO technical committee responsible for <em>Quantities and units</em>. It maintains the ISO/IEC 80000 series — the standardised names, symbols, and definitions for quantities (length, mass, time, current, temperature…) and their units.',
-  },
-  {
-    q: 'What is the ISO 80000 series?',
-    a: 'A multi-part standard covering quantities and units across all domains of science and technology. Part 1 (General) sets the framework; parts 2–13 cover specific domains (mathematics, space and time, mechanics, thermodynamics, electromagnetism, light, acoustics, chemistry, atomic physics, characteristic numbers, condensed matter, information science). Parts 14–17 are IEC-led.',
-  },
-  {
-    q: 'How is ISO 80000 different from the SI Brochure?',
-    a: 'The <strong>SI Brochure</strong> (published by BIPM) defines the seven SI base units and the rules for using them. <strong>ISO 80000</strong> builds on the SI to define the full vocabulary of quantities — every named quantity used in scientific writing, its symbol, and its unit. The two work together; the SI Brochure is normatively referenced throughout ISO 80000.',
-  },
-  {
-    q: 'How do I cite ISO 80000?',
-    a: 'ISO 80000 parts are cited by their reference number. Example: <code>ISO 80000-3:2019</code> for Part 3 (Space and time), 2019 edition. The full citation including title appears in the ISO Store entry.',
-  },
-  {
-    q: 'How does my organisation participate?',
-    a: 'Participation is through your national standards body (the ISO member for your country). Member bodies can join as P-members (voting) or O-members (observers). Individuals participate by being nominated as experts to specific working groups. Start at <a href="https://www.iso.org/members.html">iso.org/members</a>.',
-  },
-  {
-    q: 'Where can I read the underlying documents?',
-    a: 'All committee documents (agendas, minutes, resolutions, liaison reports) are available on the <a href="https://committee.iso.org/home/tc12">ISO committee site</a>. The ISO 80000 standards themselves are sold through the <a href="https://www.iso.org/standards.html">ISO Store</a>.',
-  },
-  {
-    q: 'Why are some parts IEC-led?',
-    a: 'Quantities in information science, logarithmic quantities, printing/writing rules, and time-dependency fall within IEC/TC 25\'s domain. The 80000 series is jointly branded ISO/IEC; TC 12 and IEC/TC 25 each lead on the parts aligned with their scope. The two committees jointly convene <strong>JWG 2</strong> to coordinate revisions.',
-  },
-  {
-    q: 'What is SMART standardisation?',
-    a: 'ISO\'s SMART initiative explores delivering standards as machine-readable services rather than only as PDF documents. TC 12 has resolved to coordinate with ISO/CS to explore creating ISO/IEC 80000 as an information service (Resolution P-2026-08).',
-  },
+  { q: 'What is ISO/TC 12?', a: 'ISO/TC 12 is the ISO technical committee responsible for <em>Quantities and units</em>. It maintains the ISO/IEC 80000 series — the standardised names, symbols, and definitions for quantities (length, mass, time, current, temperature…) and their units.' },
+  { q: 'What is the ISO 80000 series?', a: 'A multi-part standard covering quantities and units across all domains of science and technology. Part 1 (General) sets the framework; parts 2–13 cover specific domains (mathematics, space and time, mechanics, thermodynamics, electromagnetism, light, acoustics, chemistry, atomic physics, characteristic numbers, condensed matter, information science). Parts 14–17 are IEC-led.' },
+  { q: 'How is ISO 80000 different from the SI Brochure?', a: 'The <strong>SI Brochure</strong> (published by BIPM) defines the seven SI base units and the rules for using them. <strong>ISO 80000</strong> builds on the SI to define the full vocabulary of quantities — every named quantity used in scientific writing, its symbol, and its unit. The two work together; the SI Brochure is normatively referenced throughout ISO 80000.' },
+  { q: 'How do I cite ISO 80000?', a: 'ISO 80000 parts are cited by their reference number. Example: <code>ISO 80000-3:2019</code> for Part 3 (Space and time), 2019 edition. The full citation including title appears in the ISO Store entry.' },
+  { q: 'How does my organisation participate?', a: 'Participation is through your national standards body (the ISO member for your country). Member bodies can join as P-members (voting) or O-members (observers). Individuals participate by being nominated as experts to specific working groups. Start at <a href="https://www.iso.org/members.html">iso.org/members</a>.' },
+  { q: 'Where can I read the underlying documents?', a: 'All committee documents (agendas, minutes, resolutions, liaison reports) are available on the <a href="https://committee.iso.org/home/tc12">ISO committee site</a>. The ISO 80000 standards themselves are sold through the <a href="https://www.iso.org/standards.html">ISO Store</a>.' },
+  { q: 'Why are some parts IEC-led?', a: 'Quantities in information science, logarithmic quantities, printing/writing rules, and time-dependency fall within IEC/TC 25\'s domain. The 80000 series is jointly branded ISO/IEC; TC 12 and IEC/TC 25 each lead on the parts aligned with their scope. The two committees jointly convene <strong>JWG 2</strong> to coordinate revisions.' },
+  { q: 'What is SMART standardisation?', a: 'ISO\'s SMART initiative explores delivering standards as machine-readable services rather than only as PDF documents. TC 12 has resolved to coordinate with ISO/CS to explore creating ISO/IEC 80000 as an information service (Resolution P-2026-08).' },
 ]
 ---
 
 <BaseLayout title="FAQ" description="Frequently asked questions about ISO/TC 12 and the ISO 80000 series.">
-  <div class="page page--narrow">
+  <article class="page narrow-page">
     <PageHero
       eyebrow="Help"
       title="Frequently asked"
       lead="Common questions about quantities, units, ISO 80000, and how the committee works."
     />
 
-    <ol class="faq-list">
+    <ol class="faq">
       {faqs.map((f, i) => (
-        <li class="faq-item">
-          <h3 class="faq-q"><span class="faq-n">{String(i + 1).padStart(2, '0')}</span>{f.q}</h3>
-          <div class="prose-tc faq-a" set:html={f.a} />
+        <li class="faq__item">
+          <h3 class="faq__q">
+            <span class="faq__n num">{String(i + 1).padStart(2, '0')}</span>
+            <span>{f.q}</span>
+          </h3>
+          <div class="prose-ref faq__a" set:html={f.a} />
         </li>
       ))}
     </ol>
-  </div>
+  </article>
 </BaseLayout>
 
 <style>
-  .faq-list { list-style: none; padding: 0; margin: 2rem 0 0; }
-  .faq-item {
-    padding: 1.75rem 0;
-    border-top: 1px solid #e7e5e4;
-  }
-  .dark .faq-item { border-color: rgb(255 255 255 / 0.08); }
-  .faq-q {
-    font-family: var(--font-serif);
-    font-size: 1.1875rem;
-    font-weight: 600;
-    color: var(--color-slate-900);
-    margin: 0 0 0.625rem;
-    display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    gap: 0.875rem;
-    align-items: baseline;
-  }
-  .dark .faq-q { color: #fafaf9; }
-  .faq-n { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 500; color: var(--color-slate-400); }
-  .faq-a { padding-left: 3.375rem; }
+  .narrow-page { max-width: 48rem; }
+  .faq { list-style: none; padding: 0; margin: 2.5rem 0 0; }
+  .faq__item { padding: 2rem 0; border-top: 1px solid var(--rule); }
+  .faq__item:last-child { border-bottom: 1px solid var(--rule); }
+  .faq__q { font-family: var(--font-display); font-size: 1.1875rem; font-weight: 500; color: var(--ink); margin: 0 0 0.875rem; display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: baseline; letter-spacing: -0.015em; }
+  .faq__n { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 500; color: var(--ink-faint); }
+  .faq__a { padding-left: 3.5rem; }
   @media (max-width: 640px) {
-    .faq-q { grid-template-columns: 1fr; gap: 0.25rem; }
-    .faq-a { padding-left: 0; }
+    .faq__q { grid-template-columns: 1fr; gap: 0.25rem; }
+    .faq__a { padding-left: 0; }
   }
 </style>

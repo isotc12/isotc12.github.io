@@ -1,0 +1,176 @@
+---
+// The seven SI defining constants — exact numerical values that,
+// since the 2019 redefinition of the SI, anchor every measurement
+// in the world. This is the foundation of TC 12's work.
+
+interface DefiningConstant {
+  symbol: string
+  value: string
+  unit: string
+  name: string
+  defines: string
+  definesRef: string
+}
+
+const constants: DefiningConstant[] = [
+  { symbol: 'ΔνCs',  value: '9 192 631 770',          unit: 'Hz',         name: 'caesium hyperfine frequency',     defines: 'second',       definesRef: 's'   },
+  { symbol: 'c',     value: '299 792 458',             unit: 'm s⁻¹',      name: 'speed of light in vacuum',        defines: 'metre',        definesRef: 'm'   },
+  { symbol: 'h',     value: '6.626 070 15 × 10⁻³⁴',   unit: 'J s',        name: 'Planck constant',                 defines: 'kilogram',     definesRef: 'kg'  },
+  { symbol: 'e',     value: '1.602 176 634 × 10⁻¹⁹',  unit: 'C',          name: 'elementary charge',               defines: 'ampere',       definesRef: 'A'   },
+  { symbol: 'k',     value: '1.380 649 × 10⁻²³',      unit: 'J K⁻¹',      name: 'Boltzmann constant',              defines: 'kelvin',       definesRef: 'K'   },
+  { symbol: 'N_A',   value: '6.022 140 76 × 10²³',    unit: 'mol⁻¹',      name: 'Avogadro constant',               defines: 'mole',         definesRef: 'mol' },
+  { symbol: 'K_cd',  value: '683',                     unit: 'lm W⁻¹',     name: 'luminous efficacy (540 THz)',     defines: 'candela',      definesRef: 'cd'  },
+]
+---
+
+<section class="constants" aria-labelledby="constants-h">
+  <header class="constants__head">
+    <p class="eyebrow eyebrow--ref" id="constants-h">The seven defining constants</p>
+    <p class="constants__intro">
+      Since the 2019 redefinition of the SI, every base unit is fixed by an exact numerical value of a constant of nature. These seven numbers <em>are</em> the SI. TC 12 maintains the standard that derives from them.
+    </p>
+  </header>
+
+  <ol class="constants__list" role="list">
+    {constants.map((c, i) => (
+      <li class="constant" style={`--i:${i}`}>
+        <div class="constant__row">
+          <span class="constant__symbol" aria-hidden="true">{c.symbol}</span>
+          <span class="constant__value num">{c.value}</span>
+          <span class="constant__unit num">{c.unit}</span>
+        </div>
+        <div class="constant__meta">
+          <span class="constant__name">{c.name}</span>
+          <span class="constant__arrow">→</span>
+          <a href={`/standards/iso-80000-${c.definesRef === 'm' || c.definesRef === 'kg' ? '4' : c.definesRef === 's' ? '3' : c.definesRef === 'A' ? '6' : c.definesRef === 'K' ? '5' : c.definesRef === 'mol' ? '9' : c.definesRef === 'cd' ? '7' : '1'}/`} class="constant__defines">
+            <span class="constant__defines-label">defines</span>
+            <span class="constant__defines-ref num">{c.definesRef}</span>
+            <span class="constant__defines-name">{c.defines}</span>
+          </a>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <p class="constants__source">
+    Source: <a href="https://www.bipm.org/en/measurement-units/si-brochure" rel="noopener noreferrer">BIPM SI Brochure, 9th edition</a>. Values are exact by definition.
+  </p>
+</section>
+
+<style>
+  .constants {
+    border-top: 1px solid var(--rule-strong);
+    padding: 3rem 0;
+  }
+  .constants__head { max-width: 52ch; margin-bottom: 2.5rem; }
+  .constants__intro {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--ink-secondary);
+    margin: 0.75rem 0 0;
+  }
+  .constants__intro em { font-style: italic; color: var(--ink); font-weight: 500; }
+
+  .constants__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--rule);
+  }
+  @media (min-width: 768px) {
+    .constants__list { grid-template-columns: 1fr 1fr; }
+    .constant:nth-child(2n-1) { border-right: 1px solid var(--rule); }
+  }
+
+  .constant {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+  @media (min-width: 768px) {
+    .constant { padding: 1.75rem 1.5rem; }
+    .constant:nth-child(2n-1) { padding-left: 0; }
+    .constant:nth-child(2n) { padding-right: 0; }
+  }
+
+  .constant__row {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+  }
+  .constant__symbol {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .constant__value {
+    font-size: 1.0625rem;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .constant__unit {
+    font-size: 0.9375rem;
+    color: var(--ink-muted);
+  }
+
+  .constant__meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.8125rem;
+  }
+  .constant__name {
+    color: var(--ink-muted);
+    font-family: var(--font-display);
+    font-style: italic;
+  }
+  .constant__arrow { color: var(--ink-faint); }
+  .constant__defines {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    color: var(--ink-secondary);
+    transition: color 0.15s;
+  }
+  .constant__defines:hover { color: var(--accent); }
+  .constant__defines-label {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+  .constant__defines-ref {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 0.9375rem;
+  }
+  .constant__defines-name {
+    color: var(--ink-muted);
+    font-size: 0.8125rem;
+  }
+
+  .constants__source {
+    margin: 1.75rem 0 0;
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+  }
+  .constants__source a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

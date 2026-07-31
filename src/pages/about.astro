@@ -9,15 +9,15 @@ import { committee } from '../data/committee'
   title="About"
   description="ISO/TC 12 maintains the ISO 80000 series of standards for quantities and units. Founded 1947; secretariat held by SIS (Sweden) since 1982."
 >
-  <div class="page page--wide">
+  <article class="page">
     <PageHero
       eyebrow="About"
       title="Quantities, units, and the work of TC 12"
-      lead="Every measurement in science, engineering, and trade rests on a shared vocabulary of <em>quantities</em> (what we measure) and <em>units</em> (how we measure it). ISO/TC 12 maintains that vocabulary."
+      lead="Every measurement in science, engineering, and trade rests on a shared vocabulary of <em>quantities</em> and <em>units</em>. ISO/TC 12 maintains that vocabulary."
     />
 
     <div class="about-grid">
-      <div class="prose-tc">
+      <div class="prose-ref">
         <h3>The scope</h3>
         <p>{committee.scope}</p>
 
@@ -57,7 +57,7 @@ import { committee } from '../data/committee'
       <aside class="about-aside">
         <div class="card">
           <p class="eyebrow">Leadership</p>
-          <dl class="leadership">
+          <dl class="dl-compact">
             <div>
               <dt>Chair</dt>
               <dd>{committee.chair}</dd>
@@ -77,16 +77,14 @@ import { committee } from '../data/committee'
         </div>
 
         <div class="card">
-          <p class="eyebrow">The base units</p>
-          <p class="muted" style="margin: 0.5rem 0 1rem; font-size: 0.8125rem;">
-            Seven SI base units define the dimensions across which all ISO 80000 quantities live.
-          </p>
+          <p class="eyebrow">The seven base units</p>
+          <p class="muted small">Define the dimensions across which all ISO 80000 quantities live.</p>
           <UnitGrid variant="compact" />
         </div>
 
         <div class="card">
           <p class="eyebrow">External</p>
-          <ul class="links">
+          <ul class="link-list">
             <li><a href={committee.links.isoCommittee}>ISO committee page ↗</a></li>
             <li><a href="https://www.bipm.org/en/measurement-units/si-brochure">BIPM SI Brochure ↗</a></li>
             <li><a href="https://www.bipm.org/en/committees/jc/jcgm">JCGM (VIM, GUM) ↗</a></li>
@@ -94,28 +92,20 @@ import { committee } from '../data/committee'
         </div>
       </aside>
     </div>
-  </div>
+  </article>
 </BaseLayout>
 
 <style>
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-top: 2.5rem;
-  }
-  @media (min-width: 1024px) {
-    .about-grid { grid-template-columns: 2fr 1fr; gap: 3rem; }
-  }
+  .about-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-top: 3rem; }
+  @media (min-width: 1024px) { .about-grid { grid-template-columns: 2fr 1fr; gap: 3rem; } }
   .about-aside { display: flex; flex-direction: column; gap: 1rem; }
-  .leadership { margin: 0.75rem 0 0; }
-  .leadership div { margin-bottom: 0.875rem; }
-  .leadership dt { font-size: 0.75rem; font-weight: 600; color: var(--color-slate-500); text-transform: uppercase; letter-spacing: 0.05em; }
-  .leadership dd { margin: 0.125rem 0 0; font-size: 0.9375rem; color: var(--color-slate-900); font-weight: 500; }
-  .dark .leadership dd { color: #fafaf9; }
-  .leadership dd.muted { font-weight: 400; color: var(--color-slate-500); font-size: 0.8125rem; }
-  .links { list-style: none; padding: 0; margin: 0.5rem 0 0; display: flex; flex-direction: column; gap: 0.5rem; }
-  .links a { color: var(--color-brand); text-decoration: none; font-size: 0.875rem; }
-  .links a:hover { text-decoration: underline; }
-  .muted { color: var(--color-slate-500); }
+  .dl-compact { margin: 0.75rem 0 0; display: flex; flex-direction: column; gap: 1rem; }
+  .dl-compact dt { font-size: 0.6875rem; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .dl-compact dd { margin: 0.125rem 0 0; font-size: 0.9375rem; color: var(--ink); font-weight: 500; }
+  .dl-compact dd.muted { font-weight: 400; color: var(--ink-muted); font-size: 0.8125rem; margin-top: 0.125rem; }
+  .muted { color: var(--ink-muted); }
+  .small { font-size: 0.8125rem; line-height: 1.5; margin: 0.5rem 0 1.25rem; }
+  .link-list { list-style: none; padding: 0; margin: 0.625rem 0 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .link-list a { color: var(--accent); font-size: 0.875rem; text-decoration: none; }
+  .link-list a:hover { text-decoration: underline; text-underline-offset: 3px; }
 </style>
